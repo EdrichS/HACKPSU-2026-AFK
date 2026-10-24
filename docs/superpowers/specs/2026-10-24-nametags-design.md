@@ -1,4 +1,4 @@
-# Design: "Who's This?" — face and voice recognition for people with dementia (HackPSU 2026)
+# Design: Nametags — face and voice recognition for people with dementia (HackPSU 2026)
 
 ## Context
 
@@ -16,7 +16,7 @@ a LICENSE, so everything below is new.
 ## Scope and features at a glance
 
 ```
-                         WHO'S THIS?  (HackPSU 2026, 24 h, laptop camera + mic)
+                            NAMETAGS  (HackPSU 2026, 24 h, laptop camera + mic)
  ┌──────────────────────────────────────────────────────────────────────────────────┐
  │  IN SCOPE                                                                        │
  │                                                                                  │
@@ -225,5 +225,5 @@ and voice owners hand David lists of numbers, and David's database does the matc
 
 ## After approval
 
-Save this design to `docs/superpowers/specs/2026-10-24-whos-this-design.md` in the hackathon repo.
+Save this design to `docs/superpowers/specs/2026-10-24-nametags-design.md` in the hackathon repo.
 Commit it only once you say so. Then write the implementation plan.
