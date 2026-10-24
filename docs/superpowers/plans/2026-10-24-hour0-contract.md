@@ -25,8 +25,11 @@ python-multipart.
 - Everything stays local: no network calls in contract code or the mock. *(Spec: anti-goals.)*
   The real Gemini call lives in the context owner's code, outside the contract and the mock.
 - The face and voice owners decide model internals. The contract fixes only: the embedding as a
-  list of floats, its `dimensions`, its `metric` (`"l2"` or `"cosine"`), and its `cutoff`.
-  *(Spec: "What this design fixes about those two parts.")*
+  list of floats, its `dimensions`, its `metric` (`"l2"` or `"cosine"`), its `cutoff`, and the
+  `model` that produced it. *(Spec: "What this design fixes about those two parts.")*
+- A cutoff is a distance, and a match must be strictly under it. Cosine distance is 1 − cosine
+  similarity, so a similarity threshold *s* becomes the cutoff 1 − *s*. SpeechBrain's default 0.25
+  is a similarity, so its cutoff is 0.75.
 - The backend composes every spoken sentence, and the frontend speaks the `text` field exactly as
   received, so the wording lives in one place.
 - Spoken wording, copied from the spec:
@@ -39,7 +42,7 @@ python-multipart.
 
 ## Review Focus
 
-1. A photo with no faces: `POST /photos` returns 200 with `faces: []`, not an error. *(Test: Task 2.)*
+1. A photo with no faces: `POST /photos` returns 201 with `faces: []`, not an error. *(Test: Task 2.)*
 2. An embedder that returns the wrong number of floats: the checker fails loudly, so the mistake is
    caught before it ever reaches the database. *(Test: Task 1.)*
 3. Clicking a face that is already labelled and choosing a different person: the label moves to the
@@ -62,7 +65,9 @@ python-multipart.
 **Interfaces:**
 - Produces, in `contract/embedders.py`:
   - `Box(BaseModel)`: `x: int, y: int, width: int, height: int`
-  - `EmbedderSpec(BaseModel)`: `dimensions: int, metric: Literal["l2", "cosine"], cutoff: float`
+  - `EmbedderSpec(BaseModel)`: `dimensions: int, metric: Literal["l2", "cosine"], cutoff: float,
+    model: str`. `model` names the embedder (for example `face_recognition-1.3-small`), so the
+    backend can refuse to compare samples from different models.
   - `FaceDetection(BaseModel)`: `box: Box, embedding: list[float]`
   - `class FaceEmbedder(Protocol)`:
     - `spec: EmbedderSpec`
@@ -75,9 +80,11 @@ python-multipart.
     with a clear message
   - `def check_voice_embedder(e: VoiceEmbedder, wav: bytes) -> None`: raises `AssertionError`
 - Produces, in `contract/fakes.py`:
-  - `FakeFaceEmbedder`: spec `(128, "l2", 0.6)`. Returns one face per image, with an embedding
-    derived deterministically from the image bytes.
-  - `FakeVoiceEmbedder`: spec `(192, "cosine", 0.25)`.
+  - `FakeFaceEmbedder`: spec `(128, "l2", 0.6, "fake-face")`. Returns one face per image, with
+    the box `Box(x=0, y=0, width=1, height=1)` (it fits any image) and an embedding derived
+    deterministically from the image bytes.
+  - `FakeVoiceEmbedder`: spec `(192, "cosine", 0.75, "fake-voice")`. It never returns all zeros,
+    even for the silent audio `make_wav()` produces.
   - The fake spec values are placeholders. The real values come from the owners.
   - `make_wav(seconds: float = 1.0) -> bytes`: produces silent 16 kHz mono 16-bit audio, as a
     test helper.
@@ -109,9 +116,10 @@ def test_fake_face_embedding_is_deterministic():
   error.
 - [ ] **Step 3: Implement the models, the protocols and the two checker functions in
   `contract/embedders.py`, and the fakes in `contract/fakes.py`.** Each checker asserts that:
-  - every embedding has exactly `spec.dimensions` floats, and every float is finite;
+  - every embedding has exactly `spec.dimensions` floats, every float is finite, and the
+    embedding isn't all zeros;
   - every box has `x, y >= 0` and `width, height > 0`;
-  - `0 < cutoff`.
+  - `0 < cutoff`, and `model` isn't blank.
 - [ ] **Step 4: Run `uv run pytest tests/test_embedders.py -v`.** Expected: 4 passed.
 - [ ] **Step 5: Commit:** `git add pyproject.toml uv.lock contract tests` then
   `git commit -m "contract: embedder interfaces, fakes and checkers"`
@@ -132,32 +140,43 @@ def test_fake_face_embedding_is_deterministic():
   - `Person`: `id: int, name: str, relationship: str, face_count: int, has_voice: bool,
     small_context: str` (empty string until the first context update)
   - `PersonIn`: `name: str` (1–80 characters), `relationship: str` (1–40 characters)
-  - `PersonPatch`: `name: str | None, relationship: str | None, small_context: str | None`
+  - `PersonPatch`: `name: str | None` (1–80 characters when given), `relationship: str | None`
+    (1–40 characters when given), `small_context: str | None` (at most 300 characters when given)
   - `NotesIn`: `text: str`
   - `TranscriptLine`: `speaker: str, text: str`
   - `ConversationIn`: `lines: list[TranscriptLine]`
   - `Fact`: `id: int, text: str, source: Literal["conversation", "notes"], created_at: datetime`
   - `DetectedFace`: `face_id: int, box: Box, person_id: int | None`
   - `PhotoOut`: `photo_id: int, width: int, height: int, faces: list[DetectedFace]`
-  - `AssignIn`: `person_id: int`
+  - `AssignIn`: `person_id: int | None` (null unlabels the face)
   - `VoiceOut`: `voice_sample_id: int`
+  - `VoiceSample`: `voice_sample_id: int, created_at: datetime`
 - Routes (the mock and David's real backend both serve exactly these):
 
 | Method and path | Body | Returns |
 |---|---|---|
 | `GET /people` | — | `list[Person]` |
-| `POST /people` | `PersonIn` | `201 Person` |
-| `PATCH /people/{id}` | `PersonPatch` | `Person`, or 404 |
+| `POST /people` | `PersonIn` | `201 Person`; 409 if a person with the same name and relationship exists |
+| `PATCH /people/{id}` | `PersonPatch` | `Person`; 404; 409 as for POST |
 | `DELETE /people/{id}` | — | `204`, or 404 |
 | `POST /photos` | multipart `file` (JPEG or PNG) | `201 PhotoOut` |
-| `POST /faces/{face_id}/assign` | `AssignIn` | `204`; 404 for an unknown face or person |
+| `GET /photos` | — | `list[PhotoOut]`, with each face's current label |
+| `GET /photos/{id}/image` | — | the stored image; 404 for an unknown photo |
+| `POST /faces/{face_id}/assign` | `AssignIn` | `204`; 404 for an unknown face or person; 409 if that person is already labelled on another face in this photo |
 | `POST /people/{id}/voice` | multipart `file` (WAV, 16 kHz, mono, 16-bit) | `201 VoiceOut`; 422 for a wrong format; 404 for an unknown person |
+| `GET /people/{id}/voice` | — | `list[VoiceSample]`, oldest first; 404 for an unknown person |
+| `DELETE /people/{id}/voice/{voice_sample_id}` | — | `204`; 404 if that person has no such recording |
 | `POST /people/{id}/notes` | `NotesIn` | `Person` with the updated card; 404 for an unknown person |
 | `POST /people/{id}/conversation` | `ConversationIn` | `Person` with the updated card; 404 for an unknown person |
 | `GET /people/{id}/facts` | — | `list[Fact]`; 404 for an unknown person |
+| `DELETE /people/{id}/facts/{fact_id}` | — | `204`; 404 if that person has no such fact |
 
   The mock makes no Gemini call. For `notes` and `conversation` it stores the text as one fact and
   sets `small_context` to a fixed placeholder card.
+
+  "The same name and relationship" ignores case and surrounding spaces, so `" david"` and
+  `"Grandson"` clash with `"David"` and `"grandson"`. Labels are matched per photo: a person can be
+  on at most one face in each photo, and any number of faces can stay unlabelled.
 
 - [ ] **Step 1: Write the failing tests** using `TestClient(mock.app.app)`:
 
@@ -195,6 +214,37 @@ def test_voice_accepts_wav_and_sets_has_voice():
 
 def test_unknown_person_is_404():
     assert client.patch("/people/999", json={"name": "X"}).status_code == 404
+
+def test_photos_survive_a_reload():
+    up = client.post("/photos", files={"file": ("p.png", PNG_1x1, "image/png")}).json()
+    assert client.get("/photos").json() == [up]
+
+def test_photo_image_is_served():
+    photo_id = client.post("/photos", files={"file": ("p.png", PNG_1x1, "image/png")}).json()["photo_id"]
+    assert client.get(f"/photos/{photo_id}/image").content == PNG_1x1
+
+def test_same_name_and_relationship_is_409():
+    client.post("/people", json={"name": "David", "relationship": "grandson"})
+    r = client.post("/people", json={"name": " david", "relationship": "Grandson"})
+    assert r.status_code == 409
+
+def test_unlabelling_a_face():
+    # Assign a face to David, then assign the same face to null.
+    # Expect 204 both times, and David's face_count back to 0.
+
+def test_one_person_once_per_photo_is_409():
+    # Patch the app's face_embedder.detect_faces to return the fake's one face twice:
+    #   lambda image: FakeFaceEmbedder().detect_faces(image) * 2
+    # Upload one photo, then assign both of its faces to David.
+    # Expect 204, then 409.
+
+def test_recordings_can_be_listed_and_one_deleted():
+    # Upload make_wav(10.0) twice for David; GET /people/{id}/voice lists two recordings.
+    # DELETE the first one: 204. The list then has one recording. Deleting it again: 404.
+
+def test_patch_rejects_an_overlong_name():
+    pid = client.post("/people", json={"name": "David", "relationship": "grandson"}).json()["id"]
+    assert client.patch(f"/people/{pid}", json={"name": "x" * 81}).status_code == 422
 ```
 
   Write out the bodies of the tests that are given only as comments, exactly as the comments
@@ -207,7 +257,7 @@ def test_unknown_person_is_404():
   - Store state in dictionaries keyed by id, and give the app a `reset()` function for the test
     fixture.
   - Check the WAV format with the `wave` module from the standard library.
-- [ ] **Step 4: Run `uv run pytest tests/test_setup_api.py -v`.** Expected: 7 passed.
+- [ ] **Step 4: Run `uv run pytest tests/test_setup_api.py -v`.** Expected: 14 passed.
 - [ ] **Step 5: Commit:** `git add contract mock tests pyproject.toml uv.lock` then
   `git commit -m "contract: setup routes and mock server"`
 
@@ -296,7 +346,7 @@ def test_mock_live_bad_message_keeps_socket_open():   # Review Focus 5
 - [ ] **Step 3: Implement `contract/live.py`, add `/live` to `mock/app.py`, and write
   `contract/README.md`.** Generate each JSON example in the README with `model_dump_json()` from
   the models, so the examples always match the code.
-- [ ] **Step 4: Run the whole suite with `uv run pytest -v`.** Expected: 17 passed.
+- [ ] **Step 4: Run the whole suite with `uv run pytest -v`.** Expected: 24 passed.
 - [ ] **Step 5: Run `uv run uvicorn mock.app:app --port 8000`, then
   `curl -s localhost:8000/people`.** Expected: `[]`
 - [ ] **Step 6: Commit:** `git add contract mock tests` then

@@ -280,7 +280,9 @@ One request per visit (per person present), or per note. Not one per sentence.
 - `Person` gains `small_context: str` (empty string until the first update).
 - `PresentPerson` (in `/live` messages) gains `small_context: str`, so the Live page can show the
   card without another request.
-- `PersonPatch` gains `small_context: str | None`, for fixing the card by hand.
+- `PersonPatch` gains `small_context: str | None`, for fixing the card by hand. A card fixed by
+  hand is also stored as a `notes` fact, so the next Gemini rewrite starts from the family's
+  correction. *(Amended 2026-10-24 by David.)*
 - New routes:
 
 | Method and path | Body | Returns |
@@ -288,9 +290,22 @@ One request per visit (per person present), or per note. Not one per sentence.
 | `POST /people/{id}/notes` | `{text}` | `Person` with the updated card; 404 for an unknown person |
 | `POST /people/{id}/conversation` | `{lines: [{speaker, text}]}` | `Person` with the updated card; 404 for an unknown person |
 | `GET /people/{id}/facts` | — | `list[Fact]` (`id, text, source, created_at`); 404 for an unknown person |
+| `DELETE /people/{id}/facts/{fact_id}` | — | `204`; 404 if that person has no such fact. The card isn't rewritten automatically. *(Amended 2026-10-24 by David.)* |
 
 The mock server makes no network calls. For `notes` and `conversation` it stores the text as one
 fact and sets a fixed placeholder card.
+
+*Amended 2026-10-24 by David, from the database plan
+(`docs/superpowers/plans/2026-10-24-database.md`).* The contract plan also gains:
+- `GET /photos` and `GET /photos/{id}/image`, so the setup page can show saved photos after a
+  reload;
+- `GET /people/{id}/voice` and `DELETE /people/{id}/voice/{voice_sample_id}`, to remove one bad
+  recording;
+- `AssignIn.person_id: int | None`, so a wrong face label can be undone;
+- 409 for a second person with the same name and relationship, and for labelling one person on
+  two faces of the same photo;
+- `EmbedderSpec.model`, so samples from different models are never compared;
+- length limits on `PersonPatch`.
 
 ## Team split
 
