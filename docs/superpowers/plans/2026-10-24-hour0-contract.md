@@ -23,6 +23,7 @@ python-multipart.
 ## Global Constraints
 
 - Everything stays local: no network calls in contract code or the mock. *(Spec: anti-goals.)*
+  The real Gemini call lives in the context owner's code, outside the contract and the mock.
 - The face and voice owners decide model internals. The contract fixes only: the embedding as a
   list of floats, its `dimensions`, its `metric` (`"l2"` or `"cosine"`), and its `cutoff`.
   *(Spec: "What this design fixes about those two parts.")*
@@ -128,9 +129,14 @@ def test_fake_face_embedding_is_deterministic():
 **Interfaces:**
 - Consumes: `Box`, `FakeFaceEmbedder`, `FakeVoiceEmbedder` and `make_wav` from Task 1.
 - Produces, in `contract/setup_api.py`:
-  - `Person`: `id: int, name: str, relationship: str, face_count: int, has_voice: bool`
+  - `Person`: `id: int, name: str, relationship: str, face_count: int, has_voice: bool,
+    small_context: str` (empty string until the first context update)
   - `PersonIn`: `name: str` (1–80 characters), `relationship: str` (1–40 characters)
-  - `PersonPatch`: `name: str | None, relationship: str | None`
+  - `PersonPatch`: `name: str | None, relationship: str | None, small_context: str | None`
+  - `NotesIn`: `text: str`
+  - `TranscriptLine`: `speaker: str, text: str`
+  - `ConversationIn`: `lines: list[TranscriptLine]`
+  - `Fact`: `id: int, text: str, source: Literal["conversation", "notes"], created_at: datetime`
   - `DetectedFace`: `face_id: int, box: Box, person_id: int | None`
   - `PhotoOut`: `photo_id: int, width: int, height: int, faces: list[DetectedFace]`
   - `AssignIn`: `person_id: int`
@@ -146,6 +152,12 @@ def test_fake_face_embedding_is_deterministic():
 | `POST /photos` | multipart `file` (JPEG or PNG) | `201 PhotoOut` |
 | `POST /faces/{face_id}/assign` | `AssignIn` | `204`; 404 for an unknown face or person |
 | `POST /people/{id}/voice` | multipart `file` (WAV, 16 kHz, mono, 16-bit) | `201 VoiceOut`; 422 for a wrong format; 404 for an unknown person |
+| `POST /people/{id}/notes` | `NotesIn` | `Person` with the updated card; 404 for an unknown person |
+| `POST /people/{id}/conversation` | `ConversationIn` | `Person` with the updated card; 404 for an unknown person |
+| `GET /people/{id}/facts` | — | `list[Fact]`; 404 for an unknown person |
+
+  The mock makes no Gemini call. For `notes` and `conversation` it stores the text as one fact and
+  sets `small_context` to a fixed placeholder card.
 
 - [ ] **Step 1: Write the failing tests** using `TestClient(mock.app.app)`:
 
@@ -155,7 +167,7 @@ def test_create_and_list_person():
     assert r.status_code == 201
     assert client.get("/people").json() == [
         {"id": r.json()["id"], "name": "David", "relationship": "grandson",
-         "face_count": 0, "has_voice": False}]
+         "face_count": 0, "has_voice": False, "small_context": ""}]
 
 def test_photo_then_assign_counts_face():
     pid = client.post("/people", json={"name": "David", "relationship": "grandson"}).json()["id"]
@@ -219,7 +231,7 @@ def test_unknown_person_is_404():
     - The frontend sends no audio while the app is speaking. That is how the mic gets muted, and
       it needs no message of its own.
   - **From the server:** `ServerMessage = Present | Arrived | Unknown | WhoAnswer | Error`
-    - `PresentPerson`: `person_id: int, name: str, relationship: str`
+    - `PresentPerson`: `person_id: int, name: str, relationship: str, small_context: str`
     - `TrackedFace`: `box: Box, state: Literal["named", "unsure", "unknown"], person_id: int | None`
     - `Present`: `type="present"`, `people: list[PresentPerson]`, `faces: list[TrackedFace]`. Sent
       after every frame, for the on-screen labels.

@@ -5,7 +5,8 @@
 People with dementia often can't recognize family members, and that is distressing for everyone in
 the room. The app tells the patient, quietly and in the moment, who they are talking to: *"That's
 David, your grandson."* A family member sets it up from a family photo, and the app then recognizes
-each person by face and by voice.
+each person by face and by voice. It also shows a short note about each person on screen, kept up
+to date from their conversations with Gemini (see *Person context with Gemini*).
 
 This is a 24-hour hackathon build by a team of four (Python plus web). The demo runs on a laptop
 using its built-in camera and microphone.
@@ -34,14 +35,19 @@ a LICENSE, so everything below is new.
  │  └──────────────────────────────┘           │    unknown only after a few sec  │ │
  │                                             │ F7 Live screen: big text, button │ │
  │                                             └──────────────────────────────────┘ │
+ │                                                                                  │
+ │  CONTEXT (Gemini, text only)                                                     │
+ │  F8 After a visit: speaker-labeled transcript → new facts + a short card         │
+ │     Family member types notes → same path · card shows when they're recognized   │
  └──────────────────────────────────────────────────────────────────────────────────┘
  ┌──────────────────────────────────────────────────────────────────────────────────┐
  │  OUT OF SCOPE (future)                                                           │
- │  learn voices during conversations · personal notes · visit log ·                │
+ │  learn voices during conversations · visit log ·                                 │
  │  ask "who is this?" out loud · phone / wearable · cloud · accounts               │
  └──────────────────────────────────────────────────────────────────────────────────┘
  ┌──────────────────────────────────────────────────────────────────────────────────┐
- │  NEVER: say a wrong name · repeat or alarm · send photos or voices off the laptop│
+ │  NEVER: say a wrong name · repeat or alarm · send photos or audio off the laptop │
+ │         · show deaths, illness or bad news on the context card                   │
  └──────────────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -70,11 +76,14 @@ How the parts connect, and who owns each one:
                                         │ │ Postgres + pgvector            │ │
                                         │ │ people · photos ·              │ │
                                         │ │ face_samples · voice_samples   │ │
+                                        │ │ facts · small_context          │ │
                                         │ │ closest match under the cutoff │ │
                                         │ └────────────────────────────────┘ │
                                         └────────────────────────────────────┘
    Everything runs on the one demo laptop. The face and voice owners design their own parts;
    the shared contract fixes only what they hand the backend.
+   The one exception is Gemini: after a visit the backend sends it text (never images or audio)
+   and stores what comes back. Nothing on the live recognition path calls it.
 ```
 
 ## Goals
@@ -86,11 +95,15 @@ How the parts connect, and who owns each one:
   **out loud**, with the same text shown on screen.
 - **It announces each person once when they arrive**, and the patient can ask "who is this?" at any
   time and hear the answer again.
+- When a known person is recognized, the screen also shows a **short context card** about them,
+  for example *"David is your grandson. He just moved to Pittsburgh and works as a nurse."*
+- Gemini keeps that card up to date from each conversation and from notes a family member types.
 
 ## Non-goals (for this build)
 
 - Learning voices from conversations (named as a future use case).
-- Anything beyond name and relationship: no personal notes, no visit log.
+- A visit log or a full history view. *(Amended: short per-person context is now in scope. See
+  Person context with Gemini.)*
 - Phones, wearables, cloud hosting, user accounts, and multiple patients.
 
 ## Anti-goals (it would count as a failure even if it technically works)
@@ -98,7 +111,11 @@ How the parts connect, and who owns each one:
 - **Saying the wrong name.** Telling grandma that a stranger is her grandson is worse than saying
   nothing. When the app isn't confident, it treats the person as unknown. *(My call.)*
 - Repeating announcements, or using an alarming tone. It speaks once per arrival, calmly.
-- Sending family photos or voices off the laptop. Everything stays local. *(My call.)*
+- Sending family photos or audio off the laptop. Images and audio stay local. *(My call.)*
+  *(Amended: text may leave the laptop. Speaker-labeled transcripts and typed notes go to Gemini,
+  and nothing else does.)*
+- **Showing upsetting facts on the context card.** Deaths, illness, diagnoses and bad news never
+  appear on it, even if they came up in conversation.
 
 ## Use cases
 
@@ -113,10 +130,13 @@ How the parts connect, and who owns each one:
 | UC7 | Patient | An unknown person appears | The app stays silent while unsure. Once the face has been clearly visible and unmatched for several seconds, it says gently: "I don't recognize this person." |
 | UC8 | Family member | Add more photos of an enrolled person | The extra face samples make recognition more reliable |
 | UC9 | Patient | Several known people are present | Each is announced on arrival. "Who is this?" names everyone present: "That's David, your grandson, and Maria, your daughter." |
+| UC10 | Patient | A known person is recognized | Their short context card shows on screen next to their name |
+| UC11 | Patient | A visit ends | Gemini reads the speaker-labeled transcript, adds any new facts about that person, and updates their card |
+| UC12 | Family member | Types notes about a person | Gemini turns the notes into facts and updates the card |
+| UC13 | Family member | Opens a person's page | They can read every stored fact, and fix the card by hand if it is wrong |
 
 **Future use cases (not built now):**
 - Learning voices on the fly during conversations.
-- A short personal note per person.
 - A visit log ("David visited last Sunday").
 - Asking "who is this?" out loud instead of pressing a button.
 - Running on a phone or wearable.
@@ -148,7 +168,10 @@ How the parts connect, and who owns each one:
    browser voice, so names never go to a cloud service, and it mutes the mic while speaking so the
    app doesn't hear itself.
 7. **Live screen.** Large, high-contrast text: the camera feed with a name label, plus a big
-   "Who is this?" button.
+   "Who is this?" button. A recognized person's short context card shows beside their name.
+8. **Person context.** Each person has a large context (every fact stored about them) and a small
+   context (the short card). Gemini adds facts after each visit and from typed notes, then
+   rewrites the card. Details are in *Person context with Gemini*.
 
 ## How it gets made (my calls, all changeable)
 
@@ -169,7 +192,10 @@ How the parts connect, and who owns each one:
     installing Postgres and pgvector with brew.)*
   - Python talks to it with `psycopg` 3 and the `pgvector` package.
   - Tables:
-    - `people`: id, name, relationship, created_at
+    - `people`: id, name, relationship, created_at, `small_context` (the short card; empty until
+      the first update)
+    - `facts`: id, person_id, text, source (`conversation` or `notes`), created_at. This is the
+      large context. Rows are only ever added, never rewritten.
     - `photos`: id, file path, uploaded_at
     - `face_samples`: id, person_id, photo_id, the face's box in the photo, and an `embedding`
       vector sized to whatever the face owner's model produces
@@ -181,9 +207,92 @@ How the parts connect, and who owns each one:
   - A result counts only if its distance is under the owner's cutoff. Anything else is treated as
     *not sure yet*.
   - No index: an exact scan over a few hundred rows is instant.
-- **Pages:** Setup (people, photo upload, voice recording) and Live (the patient's view).
+- **Pages:** Setup (people, photo upload, voice recording, notes and facts per person) and Live
+  (the patient's view).
 
-## Team split (4 people)
+## Person context with Gemini
+
+*Amendment, 2026-10-24, agreed by the team.* Each person gets a short card on screen that stays
+up to date from their conversations.
+
+### Two contexts per person
+
+- **Large context:** every fact we know about the person, stored as rows in the `facts` table.
+  Gemini only ever adds rows. It never rewrites old ones, so nothing is lost by summarizing a
+  summary, and one bad fact can be deleted without touching the rest.
+- **Small context:** the short card, stored in `people.small_context`. It is at most two short
+  sentences in plain words, sized to be read at a glance. It is rewritten from the facts each time
+  they change.
+
+### Two inputs, one path
+
+1. **After a visit.** The visit ends when someone presses "End visit" (or after a timeout the
+   builder picks). The backend sends the **speaker-labeled transcript of the whole conversation**,
+   for example `Patient: Did you move?` / `David: Yeah, last month.` Keeping both sides means
+   answers stay attached to their questions. If several known people were in the visit, the same
+   transcript is sent once for each of them.
+2. **Typed notes.** A family member types notes about a person on the Setup page.
+
+Both make the same Gemini call.
+
+### The Gemini call
+
+One request per visit (per person present), or per note. Not one per sentence.
+
+- **Input:** the person's name and relationship, their existing facts, and the new transcript or
+  notes.
+- **Output:** JSON, enforced with Gemini's structured output (`response_mime_type:
+  "application/json"` plus `response_json_schema`):
+
+  ```json
+  {
+    "new_facts": ["Moved to Pittsburgh last month", "Works as a nurse"],
+    "small_context": "David is your grandson. He just moved to Pittsburgh and works as a nurse."
+  }
+  ```
+
+- The backend adds `new_facts` to the `facts` table and overwrites `small_context`.
+- **Model:** a Gemini Flash model. This is extraction and short summarizing, so a fast, cheap
+  model is enough. Check the current model list when wiring it up.
+
+**Rules the prompt must state:**
+- Only add facts about this person and their life, not about the patient.
+- Skip facts already in the existing list. Conversations with someone with dementia repeat a lot,
+  and without this rule the same fact gets added again every visit.
+- When a new fact replaces an old one (moved, changed jobs), the card uses the newer one.
+- Never put deaths, illness, diagnoses or bad news on the card.
+- Keep the card to two short sentences.
+
+### Rules for the rest of the system
+
+- **Gemini is never called at recognition time.** The Live page shows `small_context` straight
+  from the database, so the card appears instantly and still works if the wifi drops.
+- **Gemini never writes the spoken announcement.** That stays `That's {name}, your
+  {relationship}.`, composed by the backend.
+- **If the call fails or returns bad JSON,** keep the old card, add no facts, and log it.
+- **Only text leaves the laptop.** Photos and audio never do.
+- **The API key lives in a gitignored `.env`** as `GEMINI_API_KEY`. The repo is public.
+- **A wrong card gets fixed by a person.** A family member can edit `small_context` directly, or
+  add a note that corrects it.
+
+### Contract additions
+
+- `Person` gains `small_context: str` (empty string until the first update).
+- `PresentPerson` (in `/live` messages) gains `small_context: str`, so the Live page can show the
+  card without another request.
+- `PersonPatch` gains `small_context: str | None`, for fixing the card by hand.
+- New routes:
+
+| Method and path | Body | Returns |
+|---|---|---|
+| `POST /people/{id}/notes` | `{text}` | `Person` with the updated card; 404 for an unknown person |
+| `POST /people/{id}/conversation` | `{lines: [{speaker, text}]}` | `Person` with the updated card; 404 for an unknown person |
+| `GET /people/{id}/facts` | — | `list[Fact]` (`id, text, source, created_at`); 404 for an unknown person |
+
+The mock server makes no network calls. For `notes` and `conversation` it stores the text as one
+fact and sets a fixed placeholder card.
+
+## Team split
 
 The API contract gets agreed in the first hour, then each person works on their own part. The face
 and voice owners hand David lists of numbers, and David's database does the matching:
@@ -194,6 +303,7 @@ and voice owners hand David lists of numbers, and David's database does the matc
 | 2 — Voice | Voice recognition, designed and structured by its owner | For any audio clip: its embedding |
 | 3 — David: backend, database, context | The database of people, their face and voice samples, and their context (name and relationship); FastAPI routes and WebSocket; tracking everyone present, the not-sure-yet wait, the once-per-arrival logic | A `/live` socket that sends `arrived` and `unknown` events (name, relationship), plus the current list of people present |
 | 4 — Frontend | Setup page (photo, click to label, record voice) and Live page (video, label, speech, button) | The clickable demo |
+| Context (Gemini) | The Gemini call, its prompt and JSON schema, and the `notes`, `conversation` and `facts` routes. The `facts` table and `small_context` column are added to David's database. | Facts and an updated card for any transcript or note |
 
 **Rough timeline:**
 - **Hours 0–1:** contract and repo skeleton.
@@ -222,6 +332,13 @@ and voice owners hand David lists of numbers, and David's database does the matc
 7. Grandma (the operator) talks, and the app says nothing about her voice.
 8. Run the face and voice matching on their own against saved sample images and audio clips, so
    the thresholds can be tuned before the event.
+9. Type a note for a teammate. Their card updates, and the next time they walk in, it shows beside
+   their name.
+10. A teammate chats with "grandma" and mentions something new, then someone presses "End visit."
+    The new fact appears in their facts list and the card reflects it.
+11. Repeat the same fact in a second visit. It is not added a second time.
+12. Mention something sad in a conversation (staged). It never appears on the card.
+13. Turn off the wifi. Recognition still shows each person's existing card.
 
 ## After approval
 
