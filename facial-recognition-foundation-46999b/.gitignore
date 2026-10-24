@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+venv/
+
+# Face data (photos, encodings, annotated output) of real people stays local:
+# ignore everything under data/ except the README that explains the layout.
+data/*
+!data/known_faces/
+data/known_faces/*
+!data/known_faces/README.md
+annotated/
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
