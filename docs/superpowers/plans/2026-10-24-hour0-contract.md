@@ -18,7 +18,7 @@ before the others are done.
 **Tech Stack:** Python 3.12, uv, Pydantic v2, FastAPI, pytest, httpx (for FastAPI's TestClient),
 python-multipart.
 
-**Spec:** `docs/superpowers/specs/2026-10-24-whos-this-design.md`
+**Spec:** `docs/superpowers/specs/2026-10-24-nametags-design.md`
 
 ## Global Constraints
 
@@ -53,7 +53,7 @@ python-multipart.
 ### Task 1: Embedder interfaces, fakes and checkers
 
 **Files:**
-- Create: `pyproject.toml` (uv project `whos-this`, packages `contract` and `mock`, dev dependency
+- Create: `pyproject.toml` (uv project `nametags`, packages `contract` and `mock`, dev dependency
   `pytest`)
 - Create: `contract/__init__.py`, `contract/embedders.py`, `contract/fakes.py`
 - Test: `tests/test_embedders.py`
