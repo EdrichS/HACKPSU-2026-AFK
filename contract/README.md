@@ -69,7 +69,7 @@ It makes no network calls.
 | `GET /photos/{id}/image` | — | the stored image; 404 for an unknown photo |
 | `DELETE /photos/{id}` | — | `204`, the photo and every face in it are gone; 404 for an unknown photo *(real backend)* |
 | `POST /faces/{face_id}/assign` | `AssignIn` (`person_id`, or null to unlabel) | `204`; 404 for an unknown face or person; 409 if that person is already labelled on another face in this photo |
-| `POST /people/{id}/voice` | multipart `file` (WAV) | `201 VoiceOut`; 422 for a wrong format or a recording under 1 second; 404 for an unknown person |
+| `POST /people/{id}/voice` | multipart `file` (WAV) | `201 VoiceOut` with the first sample's id; the real backend stores the recording and each 4-second slice of it as samples; 422 for a wrong format or a recording under 1 second; 404 for an unknown person |
 | `GET /people/{id}/voice` | — | `list[VoiceSample]`, oldest first; 404 for an unknown person |
 | `GET /people/{id}/voice/{voice_sample_id}/audio` | — | the recording (WAV); 404 if that person has no such recording *(real backend)* |
 | `DELETE /people/{id}/voice/{voice_sample_id}` | — | `204`; 404 if that person has no such recording |

@@ -325,13 +325,20 @@ def upload_voice(request: Request, person_id: int, file: UploadFile) -> VoiceOut
         check_wav(data)
     except ValueError as e:
         raise HTTPException(422, str(e)) from None
-    embedding = voice_embedder.embed_voice(data)
-    path = _new_file(request, "voice", "wav", data)
+    from backend.enroll_api import voice_clips
+
+    clips = voice_clips(data, voice_embedder)  # the whole recording, then each 4-second slice
+    written, sample_id = [], None
     try:
         with request.app.state.pool.connection() as conn:
-            sample_id = voice.add_voice(conn, person_id, str(path), embedding, voice_embedder.spec.model)
+            for clip, embedding in clips:
+                path = _new_file(request, "voice", "wav", clip)
+                written.append(path)
+                sid = voice.add_voice(conn, person_id, str(path), embedding, voice_embedder.spec.model)
+                sample_id = sample_id if sample_id is not None else sid
     except BaseException:
-        path.unlink(missing_ok=True)
+        for path in written:
+            path.unlink(missing_ok=True)
         raise
     return VoiceOut(voice_sample_id=sample_id)
 

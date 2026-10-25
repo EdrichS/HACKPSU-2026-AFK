@@ -104,14 +104,16 @@ def test_one_person_once_per_photo_is_409(client, app_module, monkeypatch):
 
 def test_recordings_can_be_listed_and_one_deleted(client):
     pid = add_person(client)
-    assert upload_voice(client, pid).status_code == 201
+    first = upload_voice(client, pid)
+    assert first.status_code == 201
     assert upload_voice(client, pid).status_code == 201
     recordings = client.get(f"/people/{pid}/voice").json()
-    assert len(recordings) == 2
-    first = recordings[0]["voice_sample_id"]
-    assert client.delete(f"/people/{pid}/voice/{first}").status_code == 204
-    assert len(client.get(f"/people/{pid}/voice").json()) == 1
-    assert client.delete(f"/people/{pid}/voice/{first}").status_code == 404
+    # The mock stores one sample per upload; the real backend also stores each 4-second slice.
+    assert len(recordings) >= 2 and recordings[0]["voice_sample_id"] == first.json()["voice_sample_id"]
+    sample = recordings[0]["voice_sample_id"]
+    assert client.delete(f"/people/{pid}/voice/{sample}").status_code == 204
+    assert len(client.get(f"/people/{pid}/voice").json()) == len(recordings) - 1
+    assert client.delete(f"/people/{pid}/voice/{sample}").status_code == 404
 
 
 def test_patch_rejects_an_overlong_name(client):

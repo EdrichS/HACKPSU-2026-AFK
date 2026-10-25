@@ -99,6 +99,20 @@ def prepare_voice(embedder, wav: bytes) -> tuple[list[tuple[bytes, list[float]]]
     return prepared, seconds, speech_seconds
 
 
+def voice_clips(wav: bytes, embedder) -> list[tuple[bytes, list[float]]]:
+    """For POST /people/{id}/voice: the recording trimmed to its speech, then each WINDOW-second
+    slice, each with its embedding. A recording too short to trim is stored as it is."""
+    samples = decode_wav(wav)
+    speech = trim_speech(samples)
+    if len(speech) < MIN_UTTERANCE * SAMPLE_RATE:
+        speech = samples
+    prepared = []
+    for clip in [speech] + windows(speech, WINDOW):
+        data = encode_wav(clip)
+        prepared.append((data, embedder.embed_voice(data)))
+    return prepared
+
+
 @router.post("/check/photo")
 def check_photo(request: Request, file: UploadFile) -> PhotoCheck:
     """Is this a usable enrollment photo: exactly one clear face? For the wizard's per-shot feedback."""

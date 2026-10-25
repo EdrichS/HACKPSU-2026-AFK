@@ -57,7 +57,9 @@ def test_recording_twice_keeps_both_files(backend_client, tmp_path):
     for _ in range(2):
         r = backend_client.post(f"/people/{pid}/voice", files={"file": ("v.wav", make_wav(10.0), "audio/wav")})
         assert r.status_code == 201
-    assert len(list(tmp_path.rglob("*.wav"))) == 2
+    samples = backend_client.get(f"/people/{pid}/voice").json()
+    assert len(samples) >= 2  # each upload: the recording and its 4-second slices
+    assert len(list(tmp_path.rglob("*.wav"))) == len(samples)  # one file per sample, nothing lost or orphaned
 
 
 def test_removing_a_person_deletes_their_recordings(backend_client, tmp_path):

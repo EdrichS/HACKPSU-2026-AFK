@@ -29,3 +29,16 @@ def test_deleting_a_person_takes_their_sign_up_photos_with_them(backend_client, 
     assert backend_client.delete(f"/people/{pid}").status_code == 204
     assert backend_client.get("/photos").json() == []
     assert list(stored.glob("*")) == []
+
+
+def test_a_recording_is_stored_with_its_slices(backend_client, backend_module, monkeypatch):
+    """One long recording gives several samples, as /enroll does, so matching has several views of the voice."""
+    import backend.enroll_api as api
+    from contract.fakes import make_wav
+
+    monkeypatch.setattr(api, "trim_speech", lambda samples: samples)  # silence would trim to nothing
+    pid = backend_client.post("/people", json={"name": "Maya", "relationship": "granddaughter"}).json()["id"]
+    r = backend_client.post(f"/people/{pid}/voice", files={"file": ("v.wav", make_wav(10.0), "audio/wav")})
+    assert r.status_code == 201, r.text
+    samples = backend_client.get(f"/people/{pid}/voice").json()
+    assert len(samples) >= 3 and samples[0]["voice_sample_id"] == r.json()["voice_sample_id"]

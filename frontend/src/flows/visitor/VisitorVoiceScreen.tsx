@@ -40,10 +40,10 @@ export function VisitorVoiceScreen() {
         {/* The design copy says "her glasses"; the name is used instead, since pronouns aren't collected. */}
         <TitleBlock
           title="Read this out loud"
-          lead={`Read at your normal pace, like you're talking to ${rose}. This teaches ${possessive(rose)} glasses what your voice sounds like.`}
+          lead={`Read the whole thing at your normal pace, like you're talking to ${rose}. It takes about half a minute, and it teaches ${possessive(rose)} glasses what your voice sounds like.`}
         />
         <VoicePrompt
-          text={`Hi ${rose}, it's me. I'm reading this so your glasses can learn the sound of my voice. Most weekends I go for long walks, try a new recipe, and catch up with family. If you ever forget my name, listen for this voice and you'll know it's me.`}
+          text={`Hi ${rose}, it's me. I'm reading this out loud so your glasses can learn the sound of my voice. Yesterday I walked down to the harbour, bought three ripe peaches and a loaf of rye bread, and watched the fishing boats come in. Do you remember the blue kitchen in the old house, and the radio that never quite tuned in? On Thursday I'll bring the photos from June, and we can look through them together. Whenever you hear this voice, you'll know it's me.`}
         />
         <Recorder recorder={recorder} />
       </FormMain>

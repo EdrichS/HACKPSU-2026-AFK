@@ -58,7 +58,7 @@ export function GlassesUserVoiceScreen() {
       <FormMain width={780}>
         <TitleBlock title="Read this out loud" lead="This helps your glasses tell your voice apart from the people around you." />
         <VoicePrompt
-          text={`Hello, this is ${name}. I'm reading this so my glasses can learn what my own voice sounds like. On quiet mornings I like to sit by the window with a warm cup of tea and watch the street wake up. When my family calls, I want to catch every word they say.`}
+          text={`Hello, this is ${name}. I'm reading this out loud so my glasses can learn what my own voice sounds like. On quiet mornings I sit by the window with a warm cup of tea and watch the street wake up: the paper boy, the number seven bus, a small dog chasing the pigeons. I still enjoy crossword puzzles, jazz on the radio and a good long phone call. When my family visits, I want to catch every single word they say.`}
         />
         <Recorder recorder={recorder} />
         {failure && <Notice>{failure}</Notice>}
