@@ -1,0 +1,19 @@
+services:
+  db:
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_USER: nametags
+      POSTGRES_PASSWORD: nametags
+      POSTGRES_DB: nametags
+    ports:
+      - "127.0.0.1:5433:5432"   # this laptop only
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U nametags -d nametags"]
+      interval: 2s
+      timeout: 3s
+      retries: 15
+
+volumes:
+  pgdata:
