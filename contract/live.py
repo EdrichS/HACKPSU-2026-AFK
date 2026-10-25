@@ -31,7 +31,13 @@ class Who(BaseModel):
     type: Literal["who"] = "who"
 
 
-ClientMessage = Annotated[Frame | Audio | Who, Field(discriminator="type")]
+class EndVisit(BaseModel):
+    """The visit is over: summarize it into each visitor's facts and card."""
+
+    type: Literal["end_visit"] = "end_visit"
+
+
+ClientMessage = Annotated[Frame | Audio | Who | EndVisit, Field(discriminator="type")]
 
 
 # From the server.
@@ -41,6 +47,7 @@ class PresentPerson(BaseModel):
     name: str
     relationship: str
     small_context: str
+    facts: list[str] = []  # the newest few facts, for the bullets beside the name
 
 
 class TrackedFace(BaseModel):
@@ -74,19 +81,50 @@ class WhoAnswer(BaseModel):
     text: str
 
 
+class Caption(BaseModel):
+    """One finished utterance, transcribed, with who said it. Live captions on screen."""
+
+    type: Literal["caption"] = "caption"
+    person_id: int | None  # None when the voice is the user's (or nobody known)
+    speaker: str
+    text: str
+    start: float  # seconds of audio since the connection opened
+    end: float
+
+
+class Answer(BaseModel):
+    """Nova's reply to a question heard after the wake word; the frontend speaks `text`."""
+
+    type: Literal["answer"] = "answer"
+    question: str
+    text: str
+
+
+class VisitSaved(BaseModel):
+    """After end_visit: what was learned about one visitor and their new card."""
+
+    type: Literal["visit_saved"] = "visit_saved"
+    person_id: int
+    name: str
+    new_facts: list[str]
+    small_context: str
+
+
 class Error(BaseModel):
     type: Literal["error"] = "error"
     message: str
 
 
-ServerMessage = Annotated[Present | Arrived | Unknown | WhoAnswer | Error, Field(discriminator="type")]
+ServerMessage = Annotated[
+    Present | Arrived | Unknown | WhoAnswer | Caption | Answer | VisitSaved | Error, Field(discriminator="type")
+]
 
 _client_messages = TypeAdapter(ClientMessage)
 
 
-def parse_client(raw: str) -> Frame | Audio | Who:
+def parse_client(raw: str) -> Frame | Audio | Who | EndVisit:
     """Parse one client message; raises pydantic.ValidationError for anything else."""
-    return _client_messages.validate_json(raw)
+    return _client_messages.validate_json(raw)  # type: ignore[return-value]
 
 
 def who_text(people: list[PresentPerson]) -> str:

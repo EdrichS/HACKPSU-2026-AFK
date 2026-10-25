@@ -88,6 +88,12 @@ class Presence:
     def who_answer(self) -> str:
         return who_text(self.present())
 
+    @property
+    def unknown_confirmed(self) -> bool:
+        """An unmatched face has been in view long enough to count as unknown (not just unsure)."""
+        with self._lock:
+            return self._unknown_since is not None and self._clock() - self._unknown_since >= self.unknown_after
+
     def unknown_face(self, in_view: bool) -> str | None:
         """Call on every processed frame with whether an unmatched face is in view."""
         now = self._clock()

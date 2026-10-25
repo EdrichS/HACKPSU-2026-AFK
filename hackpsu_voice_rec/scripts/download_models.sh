@@ -3,6 +3,13 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 mkdir -p models
+WANT_ALL=0; WANT_TTS=1
+for arg in "$@"; do
+  case "$arg" in
+    --all) WANT_ALL=1 ;;
+    --no-tts) WANT_TTS=0 ;;  # the API container never speaks; the frontend does
+  esac
+done
 BASE_SPK="https://github.com/k2-fsa/sherpa-onnx/releases/download/speaker-recongition-models"  # (sic) typo is in the real tag
 BASE_ASR="https://github.com/k2-fsa/sherpa-onnx/releases/download/asr-models"
 
@@ -22,14 +29,16 @@ else
   echo "have  models/sherpa-onnx-moonshine-base-en-int8"
 fi
 # voice for `voicerec assistant` (Supertonic 3, ~130 MB download)
-if [ ! -d models/sherpa-onnx-supertonic-3-tts-int8-2026-05-11 ]; then
+if [ "$WANT_TTS" = 0 ]; then
+  echo "skip  models/sherpa-onnx-supertonic-3-tts-int8-2026-05-11 (--no-tts)"
+elif [ ! -d models/sherpa-onnx-supertonic-3-tts-int8-2026-05-11 ]; then
   echo "fetch models/sherpa-onnx-supertonic-3-tts-int8-2026-05-11"
   curl -sSL --fail -o models/supertonic.tar.bz2 "https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/sherpa-onnx-supertonic-3-tts-int8-2026-05-11.tar.bz2"
   tar xjf models/supertonic.tar.bz2 -C models && rm models/supertonic.tar.bz2
 else
   echo "have  models/sherpa-onnx-supertonic-3-tts-int8-2026-05-11"
 fi
-if [ "${1:-}" = "--all" ]; then
+if [ "$WANT_ALL" = 1 ]; then
   fetch "$BASE_SPK/wespeaker_en_voxceleb_CAM%2B%2B.onnx" "models/wespeaker_en_voxceleb_CAM++.onnx"
 fi
 ls -la models
