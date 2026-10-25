@@ -47,12 +47,3 @@
   padding: 14px 28px;
   font-size: 18px;
 }
-
-/* Bottom right, 44px in from the frame's edges at whatever scale it is drawn. The button stays a
-   44px touch target, so at the top right it would cover the info panel on a small display. */
-.who {
-  bottom: calc(44px * var(--hud-scale, 1));
-  right: calc(44px * var(--hud-scale, 1));
-  padding: 10px 18px;
-  font-size: 14px;
-}

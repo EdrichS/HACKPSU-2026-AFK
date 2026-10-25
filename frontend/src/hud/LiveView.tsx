@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef } from "react";
 import { useLocation } from "react-router";
 
 import { Captions } from "./Captions";
-import { HomeLink, StartButton, WhoButton } from "./Controls";
+import { HomeLink, StartButton } from "./Controls";
 import { DEMO_CAPTION, DEMO_DIRECTORY, DEMO_FACES, DEMO_PEOPLE } from "./demo";
 import { DemoScene } from "./DemoScene";
 import { FaceTags } from "./FaceTags";
@@ -63,7 +63,7 @@ function CameraLiveView({ settings }: { settings: HudSettings }) {
       controls={
         <>
           <HomeLink />
-          {session.started ? <WhoButton onClick={session.who} disabled={!session.connected} /> : <StartButton onClick={session.start} />}
+          {!session.started && <StartButton onClick={session.start} />}
         </>
       }
     >
