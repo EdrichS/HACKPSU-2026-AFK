@@ -4,11 +4,13 @@ import io
 import wave
 from datetime import datetime, timezone
 
-from fastapi import FastAPI, HTTPException, Response, UploadFile
+from fastapi import FastAPI, HTTPException, Response, UploadFile, WebSocket, WebSocketDisconnect
 from PIL import Image, UnidentifiedImageError
+from pydantic import ValidationError
 
 from contract.embedders import Box
 from contract.fakes import FakeFaceEmbedder, FakeVoiceEmbedder
+from contract.live import Arrived, Error, Frame, Present, PresentPerson, TrackedFace, Who, WhoAnswer, parse_client, who_text
 from contract.setup_api import (
     AssignIn,
     ConversationIn,
@@ -263,3 +265,29 @@ def delete_fact(person_id: int, fact_id: int) -> Response:
         raise HTTPException(404, "No such fact")
     del _facts[fact_id]
     return Response(status_code=204)
+
+
+@app.websocket("/live")
+async def live(ws: WebSocket) -> None:
+    """One fake person is "seen" on every frame and announced on the first one."""
+    await ws.accept()
+    sam = PresentPerson(person_id=0, name="Sam", relationship="friend", small_context=PLACEHOLDER_CARD)
+    announced = False
+    try:
+        while True:
+            raw = await ws.receive_text()
+            try:
+                message = parse_client(raw)
+            except ValidationError:
+                await ws.send_text(Error(message="Unrecognised message; expected frame, audio or who.").model_dump_json())
+                continue
+            if isinstance(message, Frame):
+                face = TrackedFace(box=Box(x=0, y=0, width=1, height=1), state="named", person_id=sam.person_id)
+                await ws.send_text(Present(people=[sam], faces=[face]).model_dump_json())
+                if not announced:
+                    await ws.send_text(Arrived(person=sam, via="face", text=who_text([sam])).model_dump_json())
+                    announced = True
+            elif isinstance(message, Who):
+                await ws.send_text(WhoAnswer(text=who_text([sam] if announced else [])).model_dump_json())
+    except WebSocketDisconnect:
+        return

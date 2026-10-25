@@ -1,7 +1,12 @@
 """Shared test data."""
 
+import base64
 import struct
 import zlib
+
+
+def b64(data: bytes) -> str:
+    return base64.b64encode(data).decode("ascii")
 
 
 def _png(width: int, height: int) -> bytes:
