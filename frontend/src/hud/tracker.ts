@@ -39,10 +39,10 @@ export interface TrackView {
 
 /** An unnamed face continues a track whose center is within this many face widths. */
 const MATCH_DISTANCE = 0.6;
-/** A face missing from this many snapshots in a row is gone (about 0.7 s at 3 a second). */
-const MAX_MISSED = 2;
-/** If snapshots stop coming at all, tracks go after this long. Above useLiveSession's frame timeout. */
-const TRACK_TTL_MS = 2500;
+/** A face missing from this many snapshots in a row is gone (about 1.3 s at 3 a second). */
+const MAX_MISSED = 4;
+/** If snapshots stop coming at all, tracks go after this long: a slow server must not blank the glasses. */
+const TRACK_TTL_MS = 4000;
 const SMOOTHING_MS = 120;
 const SIDES = ["x", "y", "width", "height"] as const;
 

@@ -90,11 +90,16 @@ def update_person(
 
 
 def delete_person(conn: psycopg.Connection, person_id: int) -> list[str] | None:
-    """Delete the person; return the audio files to delete after the commit, or None if missing.
+    """Delete the person; return the files to delete after the commit, or None if missing.
+
+    Their voice samples, facts and face samples go with them, and so does every photo that then
+    has no face left (a sign-up photo). A face left behind unlabelled would be as near the same
+    person's live face as their new samples if they sign up again, and the matcher would answer
+    "not sure" instead of naming them. A photo that also shows someone else is kept.
 
     The row lock makes any in-flight add_voice or assign_face for this person finish first, and
-    later ones fail. The audio paths are read in their own statement after the lock, so they
-    include a sample that committed while the lock was being waited for.
+    later ones fail. The paths are read in their own statements after the lock, so they include a
+    sample that committed while the lock was being waited for.
     """
     params = {"id": person_id}
     if conn.execute("SELECT id FROM people WHERE id = %(id)s FOR UPDATE", params).fetchone() is None:
@@ -102,6 +107,14 @@ def delete_person(conn: psycopg.Connection, person_id: int) -> list[str] | None:
     paths = [path for (path,) in conn.execute(
         "SELECT audio_path FROM voice_samples WHERE person_id = %(id)s ORDER BY id", params
     )]
-    # The foreign keys unlabel the person's faces and delete their voice samples and facts.
+    conn.execute("DELETE FROM face_samples WHERE person_id = %(id)s", params)
+    paths += [path for (path,) in conn.execute(
+        """
+        DELETE FROM photos ph
+        WHERE NOT EXISTS (SELECT 1 FROM face_samples f WHERE f.photo_id = ph.id)
+        RETURNING ph.file_path
+        """
+    )]
+    # The foreign keys delete the person's voice samples and facts.
     conn.execute("DELETE FROM people WHERE id = %(id)s", params)
     return paths

@@ -15,3 +15,17 @@ def test_deleting_a_photo_removes_its_faces_and_file(backend_client, tmp_path):
     assert list(tmp_path.rglob("*.png")) == []
     assert backend_client.delete(f"/photos/{photo['photo_id']}").status_code == 404
     assert backend_client.get(f"/photos/{photo['photo_id']}/image").status_code == 404
+
+
+def test_deleting_a_person_takes_their_sign_up_photos_with_them(backend_client, backend_module):
+    """A face left behind unlabelled would make the matcher unsure about the same person signing up again."""
+    from pathlib import Path
+
+    pid = backend_client.post("/people", json={"name": "Maya", "relationship": "granddaughter"}).json()["id"]
+    photo = backend_client.post("/photos", files={"file": ("p.png", PNG_1x1, "image/png")}).json()
+    backend_client.post(f"/faces/{photo['faces'][0]['face_id']}/assign", json={"person_id": pid})
+    stored = Path(backend_module.app.state.data_dir) / "photos"
+    assert len(list(stored.glob("*"))) == 1
+    assert backend_client.delete(f"/people/{pid}").status_code == 204
+    assert backend_client.get("/photos").json() == []
+    assert list(stored.glob("*")) == []

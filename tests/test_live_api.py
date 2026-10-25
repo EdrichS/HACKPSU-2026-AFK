@@ -258,3 +258,26 @@ def test_local_captions_when_the_cloud_session_fails(backend_client, backend_mod
             assert [m["type"] for m in receive_until(ws, "who_answer")] == ["who_answer"]
     finally:
         backend_module.app.state.speechmatics_key = None
+
+
+def test_a_named_face_keeps_its_name_through_an_unsure_frame(backend_client, monkeypatch, maya):
+    """A turned head, or a stranger's sample as near as the person's own, makes the matcher unsure
+    for a frame; the tag must not blink out for that."""
+    from live.faces import FaceIdentifier
+
+    real = FaceIdentifier.identify
+    calls = []
+
+    def flaky(self, face):
+        calls.append(1)
+        return real(self, face) if len(calls) == 1 else (None, "not_sure", 0.3)
+
+    monkeypatch.setattr(FaceIdentifier, "identify", flaky)
+    with backend_client.websocket_connect("/live") as ws:
+        ws.send_text(frame())
+        assert receive_until(ws, "present")[-1]["faces"][0]["state"] == "named"
+        for ts in (2, 3):
+            ws.send_text(frame(ts=ts))
+            present = receive_until(ws, "present")[-1]
+            assert present["faces"] == [{"box": {"x": 0, "y": 0, "width": 1, "height": 1}, "state": "named", "person_id": maya["id"]}]
+    assert len(calls) == 3

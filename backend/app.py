@@ -262,10 +262,10 @@ def update_person(request: Request, person_id: int, body: PersonPatch) -> Person
 @app.delete("/people/{person_id}", status_code=204)
 def delete_person(request: Request, person_id: int) -> Response:
     with request.app.state.pool.connection() as conn:
-        recordings = people.delete_person(conn, person_id)
-    if recordings is None:
+        files = people.delete_person(conn, person_id)
+    if files is None:
         raise NotFound("person")
-    for path in recordings:  # only after the commit
+    for path in files:  # recordings and now-faceless photos, only after the commit
         Path(path).unlink(missing_ok=True)
     return Response(status_code=204)
 

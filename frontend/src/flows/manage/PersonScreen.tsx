@@ -49,7 +49,7 @@ function RemoveSection({ person, onRemoved }: { person: Person; onRemoved: () =>
   return (
     <Section title="Remove">
       <p className={styles.help}>
-        Removing {person.name} deletes their voice recordings and notes and unlabels their faces (the photos stay, under Faces to label).
+        Removing {person.name} deletes their photos, voice recordings and notes. A photo that also shows someone else is kept.
         {isGlassesUser(person) && " This is the glasses user: the live view will have nobody to tell voices apart from until someone is set up again."}
       </p>
       <div className={styles.actions}>
