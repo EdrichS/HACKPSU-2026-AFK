@@ -19,7 +19,7 @@ A small data-science study behind Nametags, framed with CSCI 436 (Big Data Manag
 ## Why, what, how
 
 - **Why.** Recognizing someone you love is a moment of joy, and failing to is distressing for everyone in the room. A care-home worker we spoke with put affection and human connection at the center of dementia care ([interview themes](interview-themes.md)). Millions of people live with this: see the numbers below.
-- **What.** Designed for glasses, Nametags quietly tells a person with dementia who they're talking to. Today the laptop program says *"That's David, your grandson."* when someone arrives, and the live view says it when asked; the [suggested changes](suggested-changes.md) propose a gentler introduction. Nova, a voice assistant, answers questions such as who is here.
+- **What.** Designed for glasses, Nametags quietly tells a person with dementia who they're talking to. Today the laptop program introduces someone who arrives, *"Here's David, your grandson."*, and the live view answers *"That's David, your grandson."* when asked; the gentler introduction came from the [suggested changes](suggested-changes.md). Nova, a voice assistant, answers questions such as who is here.
 - **How.** Voice comes first, because faces fail with masks, time apart and poor light. It gives no name when unsure. Visitors enroll themselves, with consent. The live view shows captions.
 - **For whom.** Best fit: **mild Alzheimer's**, people who still know their family but can't find the name.
 - **What it isn't.** A treatment. Nametags doesn't slow dementia or replace medication. It is a non-drug, person-centered support that works alongside medical care. [Interview themes](interview-themes.md#4-what-nametags-does-not-claim) explains why that line matters.

@@ -1,9 +1,15 @@
 # Suggested changes
 
 > [!NOTE]
-> Version 4, October 25, 2026. Nothing here is built yet; the team decides what to build.
+> Version 4, October 25, 2026. Four of the changes are now built, listed below; the team decides what to build next.
 >
 > This page was written against `main` at commit `0245eb3`; PR #17 (`514e3f3`) has since fixed the three [issues found in the code](#issues-found-in-the-code) and changed some of what the suggestions describe (captions can now come from Speechmatics in the cloud, an unknown voice is no longer attributed to the wearer, and the glasses HUD speaks only when asked, not on arrival). So re-check each suggestion against the current code before building it.
+
+**Built since version 4:**
+- **Change 1's quick win:** an arrival is introduced, *"Here's David, your grandson."*; asked "Who is this?", the answer is still *"That's …"*. Cue first, then the name, is not built.
+- **Change 2:** when a name isn't registered, Nova says so and says who is here. Her first answer in a visit introduces her, and she never claims to be a person.
+- **Change 6, first part:** Gemini gets only the lines of voices the app recognized, and so does Nova's view of the conversation on the glasses HUD. The pause mode, the recording cue and the local-only default are not built.
+- **Change 9, the measuring:** each arrival is logged with how long naming took. Changing the two-sightings rule waits for those numbers.
 
 **What changed since version 3:**
 - A point a care-home worker made about helping people remember names, as a team member recalls it, rewrote change 1: cue first, then the name. It is designed against the code on `main`, but not built.
