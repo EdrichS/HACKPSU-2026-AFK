@@ -158,8 +158,9 @@ The real backend (`backend/`) adds, in both directions:
 - `answer` is Nova's reply when a caption started with the wake word.
 - `visit_saved` follows `end_visit`, once per visitor whose facts or card changed. Closing the
   socket also ends the visit and saves it, without these messages.
-- `present.people[].facts` carries each person's three newest facts, oldest first, for the bullets
-  beside a name. The mock sends it empty, and sends no `caption`, `answer` or `visit_saved`.
+- `present.people[].facts` carries each person's three newest facts, oldest first. The glasses show
+  the card (`small_context`) beside a name, not the facts; the field is there for a client that
+  wants them. The mock sends it empty, and sends no `caption`, `answer` or `visit_saved`.
 
 These examples were generated with `model_dump_json()` from the models in `live.py`. After
 changing the models, regenerate them.

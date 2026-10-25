@@ -4,9 +4,9 @@ import type { PresentPerson } from "../api/contract";
 import styles from "./InfoPanel.module.css";
 import { toBullets } from "./people";
 
-/** The liquid glass card about the person in view. Undesigned: hidden with no one, or no notes. */
+/** The liquid glass card about the person in view: their card (small_context). Undesigned: hidden with no one, or no card yet. */
 export const InfoPanel = memo(function InfoPanel({ person }: { person: PresentPerson | null }) {
-  const bullets = useMemo(() => (person ? toBullets(person.small_context, person.facts) : []), [person]);
+  const bullets = useMemo(() => (person ? toBullets(person.small_context) : []), [person]);
   if (!person || bullets.length === 0) return null;
   return (
     <aside className={styles.panel} aria-label={`About ${person.name}`}>
