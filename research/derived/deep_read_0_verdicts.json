@@ -1,0 +1,70 @@
+[
+  {
+    "id": "MED:36274581",
+    "verdict": "corrected",
+    "problems": [
+      "finding_for_nametags overstates the result. The abstract says 'Overall, participants anticipated the technology could reduce socializing-related stress now and in the future for both members of the care dyad.' That sums up the participants overall and says the aid could help. It does not say that all twenty dyads expected stress to fall.",
+      "finding_for_nametags says participants 'said' that visitors needing the app could limit usefulness. The abstract reports this as a result without saying who raised it: 'certain features of the memory aid (e.g., visitors must have the app), could limit utility'. It says separately that 'participants provided recommendations to enhance the tool'.",
+      "I could check only the abstract. The Europe PMC full-text service returned HTTP 500 for PMC9957785 on both of my tries (00:57 and 00:59 EDT, Oct 25), as it did for the original reader, so the paper body cannot show who raised the app limitation."
+    ],
+    "corrected_fields": {
+      "finding_for_nametags": "Twenty care dyads (persons with memory concerns and family caregivers) were presented a wearable technology-based social memory aid. Overall, participants anticipated that it could reduce socializing-related stress, now and in the future, for both members of the dyad. The abstract also reports that some features, such as visitors needing the app, could limit its utility, but it does not say whether participants or the authors raised this. Nametags identifies people by face and voice, so visitors need no app. It has the analogous limit that it can name only the people a family member has enrolled."
+    },
+    "checked_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:36274581%20AND%20SRC:MED&format=json&resultType=core"
+  },
+  {
+    "id": "MED:14511845",
+    "verdict": "corrected",
+    "problems": [
+      "finding_for_nametags says 'it was closely related to accusatory behavior' but leaves out the abstract's next sentence: 'Age, sex, cognitive impairment, stage of illness and functional disability were seen to confound the association between misidentification and accusatory behavior.' The caveat appears only in the limitation field, so the finding overstates the link when read alone.",
+      "finding_for_nametags says 'the study does not look at correcting it', but only the abstract was read. The abstract supports a narrower claim: its stated aims (prevalence, and the relationship to individual characteristics, behavioral and psychiatric manifestations and dementia-related domains) do not include correcting misidentification.",
+      "The step from the pooled 35% to 'truthful announcements and Nova answers can be expected to contradict what some wearers believe' is the reader's inference, but the finding does not say so. The abstract does not give a rate for misidentifying people alone, which is the type a truthful name would contradict."
+    ],
+    "corrected_fields": {
+      "finding_for_nametags": "In a retrospective study of 116 dementia patients, 35% had misidentification, which the study characterized as misidentification of people, the 'phantom boarder', the 'mirror image' or the 'TV sign'. Misidentification was closely related to accusatory behavior, although age, sex, cognitive impairment, stage of illness and functional disability confounded that association. The authors conclude that misidentification is a frequent component of dementia, so truthful announcements and Nova answers may contradict what some wearers believe (tension 1; an inference, not tested). The abstract does not give the rate for misidentifying people alone, and its stated aims do not include correcting misidentification."
+    },
+    "checked_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:14511845%20AND%20SRC:MED&format=json&resultType=core"
+  },
+  {
+    "id": "MED:27916672",
+    "verdict": "corrected",
+    "problems": [
+      "method_and_sample says '25 AD patients', but the abstract reads 'Thirteen SD (8 with prevalence of right and 5 with prevalence of left temporal atrophy) and 25 CE patients'. Reading 'CE' as the AD group is plausible, because the results compare SD with AD, but it is an inference. The note says so; the field does not.",
+      "The finding says 'early Alzheimer's disease' and the limitation says 'early-stage groups'. The abstract's only description is 'a pool of patients suffering from early SD and AD', and the title attaches 'early' to semantic dementia only. That the AD group was early-stage is a likely reading, not a stated fact.",
+      "The note's 'Naming failed for voices as well as faces in AD' overstates the result. The abstract says 'AD patients were significantly impaired in the naming tests, but showed preserved recognition', which is impairment, not failure."
+    ],
+    "corrected_fields": {
+      "finding_for_nametags": "The study screened out perceptual problems: it kept only patients without visual or auditory perceptual impairment, from a pool the abstract describes as 'early SD and AD'. Alzheimer's disease patients were significantly impaired at naming famous faces and voices but showed preserved recognition, while semantic dementia patients were profoundly impaired at both naming and recognition. That fits the announcement's premise (give the name to someone who still knows the person) better for AD than for semantic dementia (inference). The stimuli were famous people, not family.",
+      "method_and_sample": "comparative neuropsychological study using an experimental battery of famous face and voice recognition and naming: 13 semantic dementia patients (8 with mainly right and 5 with mainly left temporal atrophy) and 25 patients the abstract labels 'CE' (apparently the AD group), selected from a pool described as 'early SD and AD' because they showed no visual or auditory perceptual impairment; FDG-PET correlation in 12 SD patients; country not stated in the abstract",
+      "limitation": "Small groups, drawn from a pool the abstract describes as 'early SD and AD', were tested on famous rather than personally familiar faces and voices, so the result may not carry over to recognizing family members or to later dementia.",
+      "note": "Abstract only (no PMC copy). It concerns patients' own recognition of people, not machine face or voice recognition. The abstract's sample line reads '25 CE patients'; from the rest of the abstract this appears to be the AD group. AD patients were significantly impaired in the naming tests, and the battery covered famous faces and voices, so a name given on a voice match (voice-first presence) would address the same gap; that is an inference, not tested here."
+    },
+    "checked_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:27916672%20AND%20SRC:MED&format=json&resultType=core"
+  },
+  {
+    "id": "MED:25913061",
+    "verdict": "corrected",
+    "problems": [
+      "finding_for_nametags infers that the announcement and 'Who is this?' 'matter most for wearers past the mild stage'. The study measured recognition of self and familiar faces, not naming. Preserved recognition in mild AD does not show that mild-stage wearers need the name less, so the paper cannot rank the stages this way. MED:27916672, in this same batch, reports AD patients impaired at naming while their recognition was preserved."
+    ],
+    "corrected_fields": {
+      "finding_for_nametags": "Recognition of one's own and personally familiar faces from photographs was preserved in mild Alzheimer's disease but affected in moderate AD. So by the moderate stage a wearer may not recognize a familiar visitor at all, not just fail to recall the name (inference). The study measured recognition, not naming, and tested no aid, so it does not show whether the announcement and 'Who is this?' matter less in mild AD."
+    },
+    "checked_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:25913061%20AND%20SRC:MED&format=json&resultType=core"
+  },
+  {
+    "id": "MED:31196003",
+    "verdict": "corrected",
+    "problems": [
+      "finding_for_nametags says 'In most of the 56 publications reviewed, carers' continuing engagement was key'. The paper makes this point in its thematic synthesis of carers' experiences, which drew on the qualitative data: 'Carers continuous engagement and willingness to provide support with the use of AT for the person with dementia was key in the use of AT in most of the studies.' It gives no count and does not say most of the 56 publications.",
+      "method_and_sample puts the 30/17/9 split by design next to '50 studies'. The paper gives that split for the 56 publications: 'Of the 56 included publications, 30 were qualitative, 17 quantitative and 9 mixed-methods reporting on a total of 50 studies from 19 countries'.",
+      "method_and_sample says '2016 carers of people with dementia living at home'. The paper says 'reporting on findings from 2016 carers', and also 'Some studies included paid carers and participants who lived in long-term care facilities alongside carers of someone who has dementia living at home'. The review limits its results to family carers at home, but it does not say the 2016 count leaves the others out.",
+      "Minor, about the note: what it says about Table 2 is true, but Table 1 lists 'oral call identification' among the smart-home technologies in one included survey (reference 76). The review does not explain the term."
+    ],
+    "corrected_fields": {
+      "finding_for_nametags": "In the review's thematic synthesis of carers' experiences, carers' continuous engagement and willingness to help the person with dementia use assistive technology was key to its use in most of the studies. The authors also conclude that installing AT at home was often wrongly seen as a one-off event rather than an ongoing process. Nametags relies on a family member enrolling every person (photos, voice sample, facts), so it is likely to need re-enrollment as faces, voices and visitors change (tension 4), not a single setup. That is an inference; the review did not test it.",
+      "method_and_sample": "systematic review with narrative synthesis (aggregative qualitative synthesis): 56 publications (30 qualitative, 17 quantitative, 9 mixed methods) reporting on 50 studies from 19 countries, published 2000–2018, with findings from 2016 carers; some included studies also had paid carers or people in long-term care, and the review reports results only for family carers and people with dementia living at home"
+    },
+    "checked_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC6567448/fullTextXML"
+  }
+]

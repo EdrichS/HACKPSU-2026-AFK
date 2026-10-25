@@ -1,0 +1,145 @@
+[
+  {
+    "id": "us_prevalence_2026",
+    "figure": "7.4 million",
+    "claim": "The Alzheimer's Association estimates that 7.4 million Americans aged 65 and older have clinical Alzheimer's dementia in 2026.",
+    "sentence": "An estimated 7.4 million Americans age 65 and older are living with clinical Alzheimer’s dementia in 2026.",
+    "url": "https://www.alz.org/getmedia/ef8f48f9-ad36-48ea-87f9-b74034635c1e/alzheimers-facts-and-figures.pdf",
+    "locator": "p.27 (printed page number; PDF page 29 of 146), Prevalence section, 'Prevalence of Clinical Alzheimer’s Dementia and Other Dementias in the United States'",
+    "edition_or_date": "2026 Alzheimer’s Disease Facts and Figures (printed citation: Alzheimers Dement 2026;22, https://doi.org/10.1002/alz.71345); PDF metadata created 2026-04-14, modified 2026-07-01; fetched 2026-10-25",
+    "status": "confirmed",
+    "note": "Fetched the PDF on 2026-10-25 (HTTP 200, 146 pages, PDF title '2026 Alzheimer's Disease Facts and Figures') and read the sentence in its text. The superscript markers 'A2,276' printed after the sentence are left out. On every page cited in this file, the printed page number is the PDF page index minus 2."
+  },
+  {
+    "id": "us_caregivers_2025",
+    "figure": "12.7 million caregivers; 19.6 billion hours",
+    "claim": "In 2025, 12.7 million family and other unpaid caregivers gave an estimated 19.6 billion hours of unpaid help to people with Alzheimer's or other dementias in the U.S.",
+    "sentence": "In 2025, the 12.7 million family and other unpaid caregivers of people living with Alzheimer’s or other dementias provided an estimated 19.6 billion hours of unpaid help.",
+    "url": "https://www.alz.org/getmedia/ef8f48f9-ad36-48ea-87f9-b74034635c1e/alzheimers-facts-and-figures.pdf",
+    "locator": "p.52 (PDF page 54), Caregiving section, 'Hours of Unpaid Care and Economic Value of Caregiving'",
+    "edition_or_date": "2026 Alzheimer’s Disease Facts and Figures (printed citation: Alzheimers Dement 2026;22, https://doi.org/10.1002/alz.71345); PDF metadata created 2026-04-14, modified 2026-07-01; fetched 2026-10-25",
+    "status": "confirmed",
+    "note": "Read in the fetched PDF text. The superscript 'A8' printed after the sentence is left out. Endnotes A7 and A8 give the unrounded totals: 12.734 million caregivers and 19.608 billion hours. The per-caregiver sentence that follows (1,543 hours) is its own object, id us_caregivers_2025_per_caregiver."
+  },
+  {
+    "id": "us_caregivers_2025_per_caregiver",
+    "figure": "1,543 hours (nearly 30 hours per week)",
+    "claim": "That works out to 1,543 hours of care per caregiver per year, or nearly 30 hours a week.",
+    "sentence": "This number represents an average of nearly 30 hours of care per caregiver per week, or 1,543 hours of care per caregiver per year.",
+    "url": "https://www.alz.org/getmedia/ef8f48f9-ad36-48ea-87f9-b74034635c1e/alzheimers-facts-and-figures.pdf",
+    "locator": "p.52 (PDF page 54), the sentence right after the 19.6 billion hours sentence",
+    "edition_or_date": "2026 Alzheimer’s Disease Facts and Figures (printed citation: Alzheimers Dement 2026;22, https://doi.org/10.1002/alz.71345); PDF metadata created 2026-04-14, modified 2026-07-01; fetched 2026-10-25",
+    "status": "confirmed",
+    "note": "Second sentence of figure 2 (us_caregivers_2025), kept as a separate object so each object holds one exact sentence. My arithmetic: 19.6 billion / 12.7 million = 1,543 hours, matching the printed figure; the unrounded endnote totals (19.608 billion / 12.734 million) give about 1,540. That is a rounding difference only; quote the printed 1,543."
+  },
+  {
+    "id": "pa_caregivers",
+    "figure": "472 (thousands of caregivers); 835 (millions of hours); 17,213 (millions of dollars)",
+    "claim": "In Pennsylvania in 2025, an estimated 472,000 unpaid caregivers of people with Alzheimer's or other dementias gave 835 million hours of care, valued at about $17.2 billion.",
+    "sentence": "Pennsylvania 472 835 17,213",
+    "url": "https://www.alz.org/getmedia/ef8f48f9-ad36-48ea-87f9-b74034635c1e/alzheimers-facts-and-figures.pdf",
+    "locator": "p.51 (PDF page 53), Table 10",
+    "edition_or_date": "2026 Alzheimer’s Disease Facts and Figures (printed citation: Alzheimers Dement 2026;22, https://doi.org/10.1002/alz.71345); PDF metadata created 2026-04-14, modified 2026-07-01; fetched 2026-10-25",
+    "status": "confirmed",
+    "note": "This is a table row, not a sentence. Table 10 is titled 'Number of Caregivers of People with Alzheimer’s or Other Dementias, Hours of Unpaid Care and Economic Value of Unpaid Care by State, 2025*'. Its columns are Number of Caregivers (in thousands), Hours of Unpaid Care (in millions) and Value of Unpaid Care (in millions of dollars). The Pennsylvania row prints 472, 835 and 17,213, and reads the same in both plain and layout-preserving text extraction. The table footnote says state totals do not add to the U.S. totals due to rounding. The U.S. Total row is 12,734 / 19,608 / 446,312."
+  },
+  {
+    "id": "who_global",
+    "figure": "57 million (2021); over 60%; nearly 10 million new cases a year",
+    "claim": "WHO says 57 million people worldwide were living with dementia in 2021, over 60% of them in low- and middle-income countries, and there are nearly 10 million new cases each year.",
+    "sentence": "In 2021, 57 million people were living with dementia worldwide, over 60% of whom live in low-and middle-income countries. Every year, there are nearly 10 million new cases.",
+    "url": "https://www.who.int/news-room/fact-sheets/detail/dementia",
+    "locator": "Key facts, first bullet",
+    "edition_or_date": "Fact sheet dated 3 July 2026; fetched 2026-10-25",
+    "status": "confirmed",
+    "note": "Fetched 2026-10-25 (HTTP 200). The page uses non-breaking spaces in '57 million' and '10 million'; they are written here as ordinary spaces. The date shown under the title is '3 July 2026', and the page's embedded metadata gives datePublished and dateModified 2026-07-03. The 'may not be able to recognize family members or friends' sentence is its own object, id who_global_recognition."
+  },
+  {
+    "id": "who_global_recognition",
+    "figure": "none (qualitative statement)",
+    "claim": "WHO lists being unable to recognize family members or friends among the changes that can come as dementia progresses.",
+    "sentence": "People with dementia may not be able to recognize family members or friends, develop difficulties moving around, lose control over their bladder and bowels, have trouble eating and drinking and experience behaviour changes such as aggression that are distressing to the person with dementia as well as those around them.",
+    "url": "https://www.who.int/news-room/fact-sheets/detail/dementia",
+    "locator": "Signs and symptoms section",
+    "edition_or_date": "Fact sheet dated 3 July 2026; fetched 2026-10-25",
+    "status": "confirmed",
+    "note": "Part of figure 4 (who_global), kept as a separate object so each object holds one exact sentence. Same fetch and date as who_global. The sentence just before it reads: 'As the condition progresses, the need for help with personal care increases.'"
+  },
+  {
+    "id": "nchs_nursing_homes",
+    "figure": "41.1% (2022)",
+    "claim": "NCHS reports that 41.1% of U.S. nursing home residents were diagnosed with Alzheimer disease or other dementias in 2022.",
+    "sentence": "Percent of nursing home residents: 41.1% (2022)",
+    "url": "https://www.cdc.gov/nchs/fastats/alzheimers.htm",
+    "locator": "List 'Percent of long-term care services users diagnosed with Alzheimer disease or other dementias' (Data are for the U.S.)",
+    "edition_or_date": "Last Reviewed: February 18, 2026; data year 2022; fetched 2026-10-25",
+    "status": "confirmed",
+    "note": "Fetched 2026-10-25 (HTTP 200). The page gives the source as 'Biennial Overview of Post-acute and Long-term Care in the United States, Table 4'. The footer reads 'Last Reviewed: February 18, 2026', and the page metadata also gives last updated February 18, 2026. The Facts and Figures 46% (ff_nursing_homes) cites the same NCHS Biennial Overview (its reference 946) but its sentence gives no data year. So present the two numbers separately, each with its own source, not as two sources agreeing."
+  },
+  {
+    "id": "ff_nursing_homes",
+    "figure": "46%",
+    "claim": "The Alzheimer's Association reports that 46% of U.S. nursing home residents have Alzheimer's or other dementias.",
+    "sentence": "Overall, 46% of nursing home residents have Alzheimer’s or other dementias",
+    "url": "https://www.alz.org/getmedia/ef8f48f9-ad36-48ea-87f9-b74034635c1e/alzheimers-facts-and-figures.pdf",
+    "locator": "p.83 (PDF page 85), Use and Costs of Health Care, Long-Term Care and Hospice section, 'Use of Long-Term Care Services by Setting', 'Nursing home care' bullet",
+    "edition_or_date": "2026 Alzheimer’s Disease Facts and Figures (printed citation: Alzheimers Dement 2026;22, https://doi.org/10.1002/alz.71345); PDF metadata created 2026-04-14, modified 2026-07-01; fetched 2026-10-25",
+    "status": "confirmed",
+    "note": "The recorded text is the part of the sentence before superscript reference 946. After that marker the sentence continues: 'although the prevalence varies when considering the short- and long-stay populations.' Reference 946 is the NCHS 'Biennial Overview of Postacute and Long-term Care in the United States' (data.cdc.gov, accessed January 19, 2026). The 58% long-stay sentence is its own object, id ff_nursing_homes_long_stay."
+  },
+  {
+    "id": "ff_nursing_homes_long_stay",
+    "figure": "58% (long-stay); 36% (short-stay)",
+    "claim": "Among long-stay nursing home patients (100 days or longer), 58% have Alzheimer's or other dementias, compared with 36% of short-stay patients.",
+    "sentence": "While 36% of short-stay (less than 100 days) patients have Alzheimer’s or other dementias, 58% of long-stay (100 days or longer) patients have these conditions.",
+    "url": "https://www.alz.org/getmedia/ef8f48f9-ad36-48ea-87f9-b74034635c1e/alzheimers-facts-and-figures.pdf",
+    "locator": "pp.83-84 (PDF pages 85-86); the sentence starts on p.83 and ends at the top of p.84",
+    "edition_or_date": "2026 Alzheimer’s Disease Facts and Figures (printed citation: Alzheimers Dement 2026;22, https://doi.org/10.1002/alz.71345); PDF metadata created 2026-04-14, modified 2026-07-01; fetched 2026-10-25",
+    "status": "confirmed",
+    "note": "Part of figure 6 (ff_nursing_homes), kept as a separate object so each object holds one exact sentence. In the extracted PDF text, the running footer 'Use and Costs of Health Care, Long-Term Care and Hospice' and the page number '83' come between 'long-stay' and '(100 days', so a word-for-word check has to skip them. Both halves of the sentence match the PDF text exactly."
+  },
+  {
+    "id": "uk_care_homes",
+    "figure": "70 per cent",
+    "claim": "Alzheimer's Society estimates that 70% of people in care homes in England have dementia or severe memory problems.",
+    "sentence": "It is estimated that 70 per cent of people in care homes in England have dementia or severe memory problems.",
+    "url": "https://www.alzheimers.org.uk/what-we-do/news-and-media/facts-media",
+    "locator": "Page 'Facts for the media about dementia', section 'How many people in the UK have dementia?'",
+    "edition_or_date": "No date shown on the page; page metadata gives datePublished 03 June 2021 and dateModified 24 September 2026; fetched 2026-10-25",
+    "status": "confirmed",
+    "note": "Fetched 2026-10-25 (HTTP 200). The address in the brief (https://www.alzheimers.org.uk/about-us/news-and-media/facts-media) now redirects here, so the url above is the final one. The page gives no source or link for this figure."
+  },
+  {
+    "id": "misid_mendez_1992",
+    "figure": "25.4% (N = 55); transient misidentifications of familiar persons N = 34; of 217 outpatients",
+    "claim": "In a retrospective review of the records of 217 outpatients with Alzheimer's disease, 25.4% (55) had disturbances of person identification, most often transient misidentifications of familiar people (34).",
+    "sentence": "These disturbances occurred in 25.4% (N = 55) and included transient misidentifications of familiar persons (N = 34), the Capgras syndrome (N = 11), misidentification of themselves in mirrors (N = 5), prosopagnosia (N = 3), misidentification of unfamiliar persons as familiar (N = 1), and misidentification of another person as oneself (N = 1).",
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:1737981%20AND%20SRC:MED&format=json&resultType=core",
+    "locator": "Abstract",
+    "edition_or_date": "The Journal of nervous and mental disease 180(2):94-96, 1992 (Europe PMC first publication date 1992-02-01); abstract fetched 2026-10-25",
+    "status": "confirmed",
+    "note": "Read from the abstract in the Europe PMC API record (PMID 1737981, not in PMC). Title: 'Disturbances of person identification in Alzheimer's disease. A retrospective study.' Authors as listed: Mendez MF, Martin RJ, Smyth KA, Whitehouse PJ. The sentence before it gives the denominator: 'the records of 217 outpatients with AD'. The sentence after it says 'Transient misidentifications were easily corrected misperceptions'. My arithmetic: 34/217 = 15.7% of outpatients had transient misidentifications of familiar persons. 55/217 = 25.35%, which the abstract prints as 25.4%; quote the printed figure."
+  },
+  {
+    "id": "misid_harciarek_2008",
+    "figure": "15.8%",
+    "claim": "Based on interviews with patients and their caregivers, misidentification syndromes were found in 15.8% of 392 people with probable Alzheimer's disease.",
+    "sentence": "On the basis of a semistructured interview with both patients and their reliable caregivers, MIS was identified in 15.8% of cases with AD, 16.6% of patients with DLB, and in 8.3% of individuals with semantic dementia.",
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:18525289%20AND%20SRC:MED&format=json&resultType=core",
+    "locator": "Abstract",
+    "edition_or_date": "Alzheimer disease and associated disorders 22(2):163-169, 2008 (Europe PMC first publication date 2008-04-01); abstract fetched 2026-10-25",
+    "status": "confirmed",
+    "note": "Read from the abstract in the Europe PMC API record (PMID 18525289, not in PMC). Title: 'The prevalence of misidentification syndromes in neurodegenerative diseases.' Authors as listed: Harciarek M, Kertesz A. The AD group was 'Three hundred ninety-two individuals with probable AD'. The abstract also says 'The most frequent form of MIS was Capgras delusions'. My arithmetic: 15.8% of 392 is about 62 people."
+  },
+  {
+    "id": "capgras_pereira_2019",
+    "figure": "6%; 1,977 patients pooled",
+    "claim": "A meta-analysis of 8 studies pooling 1,977 people with Alzheimer's disease put the prevalence of Capgras syndrome at 6%.",
+    "sentence": "Overall, a total of 1,977 patients with Alzheimer's disease were analyzed, and the prevalence of Capgras syndrome in this group was 6% (CI: 95% I² 54% 4.0-8.0).",
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:31844501%20AND%20SRC:MED&format=json&resultType=core",
+    "locator": "Abstract, Results",
+    "edition_or_date": "Dementia & neuropsychologia 13(4):463-468, 2019 (Europe PMC first publication date 2019-10-01); abstract fetched 2026-10-25",
+    "status": "confirmed",
+    "note": "Read from the abstract in the Europe PMC API record (PMID 31844501, open access as PMC6907701). Title: 'Prevalence of Capgras syndrome in Alzheimer's patients: A systematic review and meta-analysis.' Authors as listed: Pereira GCM, de Oliveira GC. Total pooled: 1,977 patients with Alzheimer's disease. The abstract also says '40 studies were identified, 8 of which were included in the present review.' The interval is printed as shown. My reading, not stated in the text, is a 95% CI of 4.0-8.0% with I-squared 54%. The open-access full text (https://www.ebi.ac.uk/europepmc/webservices/rest/PMC6907701/fullTextXML) gives the same 1,977 patients and 6% in its Results. The full text writes Alzheimer with a curly apostrophe; this API abstract uses a straight one."
+  }
+]

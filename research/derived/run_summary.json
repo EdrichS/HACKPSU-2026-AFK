@@ -1,0 +1,96 @@
+{
+  "job0": {
+    "unique_before_filter": 6816,
+    "truth_tags_removed": 1006,
+    "ethics_tags_removed": 44,
+    "records_dropped_by_filter": 1012,
+    "unique_after_filter": 5804
+  },
+  "vocabulary_terms": 284090,
+  "seconds": {
+    "job0": 3.2,
+    "job1": 0.1,
+    "job2": 2.4,
+    "job3_build": 0.0,
+    "job3_count": 2.2,
+    "job3_lookup": 0.1,
+    "job4": 9.3,
+    "job5": 0.1,
+    "job6": 1.6,
+    "job7": 2.0
+  },
+  "cms_locations": 54,
+  "cms_suppressed_cells": [
+    "Puerto Rico (alzheimers)",
+    "Puerto Rico (non_alzheimers_dementia)",
+    "Virgin Islands (alzheimers)",
+    "Virgin Islands (non_alzheimers_dementia)"
+  ],
+  "pa": [
+    [
+      38.35,
+      25526
+    ],
+    [
+      10.61,
+      7060
+    ]
+  ],
+  "cms_national": {
+    "alzheimers": {
+      "pct": 10.14,
+      "residents": 124553
+    },
+    "non_alzheimers_dementia": {
+      "pct": 38.89,
+      "residents": 477804
+    }
+  },
+  "recognition_x_ethics": 6,
+  "recognition_x_assistive": 11,
+  "concept_papers": {
+    "recognizing faces": 287,
+    "recognizing voices": 25,
+    "misidentification": 188,
+    "not recognizing family": 53,
+    "smart glasses": 3,
+    "wearable camera": 10,
+    "voice assistant / conversational AI": 85,
+    "memory aid": 80,
+    "name badges / tags": 1,
+    "photos / reminiscence": 145,
+    "masks / PPE": 14,
+    "visiting restrictions / separation": 36,
+    "truth-telling / deception": 135,
+    "privacy / consent / surveillance": 317,
+    "bystanders / others on camera": 6,
+    "staff turnover / agency staff": 53
+  },
+  "reading_top5": [
+    [
+      1,
+      2020,
+      "A Personalized Voice-Based Diet Assistant for Caregivers of Alzheimer "
+    ],
+    [
+      2,
+      2023,
+      "Can Technology-Based Social Memory Aids Improve Social Engagement? Per"
+    ],
+    [
+      3,
+      2017,
+      "Famous faces and voices: Differential profiles in early right and left"
+    ],
+    [
+      4,
+      2003,
+      "Misidentification in patients with dementia."
+    ],
+    [
+      5,
+      2026,
+      "Uses of assistive technology incorporating smart camera features in th"
+    ]
+  ]
+}

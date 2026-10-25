@@ -1,0 +1,390 @@
+[
+  {
+    "file": "figures.json",
+    "id": "us_prevalence_2026",
+    "field": "sentence",
+    "url": "https://www.alz.org/getmedia/ef8f48f9-ad36-48ea-87f9-b74034635c1e/alzheimers-facts-and-figures.pdf",
+    "quote": "An estimated 7.4 million Americans age 65 and older are living with clinical Alzheimer’s dementia in 2026.",
+    "result": "pass"
+  },
+  {
+    "file": "figures.json",
+    "id": "us_caregivers_2025",
+    "field": "sentence",
+    "url": "https://www.alz.org/getmedia/ef8f48f9-ad36-48ea-87f9-b74034635c1e/alzheimers-facts-and-figures.pdf",
+    "quote": "In 2025, the 12.7 million family and other unpaid caregivers of people living with Alzheimer’s or other dementias provided an estimated 19.6 billion hours of unpaid help.",
+    "result": "pass"
+  },
+  {
+    "file": "figures.json",
+    "id": "us_caregivers_2025_per_caregiver",
+    "field": "sentence",
+    "url": "https://www.alz.org/getmedia/ef8f48f9-ad36-48ea-87f9-b74034635c1e/alzheimers-facts-and-figures.pdf",
+    "quote": "This number represents an average of nearly 30 hours of care per caregiver per week, or 1,543 hours of care per caregiver per year.",
+    "result": "pass"
+  },
+  {
+    "file": "figures.json",
+    "id": "pa_caregivers",
+    "field": "sentence",
+    "url": "https://www.alz.org/getmedia/ef8f48f9-ad36-48ea-87f9-b74034635c1e/alzheimers-facts-and-figures.pdf",
+    "quote": "Pennsylvania 472 835 17,213",
+    "result": "pass"
+  },
+  {
+    "file": "figures.json",
+    "id": "who_global",
+    "field": "sentence",
+    "url": "https://www.who.int/news-room/fact-sheets/detail/dementia",
+    "quote": "In 2021, 57 million people were living with dementia worldwide, over 60% of whom live in low-and middle-income countries. Every year, there are nearly 10 million new cases.",
+    "result": "pass"
+  },
+  {
+    "file": "figures.json",
+    "id": "who_global_recognition",
+    "field": "sentence",
+    "url": "https://www.who.int/news-room/fact-sheets/detail/dementia",
+    "quote": "People with dementia may not be able to recognize family members or friends, develop difficulties moving around, lose control over their bladder and bowels, have trouble eating and drinking and experience behaviour changes such as aggression that are distressing to the person with dementia as well as those around them.",
+    "result": "pass"
+  },
+  {
+    "file": "figures.json",
+    "id": "nchs_nursing_homes",
+    "field": "sentence",
+    "url": "https://www.cdc.gov/nchs/fastats/alzheimers.htm",
+    "quote": "Percent of nursing home residents: 41.1% (2022)",
+    "result": "pass"
+  },
+  {
+    "file": "figures.json",
+    "id": "ff_nursing_homes",
+    "field": "sentence",
+    "url": "https://www.alz.org/getmedia/ef8f48f9-ad36-48ea-87f9-b74034635c1e/alzheimers-facts-and-figures.pdf",
+    "quote": "Overall, 46% of nursing home residents have Alzheimer’s or other dementias",
+    "result": "pass"
+  },
+  {
+    "file": "figures.json",
+    "id": "ff_nursing_homes_long_stay",
+    "field": "sentence",
+    "url": "https://www.alz.org/getmedia/ef8f48f9-ad36-48ea-87f9-b74034635c1e/alzheimers-facts-and-figures.pdf",
+    "quote": "While 36% of short-stay (less than 100 days) patients have Alzheimer’s or other dementias, 58% of long-stay (100 days or longer) patients have these conditions.",
+    "result": "pass"
+  },
+  {
+    "file": "figures.json",
+    "id": "uk_care_homes",
+    "field": "sentence",
+    "url": "https://www.alzheimers.org.uk/what-we-do/news-and-media/facts-media",
+    "quote": "It is estimated that 70 per cent of people in care homes in England have dementia or severe memory problems.",
+    "result": "pass"
+  },
+  {
+    "file": "figures.json",
+    "id": "misid_mendez_1992",
+    "field": "sentence",
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:1737981%20AND%20SRC:MED&format=json&resultType=core",
+    "quote": "These disturbances occurred in 25.4% (N = 55) and included transient misidentifications of familiar persons (N = 34), the Capgras syndrome (N = 11), misidentification of themselves in mirrors (N = 5), prosopagnosia (N = 3), misidentification of unfamiliar persons as familiar (N = 1), and misidentification of another person as oneself (N = 1).",
+    "result": "pass"
+  },
+  {
+    "file": "figures.json",
+    "id": "misid_harciarek_2008",
+    "field": "sentence",
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:18525289%20AND%20SRC:MED&format=json&resultType=core",
+    "quote": "On the basis of a semistructured interview with both patients and their reliable caregivers, MIS was identified in 15.8% of cases with AD, 16.6% of patients with DLB, and in 8.3% of individuals with semantic dementia.",
+    "result": "pass"
+  },
+  {
+    "file": "figures.json",
+    "id": "capgras_pereira_2019",
+    "field": "sentence",
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:31844501%20AND%20SRC:MED&format=json&resultType=core",
+    "quote": "Overall, a total of 1,977 patients with Alzheimer's disease were analyzed, and the prevalence of Capgras syndrome in this group was 6% (CI: 95% I² 54% 4.0-8.0).",
+    "result": "pass"
+  },
+  {
+    "file": "accounts_peer.json",
+    "id": "verbeek2020-mister-j",
+    "field": "quote",
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC7294280/fullTextXML",
+    "quote": "Mister J. did not recognize his son as they had not seen each other for 10 weeks… He was crying and could not understand how he could forget about his son.",
+    "result": "pass"
+  },
+  {
+    "file": "accounts_peer.json",
+    "id": "bernardi2024-lower-mask",
+    "field": "quote",
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC11535700/fullTextXML",
+    "quote": "You see, there are small gestures. Maybe [the family member] tends to lower the mask to make themselves recognizable because even there, seeing the eyes is fine, but facial expressions are not the same",
+    "result": "pass"
+  },
+  {
+    "file": "accounts_peer.json",
+    "id": "kaelen2021-masks-staff",
+    "field": "quote",
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC7997017/fullTextXML",
+    "quote": "The masks created even more distance, as many residents did not recognize the staff anymore or could no longer engage in a conversation due to hearing problems.",
+    "result": "pass"
+  },
+  {
+    "file": "accounts_peer.json",
+    "id": "ariander2024-ppe-staff",
+    "field": "quote",
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC11003312/fullTextXML",
+    "quote": "Wearing the protective equipment could also make staff feel that residents did not recognize them, particularly when caring for residents with cognitive impairments.",
+    "result": "pass"
+  },
+  {
+    "file": "accounts_peer.json",
+    "id": "kemp2025-staff-as-relatives",
+    "field": "quote",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12048800/",
+    "quote": "In all communities, we observed residents believing that certain staff members were “relatives” and “good friends” or had long-standing family connections. Care partners tended not to correct these misconceptions viewing them signs of “trust” that made residents “receptive to care.”",
+    "result": "unreachable",
+    "why": "HTTPError: unreachable (HTTP 403): https://pmc.ncbi.nlm.nih.gov/articles/PMC12048800/"
+  },
+  {
+    "file": "accounts_peer.json",
+    "id": "kemp2025-hugh-assistant",
+    "field": "quote",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC12048800/",
+    "quote": "If you want to communicate with Hugh, you are his assistant. He would tell you he has a meeting; you just tell him that you’ll schedule that for him.",
+    "result": "unreachable",
+    "why": "HTTPError: unreachable (HTTP 403): https://pmc.ncbi.nlm.nih.gov/articles/PMC12048800/"
+  },
+  {
+    "file": "accounts_peer.json",
+    "id": "cohen-mansfield2014-mr-d",
+    "field": "quote",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10852750/",
+    "quote": "For example, Mr D, an 81-year-old man with an MMSE score of 17, experiences a misidentification delusion in which he thinks one of the caregivers is his daughter and at times mistook his son for his older brother. The informant concluded that no intervention was needed as the delusion neither had negative consequences nor was it accompanied by any emotional discomfort.",
+    "result": "unreachable",
+    "why": "HTTPError: unreachable (HTTP 403): https://pmc.ncbi.nlm.nih.gov/articles/PMC10852750/"
+  },
+  {
+    "file": "accounts_peer.json",
+    "id": "cohen-mansfield2014-argue-40",
+    "field": "quote",
+    "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC10852750/",
+    "quote": "The converse reaction is arguing with the older person about reality by telling the person that he or she is wrong, which occurred in 37% of the cases. This was the reaction in half the cases of delusion of theft and for 40% of the instances when a person manifested delusions of misidentification and when thinking the house was not their home.",
+    "result": "unreachable",
+    "why": "HTTPError: unreachable (HTTP 403): https://pmc.ncbi.nlm.nih.gov/articles/PMC10852750/"
+  },
+  {
+    "file": "accounts_peer.json",
+    "id": "tuckett2012-lie",
+    "field": "quote",
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=DOI:%2210.1177/0969733011412104%22&format=json&resultType=core",
+    "quote": "Care providers in residential aged care facilities (RACFs) lie to residents with dementia. Lying is conceptualized as therapeutic whereby the care provider's intent is to eliminate harm and also control behaviour.",
+    "result": "pass"
+  },
+  {
+    "file": "accounts_peer.json",
+    "id": "edwards2021-speech-difficulties",
+    "field": "quote",
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC8726051/fullTextXML",
+    "quote": "Nine (8%) homes reported device limitations including the smart speaker’s inability to understand certain residents because of speech difficulties or not using the “desired” language.",
+    "result": "pass"
+  },
+  {
+    "file": "accounts_peer.json",
+    "id": "edwards2021-data-protection",
+    "field": "quote",
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC8726051/fullTextXML",
+    "quote": "Among the 35 care homes that reported not using the device, 15 (43%) belonged to a care provider whose IT specialist raised concerns about data protection (Multimedia Appendix 2).",
+    "result": "pass"
+  },
+  {
+    "file": "accounts_peer.json",
+    "id": "koh2023-introduce-as-robot",
+    "field": "quote",
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC9899814/fullTextXML",
+    "quote": "you don’t actually want somebody… associating with it as if it was a real animal because that could cause further distress down the line if they feel, well, I’ve never seen it eating or it doesn’t seem to be drinking… they could be stressors to the person with dementia… I think in so far as is possible you’d want to be introducing it that it is a robot",
+    "result": "pass"
+  },
+  {
+    "file": "accounts_peer.json",
+    "id": "koh2023-go-along-cat",
+    "field": "quote",
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC9899814/fullTextXML",
+    "quote": "we will say it to our residents “is little kitten okay here in the basket or is he okay here.” if that’s their reality and they believe the cat is real. they’re happy with that",
+    "result": "pass"
+  },
+  {
+    "file": "accounts_peer.json",
+    "id": "emilsson2023-staff-on-film",
+    "field": "quote",
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC9912642/fullTextXML",
+    "quote": "Some felt uncomfortable that we should maybe be on film, did someone sit and watch us? We joked about it, that we must look good in the hair before going to work.",
+    "result": "pass"
+  },
+  {
+    "file": "accounts_peer.json",
+    "id": "ronning2026-residents-forget",
+    "field": "quote",
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC13014000/fullTextXML",
+    "quote": "The device, which was mounted on the wall of the resident's apartment, might have gone unnoticed by the residents as time passed. Although the professionals had informed the residents about the system, they acknowledged that residents were likely to forget about it, “…it's not just once, but it can be every time you come in as it can change for someone with cognitive impairment” (Nr 10).",
+    "result": "pass"
+  },
+  {
+    "file": "accounts_org.json",
+    "id": "org-mhf-1",
+    "field": "quote",
+    "url": "https://www.mentalhealth.org.uk/sites/default/files/2022-09/MHF-dementia-truth-inquiry-report.pdf",
+    "quote": "Often most heart-breaking for close family members or friends are situations where they are no longer recognised or are even believed to be an imposter.",
+    "result": "pass"
+  },
+  {
+    "file": "accounts_org.json",
+    "id": "org-dementiauk-1",
+    "field": "quote",
+    "url": "https://www.dementiauk.org/information-and-support/looking-after-yourself-as-a-carer/when-someone-doesnt-recognise-you/",
+    "quote": "If the person with dementia is struggling to recognise you, introduce yourself and explain the connection between you: for example, “Hello Mum, it’s Julie, your daughter, and I have little Danny, your grandson, with me.”",
+    "result": "pass"
+  },
+  {
+    "file": "accounts_org.json",
+    "id": "org-dementiauk-2",
+    "field": "quote",
+    "url": "https://www.dementiauk.org/information-and-support/looking-after-yourself-as-a-carer/when-someone-doesnt-recognise-you/",
+    "quote": "Try not to correct the person if they get your name wrong or say something that isn’t true – this can lead to distress and frustration on all sides.",
+    "result": "pass"
+  },
+  {
+    "file": "accounts_org.json",
+    "id": "org-alz-1",
+    "field": "quote",
+    "url": "https://www.alz.org/help-support/caregiving/stages-behaviors/memory-loss-confusion",
+    "quote": "Avoid explanations that sound like scolding. Try: \"I thought it was a fork\" or \"I think she is your granddaughter Julie.\"",
+    "result": "pass"
+  },
+  {
+    "file": "accounts_org.json",
+    "id": "org-scie-1",
+    "field": "quote",
+    "url": "https://www.scie.org.uk/safeguarding/adults/practice/adult-safeguarding-practice-questions/",
+    "quote": "Mrs B no longer recognises her husband, and sometimes becomes very frightened because she thinks he is an intruder. She has hit him on numerous occasions and is very threatening towards him.",
+    "result": "pass"
+  },
+  {
+    "file": "accounts_extra.json",
+    "id": "kemp2025-abstract-reality-management",
+    "field": "quote",
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=DOI:%2210.1093/geront/gnaf061%22&format=json&resultType=core",
+    "quote": "In response, care partners engaged in a process of \"reality management,\" which involved strategies that invalidated or validated realities and emotions; these included ignoring, dismissing, correcting, redirecting, and joining.",
+    "result": "pass"
+  },
+  {
+    "file": "accounts_extra.json",
+    "id": "cohen-mansfield2014-abstract-tailored",
+    "field": "quote",
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=DOI:%2210.1177/1533317514522850%22&format=json&resultType=core",
+    "quote": "The most effective approaches may be those tailored to the individual.",
+    "result": "pass"
+  },
+  {
+    "file": "extra_quotes.json",
+    "id": "mccarron2019-too-slow",
+    "field": "quote",
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC6715400/fullTextXML",
+    "quote": "She said that by the time the SSA recognized the face, her husband had already asked her who the person was.",
+    "result": "pass"
+  },
+  {
+    "file": "extra_quotes.json",
+    "id": "mccarron2019-lighting",
+    "field": "quote",
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC6715400/fullTextXML",
+    "quote": "Several participants reported that the SSA only worked in certain lighting.",
+    "result": "pass"
+  },
+  {
+    "file": "extra_quotes.json",
+    "id": "mccarron2019-son-in-law",
+    "field": "quote",
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC6715400/fullTextXML",
+    "quote": "Marge (caregiver, age 67) mentioned that the software could not distinguish her son from her son-in-law, both of whom were bald and had beards but otherwise had little physical resemblance.",
+    "result": "pass"
+  },
+  {
+    "file": "extra_quotes.json",
+    "id": "abraha2017-simulated-presence",
+    "field": "quote",
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:28302633%20AND%20SRC:MED&format=json&resultType=core",
+    "quote": "cognitive/emotion-oriented interventions (13 SRs; 26 primary studies) that included cognitive stimulation, reminiscence therapy, validation therapy, simulated presence therapy",
+    "result": "pass"
+  },
+  {
+    "file": "extra_quotes.json",
+    "id": "scales2018-person-centered",
+    "field": "quote",
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:29361069%20AND%20SRC:MED&format=json&resultType=core",
+    "quote": "Nonpharmacological practices are person-centered, and their selection can be informed by considering the cause and meaning of the individual's behavioral and psychological symptoms.",
+    "result": "pass"
+  },
+  {
+    "file": "extra_quotes.json",
+    "id": "clare2002-relearning",
+    "field": "quote",
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:12382992%20AND%20SRC:MED&format=json&resultType=core",
+    "quote": "Training produced a significant group improvement in recall of trained, but not control, items. Gains were largely maintained 6 months later, in the absence of practice.",
+    "result": "pass"
+  },
+  {
+    "file": "extra_quotes.json",
+    "id": "clare2002-awareness",
+    "field": "quote",
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:12382992%20AND%20SRC:MED&format=json&resultType=core",
+    "quote": "participants who were more aware of their memory difficulties achieved better outcomes.",
+    "result": "pass"
+  },
+  {
+    "file": "extra_quotes.json",
+    "id": "dunn2007-errors",
+    "field": "quote",
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:17852759%20AND%20SRC:MED&format=json&resultType=core",
+    "quote": "Reducing errors did not produce any benefits.",
+    "result": "pass"
+  },
+  {
+    "file": "extra_quotes.json",
+    "id": "dunn2007-effort",
+    "field": "quote",
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:17852759%20AND%20SRC:MED&format=json&resultType=core",
+    "quote": "Effort enhancement may be more important, especially when learning novel associations.",
+    "result": "pass"
+  },
+  {
+    "file": "extra_quotes.json",
+    "id": "woods2012-cst",
+    "field": "quote",
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:22336813%20AND%20SRC:MED&format=json&resultType=core",
+    "quote": "There was consistent evidence from multiple trials that cognitive stimulation programmes benefit cognition in people with mild to moderate dementia over and above any medication effects.",
+    "result": "pass"
+  },
+  {
+    "file": "extra_quotes.json",
+    "id": "woods2012-ro",
+    "field": "quote",
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:22336813%20AND%20SRC:MED&format=json&resultType=core",
+    "quote": "RO emphasised the engagement of nursing assistants in a hopeful, therapeutic process but became associated with a rigid, confrontational approach to people with dementia, leading to its use becoming less and less common.",
+    "result": "pass"
+  },
+  {
+    "file": "extra_quotes.json",
+    "id": "clare2019-great",
+    "field": "quote",
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:30724405%20AND%20SRC:MED&format=json&resultType=core",
+    "quote": "CR enables people with early-stage dementia to improve their everyday functioning in relation to individual goals targeted in the therapy.",
+    "result": "pass"
+  },
+  {
+    "file": "extra_quotes.json",
+    "id": "yamaguchi2010-errorless",
+    "field": "quote",
+    "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:21159057%20AND%20SRC:MED&format=json&resultType=core",
+    "quote": "the activities should be based on errorless learning to ensure a pleasant atmosphere and to maintain a patient's dignity.",
+    "result": "pass"
+  }
+]

@@ -1,0 +1,64 @@
+[
+  {
+    "id": "MED:26468655",
+    "verdict": "corrected",
+    "problems": [
+      "finding_for_nametags places the recording 'at home' and 'inside dementia households', but the fetched record never says where it took place: the words home, household, house and residence appear nowhere in it, including the abstract and its subject headings. The abstract says only that the system gathered image and voice data 'from the caregiver's perspective' in a pilot with 18 caregiving dyads. The full text could not be checked instead: fullTextXML for PMC4814293 still returned HTTP 500 at 00:58 EDT."
+    ],
+    "corrected_fields": {
+      "finding_for_nametags": "A prototype camera system worn by the family caregiver, not the person with dementia, captured image and voice data from the caregiver's perspective so nurses and other providers could see the behaviors and interactions the caregiver finds difficult, in a pilot with 18 caregiving dyads. It shows only that a worn camera and microphone have been used by family caregivers of people with dementia (the abstract does not say where the recording took place); the abstract reports no usability, privacy or reaction results and nothing about recognizing people, so it tests no Nametags feature or tension."
+    },
+    "checked_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:26468655%20AND%20SRC:MED&format=json&resultType=core"
+  },
+  {
+    "id": "MED:35976047",
+    "verdict": "corrected",
+    "problems": [
+      "Overstated: 'so there is no published evidence yet that a voice assistant like Nova helps people with dementia' turns one review's result into a claim about all published work up to today. The review covered only conversational agents for rehabilitation in adults with brain-related neurological conditions, in English, and was published in February 2023. What its abstract supports is narrower: none of its 11 included papers tested effectiveness, and none measured health outcomes.",
+      "Imprecise: the finding says product.md does not describe 'safety issues' for Nova. It is right that product.md describes no clinician oversight, but it does give Nova safety-relevant rules: 'Never guess or invent a fact', the database as 'the only source of truth', and 'Never bring up illness or diagnoses'."
+    ],
+    "corrected_fields": {
+      "finding_for_nametags": "A scoping review found 11 papers on conversational agents in rehabilitation for adults with brain conditions (7 aimed at people with dementia alone or in mixed groups), all at an early stage with samples of 1 to 33, no effectiveness testing and safety considered in only two, so this review offers no evidence that a voice assistant like Nova helps people with dementia; it cannot rule out evidence outside its scope (English-language rehabilitation studies, in a review published in February 2023). None of the purposes the papers reported was identifying people, which is Nova's job, and the authors ask future studies to clearly define safety issues and requirements for clinician oversight; product.md gives Nova behavior rules (never guess or invent a fact, never bring up illness or diagnoses) but says nothing about clinician oversight."
+    },
+    "checked_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:35976047%20AND%20SRC:MED&format=json&resultType=core"
+  },
+  {
+    "id": "MED:26288888",
+    "verdict": "corrected",
+    "problems": [
+      "finding_for_nametags says caregivers wore the camera 'at home', but the fetched record never says where: the words home, household, house and residence appear nowhere in it, including the abstract and its subject headings. The abstract gives only '3 to 7 days of wear per CG' and concludes that caregivers 'can and will wear a camera system to reveal their daily caregiving challenges to health care providers'. The full text could not be checked instead: fullTextXML for PMC4545579 still returned HTTP 500 at 00:58 EDT."
+    ],
+    "corrected_fields": {
+      "finding_for_nametags": "When family caregivers wore a camera system for 3 to 7 days to record difficult behaviors for health care providers (the abstract does not say where), they judged its benefits worth the invasion of privacy beforehand, their privacy concerns did not change significantly after wear, and they found it easy to learn but cumbersome and obtrusive. That is small, indirect support for a worn camera around a person with dementia: the privacy judgment was the wearers' own, and nothing here tests a person with dementia wearing the camera or other residents and staff as bystanders (tension 3)."
+    },
+    "checked_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:26288888%20AND%20SRC:MED&format=json&resultType=core"
+  },
+  {
+    "id": "MED:31518270",
+    "verdict": "corrected",
+    "problems": [
+      "method_and_sample says the 48 people with memory loss took part 'with caregivers'. Not all did: 'Thirty-five participants were caregivers and 13 were persons with memory loss who had no caregiver available.' Those 13 filled in the surveys themselves; for the other 35, the caregiver did.",
+      "finding_for_nametags overstates the trial result a little. It says the app 'had no significant effect'. The paper reports that use 'was not significantly associated with changes' (P>.05), says the results 'should be interpreted with caution' because of the small sample, and says the trial 'could be considered an underpowered RCT'.",
+      "Minor: the finding lists slow recognition among the failures 'users reported'. In the text that is one caregiver's account ('Rebekah (caregiver, age 69) thought the SSA took too long to recognize a face.'). Of the three failures listed, only the lighting one was reported by more than one person ('Several participants reported that the SSA only worked in certain lighting.').",
+      "Minor: the finding offers the son and son-in-law as an example of the look-alike-relative risk, but the paper says of the two men: 'both of whom were bald and had beards but otherwise had little physical resemblance'. The software confused two relatives who shared only those features.",
+      "Minor: the finding gives awkwardness as the only reason families enrolled only people they knew well. The paper gives two: many found the process 'time-consuming and cumbersome', and some felt uncomfortable asking people ('For these reasons, many said they only felt comfortable asking individuals they knew well to enroll.').",
+      "Update, not an error when this entry was written: product.md was changed at 01:04 EDT, after this entry (00:57), to add visitor self-enrollment (/visitor, with a consent screen, from commit 0245eb3). The finding ties the enrollment problems only to family enrollment; the paper's point that asking people to enroll felt awkward bears on the visitor flow as well."
+    ],
+    "corrected_fields": {
+      "method_and_sample": "pilot randomized controlled trial, 48 people with memory loss (20 app, 28 usual care), 35 of them with a caregiver who completed the surveys and 13 with no caregiver available, 6 months, plus 13 phone interviews with intervention-group participants; Minnesota, USA",
+      "finding_for_nametags": "In a 6-month pilot trial with 48 people with memory loss, prior art very close to Nametags (a phone that recognized enrolled faces and showed the person's name and relationship on a smartwatch) showed no significant effect on quality of social interaction or quality of life, in a trial its authors say is small and could be considered underpowered, and most participants interviewed did not find it useful. Their reasons bear on Nametags' enrollment (by a family member, or since commit 0245eb3 by visitors themselves through /visitor) and look-alike-relative risk: enrolling was time-consuming, cumbersome and awkward, so many said they only felt comfortable asking people they knew well to enroll, often people the person with memory loss already remembered; several participants reported that it only worked in certain lighting; one caregiver said that by the time it recognized a face her husband had already asked her who the person was; and another said it could not tell her son from her son-in-law, who were both bald with beards but otherwise had little physical resemblance."
+    },
+    "checked_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC6715400/fullTextXML"
+  },
+  {
+    "id": "MED:25784202",
+    "verdict": "corrected",
+    "problems": [
+      "Update, not an error when this entry was written: product.md was changed at 01:04 EDT, after this entry (00:57), to add the glasses HUD at /live from commit 0245eb3, which shows face tags and live captions of the conversation. The finding names the context card as the text Nametags still asks the wearer to read; the HUD's captions are more text on a display, so the paper's reading difficulty bears on them too (not tested). Every paper-side claim checks out against the abstract, as do the supporting sentence (word for word), method_and_sample, and the title, authors, year and venue."
+    ],
+    "corrected_fields": {
+      "finding_for_nametags": "Earlier prior art for Nametags: photos taken with a smartwatch went to face recognition in the cloud and details about the recognized person came back to the watch; the authors report correct results (no figures in the abstract) but usability problems for patients with dementia in reading the small screen and taking a proper photo. Nametags' spoken announcement and hands-free glasses camera skip both steps by design (not tested here), but Nametags still puts text in front of the wearer: the context card and, since commit 0245eb3, the glasses HUD with face tags and live captions of the conversation, so the paper's reading difficulty bears on those (not tested here). The cloud design is the same choice as the DEPLOY.md server, whose privacy this abstract does not discuss."
+    },
+    "checked_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:25784202%20AND%20SRC:MED&format=json&resultType=core"
+  }
+]

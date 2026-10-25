@@ -1,0 +1,142 @@
+[
+  {
+    "id": "MED:21867384",
+    "doi": "10.1080/13607863.2011.569489",
+    "title": "Do people with dementia find lies and deception in dementia care acceptable?",
+    "authors": [
+      "Day AM",
+      "James IA",
+      "Meyer TD",
+      "Lee DR"
+    ],
+    "year": 2011,
+    "venue": "Aging & mental health",
+    "text_source": "abstract",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:21867384%20AND%20SRC:MED&format=json&resultType=core",
+    "finding_for_nametags": "Interviewed directly, people with dementia judged carers' lies acceptable if told in their best interest, a judgement shaped by whether they were aware of the lie and by why the carer lied. That bears on tension 1 (the announcement names people truthfully) and tension 2 (Nova does not say it is an AI unless asked), but the study concerns lies told by human carers, not by a device.",
+    "method_and_sample": "qualitative Grounded Theory study, two rounds of one-to-one interviews with people with dementia; sample size, dementia stage and country not given in the abstract",
+    "limitation": "Only the abstract was available, so the sample size, the participants' dementia stage and the kinds of lies discussed are unknown, and the abstract does not mention technology or AI.",
+    "supporting_sentence": "This best interest decision was complex, and influenced by factors such as the person with dementia's awareness of the lie, and the carer's motivation for lying.",
+    "relevance": "high",
+    "bears_on": [
+      "truth-telling",
+      "announcement",
+      "Nova"
+    ],
+    "status": "read",
+    "note": "Abstract only (not open access in Europe PMC). The abstract does not say which way awareness of the lie moves acceptability, so no direction is claimed here. The model of these factors that the paper describes is in the full text, which was not read."
+  },
+  {
+    "id": "MED:34081019",
+    "doi": "10.2196/25006",
+    "title": "Chatbots to Support People With Dementia and Their Caregivers: Systematic Review of Functions and Quality.",
+    "authors": [
+      "Ruggiano N",
+      "Brown EL",
+      "Roberts L",
+      "Framil Suarez CV",
+      "Luo Y",
+      "Hao Z",
+      "et al."
+    ],
+    "year": 2021,
+    "venue": "Journal of medical Internet research",
+    "text_source": "full text",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC8212632/fullTextXML",
+    "finding_for_nametags": "In this review of commercial dementia chatbots, only 6 of the 505 found met the criteria (5 were Alexa voice skills), none had peer-reviewed research behind it, and skills that needed exact commands or pronunciations were hard to use even for the researchers, who warn this may be a barrier for people with cognitive impairment. For Nova that is a caution about depending on a spoken wake word (\"Nova\", \"Hey Nova\"), not evidence about Nova itself: no person with dementia tested the apps in this review, and their dialog was pre-programmed and narrow, unlike Nova's language model.",
+    "method_and_sample": "systematic review of commercial chatbot apps (Google Play, Apple App Store, Alexa Skills, web), Dec 2019 to Apr 2020; 505 found, 6 included; rated by the research team, not by end users",
+    "limitation": "The apps were judged by the researchers against a chatbot-quality framework, with no people with dementia or caregivers testing them, and their pre-programmed 2020 dialog says little about a language-model assistant like Nova.",
+    "supporting_sentence": "For instance, most apps had limitations in their programmed content, which created challenges when evaluators did not use specific commands.",
+    "relevance": "medium",
+    "bears_on": [
+      "Nova",
+      "prior art"
+    ],
+    "status": "read",
+    "note": "Prior art: one Alexa skill (My Life Story) stored a person's life history and told it back on command, close to Nova reading out a person's stored facts. The paper lists passing the Turing test as a quality attribute and never discusses telling users they are talking to a machine, so it does not inform tension 2. Every privacy statement the reviewers found promised no sharing with third parties unless the user gave permission, a contrast with Nova sending questions and looked-up rows to Anthropic."
+  },
+  {
+    "id": "MED:34170256",
+    "doi": "10.2196/25891",
+    "title": "Usability and Acceptance of the Embodied Conversational Agent Anne by People With Dementia and Their Caregivers: Exploratory Study in Home Environment Settings.",
+    "authors": [
+      "Stara V",
+      "Vera B",
+      "Bolliger D",
+      "Rossi L",
+      "Felici E",
+      "Di Rosa M",
+      "et al."
+    ],
+    "year": 2021,
+    "venue": "JMIR mHealth and uHealth",
+    "text_source": "full text",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC8386369/fullTextXML",
+    "finding_for_nametags": "In a 4-week home trial of the tablet agent Anne, some people with early dementia said speech-recognition errors (Anne sometimes answered a different question) hurt their intention to use it, its usefulness and their trust, and their ratings of usefulness and trust fell over the 4 weeks. Nova takes spoken questions, so a misheard name in a question like \"Nova, who is David?\" is the failure this study points to; the study itself did not test questions about people.",
+    "method_and_sample": "mixed-methods 4-week home field trial (acceptance and usability questionnaires, telemetry, short open questions), 20 people with early dementia (MMSE 24-27) and 14 family caregivers, Ancona, Italy",
+    "limitation": "A single small 4-week trial in one Italian city, limited to early-stage people living independently who had training, a manual and a support line, so it says little about later-stage or care-home users.",
+    "supporting_sentence": "Some of them clearly discussed how technical problems related to speech recognition had a negative impact on intention to use, adaptiveness, usefulness, and trust.",
+    "relevance": "high",
+    "bears_on": [
+      "Nova",
+      "families",
+      "prior art"
+    ],
+    "status": "read",
+    "note": "Anne also had a touch screen, and touch use far outnumbered successful voice use (55,442 vs 853 interactions), mostly because of games, the authors say. Family caregivers' ratings of usefulness and trust also fell over the 4 weeks. People with advanced dementia were excluded because their reaction to an unknown virtual assistant was judged unpredictable. Some role and closeness percentages in the paper do not match their own fractions (6/14 given as 40%), so they are not used here."
+  },
+  {
+    "id": "MED:21500008",
+    "doi": "10.1080/13607863.2010.543662",
+    "title": "Ethics of using assistive technology in the care for community-dwelling elderly people: an overview of the literature.",
+    "authors": [
+      "Zwijsen SA",
+      "Niemeijer AR",
+      "Hertogh CM"
+    ],
+    "year": 2011,
+    "venue": "Aging & mental health",
+    "text_source": "abstract",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:21500008%20AND%20SRC:MED&format=json&resultType=core",
+    "finding_for_nametags": "A review of 46 papers on assistive technology for older people living at home, focused on dementia, found three ethical themes: privacy, autonomy and obtrusiveness in the home; stigma and human contact; and device design (individual approach, affordability, safety). These frame the worn camera-and-microphone glasses in general, but the abstract gives no evidence specific to cameras, face or voice recognition, or voice assistants.",
+    "method_and_sample": "systematic literature review, 46 papers, international literature on assistive technology for community-dwelling older people, focused on dementia",
+    "limitation": "Read from the abstract only; it reviews ethical arguments in the literature rather than measured outcomes, and it covers people living at home, not care homes.",
+    "supporting_sentence": "The first theme, personal living environment, involves the subthemes privacy, autonomy and obtrusiveness.",
+    "relevance": "medium",
+    "bears_on": [
+      "deployment/privacy",
+      "glasses/wearable camera"
+    ],
+    "status": "read",
+    "note": "Abstract only (not open access in Europe PMC); it does not say which technologies the 46 papers covered or the search dates. The authors' point that ethics framed around independence may fit frail elderly people less well than a social, reciprocal view could support a family-run enrollment model, but that is an interpretation, not a finding."
+  },
+  {
+    "id": "MED:36681841",
+    "doi": "10.1186/s12938-023-01065-3",
+    "title": "Privacy-protecting behaviours of risk detection in people with dementia using videos.",
+    "authors": [
+      "Mishra PK",
+      "Iaboni A",
+      "Ye B",
+      "Newman K",
+      "Mihailidis A",
+      "Khan SS"
+    ],
+    "year": 2023,
+    "venue": "Biomedical engineering online",
+    "text_source": "full text",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC9863094/fullTextXML",
+    "finding_for_nametags": "In a Toronto dementia unit whose common-area camera feed also caught other residents, staff and visitors, the study turned audio off, kept cameras out of bedrooms and washrooms, and had staff and participants' substitute decision-makers give written consent; swapping people for skeletons or masks kept risk detection about as good as raw video (AUC 0.823 vs 0.822). That is a concrete precedent for tension 3, set against glasses that go wherever the wearer goes, transcribe what everyone says and exist to identify people, the very information this study removed.",
+    "method_and_sample": "technical study of privacy-protecting video anomaly detection (skeletons or segmentation masks fed to convolutional autoencoders); about 21 h training and 9 h test video from one participant and one camera, out of a 2-year, 17-participant study in a specialized dementia unit, Toronto, Canada",
+    "limitation": "It measures detection accuracy for one participant on one fixed camera, not how residents, staff or visitors felt about being filmed, and it uses fixed surveillance cameras, not a worn one.",
+    "supporting_sentence": "Due to privacy concerns, the cameras were not installed in the bedrooms and washrooms of participating residents, and the audio was turned off.",
+    "relevance": "medium",
+    "bears_on": [
+      "bystander privacy",
+      "care homes",
+      "deployment/privacy"
+    ],
+    "status": "read",
+    "note": "The paper does not say whether non-participating residents or visitors consented. It also cites cameras that turn people into skeletons on the device so raw video need not be stored, a parallel to keeping photos and audio local (tension 5), but face embeddings, unlike skeletons, are made to identify people."
+  }
+]

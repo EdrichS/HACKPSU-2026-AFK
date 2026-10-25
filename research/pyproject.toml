@@ -1,0 +1,11 @@
+[project]
+name = "nametags-study"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "matplotlib>=3.11.2",
+    "psutil>=7.2.2",
+    "pypdf>=6.21.2",
+    "pyspark[sql]==4.2.0",
+    "requests>=2.34.2",
+]

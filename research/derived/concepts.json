@@ -1,0 +1,924 @@
+{
+  "vocabulary_terms": 284090,
+  "concepts": {
+    "recognizing faces": {
+      "papers": 287,
+      "terms": [
+        "face recognition",
+        "facial recognition",
+        "familiar faces",
+        "familiar face",
+        "face processing",
+        "face identification",
+        "recognize faces",
+        "recognizing faces",
+        "prosopagnosia"
+      ],
+      "most_cited": [
+        {
+          "id": "MED:9236948",
+          "title": "Development of cognitive instruments for use in clinical trials of antidementia drugs: additions to the Alzheimer's Disease Assessment Scale that broaden its scope. The Alzheimer's Disease Cooperative Study.",
+          "year": 1997,
+          "doi": null,
+          "cited_by": 384
+        },
+        {
+          "id": "MED:11520976",
+          "title": "A portrait of Alzheimer secretases--new features and familiar faces.",
+          "year": 2001,
+          "doi": "10.1126/science.1064638",
+          "cited_by": 374
+        },
+        {
+          "id": "MED:14985259",
+          "title": "Knowledge of famous faces and names in semantic dementia.",
+          "year": 2004,
+          "doi": "10.1093/brain/awh099",
+          "cited_by": 256
+        },
+        {
+          "id": "MED:22529204",
+          "title": "Contextual social cognition and the behavioral variant of frontotemporal dementia.",
+          "year": 2012,
+          "doi": "10.1212/wnl.0b013e3182518375",
+          "cited_by": 243
+        },
+        {
+          "id": "MED:15851728",
+          "title": "The natural history of temporal variant frontotemporal dementia.",
+          "year": 2005,
+          "doi": "10.1212/01.wnl.0000158425.46019.5c",
+          "cited_by": 229
+        }
+      ]
+    },
+    "recognizing voices": {
+      "papers": 25,
+      "terms": [
+        "voice recognition",
+        "speaker recognition",
+        "familiar voices",
+        "familiar voice",
+        "voice identification",
+        "phonagnosia"
+      ],
+      "most_cited": [
+        {
+          "id": "MED:21908871",
+          "title": "Voice processing in dementia: a neuropsychological and neuroanatomical analysis.",
+          "year": 2011,
+          "doi": "10.1093/brain/awr205",
+          "cited_by": 58
+        },
+        {
+          "id": "MED:27916672",
+          "title": "Famous faces and voices: Differential profiles in early right and left semantic dementia and in Alzheimer's disease.",
+          "year": 2017,
+          "doi": "10.1016/j.neuropsychologia.2016.11.020",
+          "cited_by": 46
+        },
+        {
+          "id": "MED:32178724",
+          "title": "A computerized version of the Short Form of the Face-Name Associative Memory Exam (FACEmemory®) for the early detection of Alzheimer's disease.",
+          "year": 2020,
+          "doi": "10.1186/s13195-020-00594-6",
+          "cited_by": 39
+        },
+        {
+          "id": "MED:33233605",
+          "title": "The Perceptions of People with Dementia and Key Stakeholders Regarding the Use and Impact of the Social Robot MARIO.",
+          "year": 2020,
+          "doi": "10.3390/ijerph17228621",
+          "cited_by": 33
+        },
+        {
+          "id": "MED:20592583",
+          "title": "Pilot study to show the feasibility of a multicenter trial of home-based assessment of people over 75 years old.",
+          "year": 2010,
+          "doi": "10.1097/wad.0b013e3181d7109f",
+          "cited_by": 18
+        }
+      ]
+    },
+    "misidentification": {
+      "papers": 188,
+      "terms": [
+        [
+          [
+            "capgras",
+            "misidentification syndrome",
+            "misidentification syndromes"
+          ]
+        ],
+        [
+          [
+            "misidentification",
+            "misidentifications",
+            "misidentify",
+            "misidentified"
+          ],
+          [
+            "delusion",
+            "delusions",
+            "delusional",
+            "syndrome",
+            "syndromes",
+            "familiar",
+            "psychosis",
+            "psychotic",
+            "persons",
+            "people"
+          ]
+        ]
+      ],
+      "most_cited": [
+        {
+          "id": "MED:9075466",
+          "title": "The course of psychopathologic features in mild to moderate Alzheimer disease.",
+          "year": 1997,
+          "doi": "10.1001/archpsyc.1997.01830150083012",
+          "cited_by": 239
+        },
+        {
+          "id": "MED:10401449",
+          "title": "Psychiatric morbidity in dementia with Lewy bodies: a prospective clinical and neuropathological comparative study with Alzheimer's disease.",
+          "year": 1999,
+          "doi": "10.1176/ajp.156.7.1039",
+          "cited_by": 191
+        },
+        {
+          "id": "MED:2912509",
+          "title": "Psychotic symptoms and the longitudinal course of senile dementia of the Alzheimer type.",
+          "year": 1989,
+          "doi": "10.1016/0006-3223(89)90145-5",
+          "cited_by": 174
+        },
+        {
+          "id": "MED:28082298",
+          "title": "Finding the imposter: brain connectivity of lesions causing delusional misidentifications.",
+          "year": 2017,
+          "doi": "10.1093/brain/aww288",
+          "cited_by": 160
+        },
+        {
+          "id": "MED:2397366",
+          "title": "Psychiatric phenomena in Alzheimer's disease. II: Disorders of perception.",
+          "year": 1990,
+          "doi": "10.1192/bjp.157.1.76",
+          "cited_by": 127
+        }
+      ]
+    },
+    "not recognizing family": {
+      "papers": 53,
+      "terms": [
+        [
+          [
+            "recognize",
+            "recognise",
+            "recognizing",
+            "recognising",
+            "recognized",
+            "recognised",
+            "recognizes",
+            "recognises"
+          ],
+          [
+            "family members",
+            "family member",
+            "relatives",
+            "relative",
+            "spouse",
+            "spouses",
+            "husband",
+            "wife",
+            "son",
+            "daughter",
+            "grandchildren",
+            "loved ones",
+            "visitors"
+          ]
+        ]
+      ],
+      "most_cited": [
+        {
+          "id": "MED:17071925",
+          "title": "Semantic dementia and fluent primary progressive aphasia: two sides of the same coin?",
+          "year": 2006,
+          "doi": "10.1093/brain/awl285",
+          "cited_by": 152
+        },
+        {
+          "id": "MED:27662829",
+          "title": "In the Information Age, do dementia caregivers get the information they need? Semi-structured interviews to determine informal caregivers' education needs, barriers, and preferences.",
+          "year": 2016,
+          "doi": "10.1186/s12877-016-0338-7",
+          "cited_by": 104
+        },
+        {
+          "id": "MED:23578033",
+          "title": "Family caregivers' experiences of relinquishing the care of a person with dementia to a nursing home: insights from a meta-ethnographic study.",
+          "year": 2014,
+          "doi": "10.1111/scs.12046",
+          "cited_by": 102
+        },
+        {
+          "id": "MED:4015463",
+          "title": "Spatial vision in Alzheimer's disease. General findings and a case report.",
+          "year": 1985,
+          "doi": "10.1001/archneur.1985.04060070057015",
+          "cited_by": 74
+        },
+        {
+          "id": "MED:9497906",
+          "title": "Recognition memory and recollective experience in Alzheimer's disease.",
+          "year": 1997,
+          "doi": "10.1080/741941546",
+          "cited_by": 60
+        }
+      ]
+    },
+    "smart glasses": {
+      "papers": 3,
+      "terms": [
+        [
+          [
+            "smart glasses",
+            "google glass"
+          ]
+        ],
+        [
+          [
+            "glasses"
+          ],
+          [
+            "camera",
+            "cameras",
+            "augmented",
+            "wearable",
+            "smart"
+          ]
+        ]
+      ],
+      "most_cited": [
+        {
+          "id": "MED:39574193",
+          "title": "A digitally supported multimodal lifestyle program to promote brain health among older adults (the LETHE randomized controlled feasibility trial): study design, progress, and first results.",
+          "year": 2024,
+          "doi": "10.1186/s13195-024-01615-4",
+          "cited_by": 16
+        },
+        {
+          "id": "MED:42247407",
+          "title": "Uses of assistive technology incorporating smart camera features in the rehabilitation of people living with disabilities: a scoping review.",
+          "year": 2026,
+          "doi": "10.1080/17483107.2026.2678548",
+          "cited_by": 0
+        },
+        {
+          "id": "MED:42460246",
+          "title": "Wearable Electronic Devices for Alzheimer's Disease Care: A Systematic Review of Applications, Benefits, and Challenges.",
+          "year": 2026,
+          "doi": "10.1002/hsr2.72806",
+          "cited_by": 0
+        }
+      ]
+    },
+    "wearable camera": {
+      "papers": 10,
+      "terms": [
+        "wearable camera",
+        "wearable cameras",
+        "sensecam",
+        "lifelogging",
+        "life logging"
+      ],
+      "most_cited": [
+        {
+          "id": "MED:24528204",
+          "title": "The use of a wearable camera improves autobiographical memory in patients with Alzheimer's disease.",
+          "year": 2015,
+          "doi": "10.1080/09658211.2014.886703",
+          "cited_by": 41
+        },
+        {
+          "id": "MED:28124633",
+          "title": "It is not only memory: effects of sensecam on improving well-being in patients with mild alzheimer disease.",
+          "year": 2017,
+          "doi": "10.1017/s104161021600243x",
+          "cited_by": 30
+        },
+        {
+          "id": "MED:38601188",
+          "title": "Feasibility and usability of remote monitoring in Alzheimer's disease.",
+          "year": 2024,
+          "doi": "10.1177/20552076241238133",
+          "cited_by": 18
+        },
+        {
+          "id": "MED:26288888",
+          "title": "Usability of a Wearable Camera System for Dementia Family Caregivers.",
+          "year": 2015,
+          "doi": "10.1260/2040-2295.6.2.213",
+          "cited_by": 17
+        },
+        {
+          "id": "MED:28558637",
+          "title": "The Cognitive Effects of Wearable Cameras in Mild Alzheimer Disease - An Experimental Study.",
+          "year": 2017,
+          "doi": "10.2174/1567205014666170531083015",
+          "cited_by": 13
+        }
+      ]
+    },
+    "voice assistant / conversational AI": {
+      "papers": 85,
+      "terms": [
+        "voice assistant",
+        "voice assistants",
+        "conversational agent",
+        "conversational agents",
+        "chatbot",
+        "chatbots",
+        "alexa",
+        "smart speaker",
+        "smart speakers",
+        "language model",
+        "language models"
+      ],
+      "most_cited": [
+        {
+          "id": "MED:37490317",
+          "title": "ChatGPT vs Google for Queries Related to Dementia and Other Cognitive Decline: Comparison of Results.",
+          "year": 2023,
+          "doi": "10.2196/48966",
+          "cited_by": 59
+        },
+        {
+          "id": "MED:34383672",
+          "title": "Smart Home Sensing and Monitoring in Households With Dementia: User-Centered Design Approach.",
+          "year": 2021,
+          "doi": "10.2196/27047",
+          "cited_by": 52
+        },
+        {
+          "id": "MED:34081019",
+          "title": "Chatbots to Support People With Dementia and Their Caregivers: Systematic Review of Functions and Quality.",
+          "year": 2021,
+          "doi": "10.2196/25006",
+          "cited_by": 42
+        },
+        {
+          "id": "MED:34781881",
+          "title": "Digital personal assistants are smart ways for assistive technology to aid the health and wellbeing of patients and carers.",
+          "year": 2021,
+          "doi": "10.1186/s12877-021-02436-y",
+          "cited_by": 34
+        },
+        {
+          "id": "MED:34170256",
+          "title": "Usability and Acceptance of the Embodied Conversational Agent Anne by People With Dementia and Their Caregivers: Exploratory Study in Home Environment Settings.",
+          "year": 2021,
+          "doi": "10.2196/25891",
+          "cited_by": 21
+        }
+      ]
+    },
+    "memory aid": {
+      "papers": 80,
+      "terms": [
+        "memory aid",
+        "memory aids",
+        "memory book",
+        "memory books",
+        "reminder system",
+        "reminder systems",
+        "cognitive prosthesis"
+      ],
+      "most_cited": [
+        {
+          "id": "MED:1986728",
+          "title": "Memory complaints in older adults. Fact or fiction?",
+          "year": 1991,
+          "doi": "10.1001/archneur.1991.00530130069022",
+          "cited_by": 185
+        },
+        {
+          "id": "MED:22657941",
+          "title": "Medication adherence in older adults with cognitive impairment: a systematic evidence-based review.",
+          "year": 2012,
+          "doi": "10.1016/j.amjopharm.2012.04.004",
+          "cited_by": 147
+        },
+        {
+          "id": "MED:11445026",
+          "title": "Midlife women's attributions about perceived memory changes: observations from the Seattle Midlife Women's Health Study.",
+          "year": 2001,
+          "doi": "10.1089/152460901750269670",
+          "cited_by": 129
+        },
+        {
+          "id": "MED:11536347",
+          "title": "Memory rehabilitation in Alzheimer's disease: a review of progress.",
+          "year": 2001,
+          "doi": "10.1002/gps.428",
+          "cited_by": 95
+        },
+        {
+          "id": "MED:18636436",
+          "title": "Cognitive rehabilitation in patients with mild cognitive impairment.",
+          "year": 2009,
+          "doi": "10.1002/gps.2086",
+          "cited_by": 94
+        }
+      ]
+    },
+    "name badges / tags": {
+      "papers": 1,
+      "terms": [
+        [
+          [
+            "name badge",
+            "name badges",
+            "name tag",
+            "name tags"
+          ]
+        ],
+        [
+          [
+            "name",
+            "names"
+          ],
+          [
+            "badge",
+            "badges"
+          ]
+        ]
+      ],
+      "most_cited": [
+        {
+          "id": "MED:1610511",
+          "title": "When Greta Garbo is easier to remember than Stefan Edberg: influences of prior knowledge on recognition memory in Alzheimer's disease.",
+          "year": 1992,
+          "doi": "10.1037//0882-7974.7.2.214",
+          "cited_by": 6
+        }
+      ]
+    },
+    "photos / reminiscence": {
+      "papers": 145,
+      "terms": [
+        "reminiscence",
+        "family photos",
+        "photo albums",
+        "life story"
+      ],
+      "most_cited": [
+        {
+          "id": "MED:28302633",
+          "title": "Systematic review of systematic reviews of non-pharmacological interventions to treat behavioural disturbances in older patients with dementia. The SENATOR-OnTop series.",
+          "year": 2017,
+          "doi": "10.1136/bmjopen-2016-012759",
+          "cited_by": 302
+        },
+        {
+          "id": "MED:29361069",
+          "title": "Evidence-Based Nonpharmacological Practices to Address Behavioral and Psychological Symptoms of Dementia.",
+          "year": 2018,
+          "doi": "10.1093/geront/gnx167",
+          "cited_by": 183
+        },
+        {
+          "id": "MED:18855170",
+          "title": "What is meaningful activity for people with dementia living in care homes? A comparison of the views of older people with dementia, staff and family carers.",
+          "year": 2008,
+          "doi": "10.1080/13607860802343019",
+          "cited_by": 144
+        },
+        {
+          "id": "MED:31108489",
+          "title": "A Mini-Review of Virtual Reality-Based Interventions to Promote Well-Being for People Living with Dementia and Mild Cognitive Impairment.",
+          "year": 2019,
+          "doi": "10.1159/000500040",
+          "cited_by": 115
+        },
+        {
+          "id": "MED:23578033",
+          "title": "Family caregivers' experiences of relinquishing the care of a person with dementia to a nursing home: insights from a meta-ethnographic study.",
+          "year": 2014,
+          "doi": "10.1111/scs.12046",
+          "cited_by": 102
+        }
+      ]
+    },
+    "masks / PPE": {
+      "papers": 14,
+      "terms": [
+        [
+          [
+            "face masks",
+            "face mask",
+            "personal protective",
+            "protective equipment",
+            "ppe"
+          ]
+        ],
+        [
+          [
+            "masks",
+            "mask"
+          ],
+          [
+            "covid",
+            "pandemic",
+            "wearing",
+            "worn"
+          ]
+        ]
+      ],
+      "most_cited": [
+        {
+          "id": "MED:35010779",
+          "title": "The Impact of Social Distancing Due to the COVID-19 Pandemic on People with Dementia, Family Carers and Healthcare Professionals: A Qualitative Study.",
+          "year": 2022,
+          "doi": "10.3390/ijerph19010519",
+          "cited_by": 40
+        },
+        {
+          "id": "MED:33325324",
+          "title": "Ethical care during COVID-19 for care home residents with dementia.",
+          "year": 2021,
+          "doi": "10.1177/0969733020976194",
+          "cited_by": 27
+        },
+        {
+          "id": "MED:33818339",
+          "title": "Reopening the doors of Dutch nursing homes during the COVID-19 crisis: results of an in-depth monitoring.",
+          "year": 2022,
+          "doi": "10.1017/s1041610221000296",
+          "cited_by": 23
+        },
+        {
+          "id": "MED:36136803",
+          "title": "Experiences of Nurses in Nursing Homes during the COVID-19 Pandemic in Germany: A Qualitative Study.",
+          "year": 2022,
+          "doi": "10.3390/geriatrics7050094",
+          "cited_by": 12
+        },
+        {
+          "id": "MED:33196279",
+          "title": "Medical home visit programs during COVID-19 state of emergency.",
+          "year": 2020,
+          "doi": "10.37765/ajmc.2020.88467",
+          "cited_by": 10
+        }
+      ]
+    },
+    "visiting restrictions / separation": {
+      "papers": 36,
+      "terms": [
+        [
+          [
+            "visiting restrictions",
+            "visitor restrictions",
+            "visiting ban"
+          ]
+        ],
+        [
+          [
+            "visits",
+            "visiting",
+            "visitors",
+            "visitation"
+          ],
+          [
+            "family",
+            "families",
+            "relatives"
+          ],
+          [
+            "covid",
+            "pandemic",
+            "restrictions",
+            "lockdown",
+            "separation"
+          ]
+        ]
+      ],
+      "most_cited": [
+        {
+          "id": "MED:32736918",
+          "title": "Experiences and Needs of Caregivers of Persons With Dementia in India During the COVID-19 Pandemic-A Qualitative Study.",
+          "year": 2020,
+          "doi": "10.1016/j.jagp.2020.06.026",
+          "cited_by": 82
+        },
+        {
+          "id": "MED:35010779",
+          "title": "The Impact of Social Distancing Due to the COVID-19 Pandemic on People with Dementia, Family Carers and Healthcare Professionals: A Qualitative Study.",
+          "year": 2022,
+          "doi": "10.3390/ijerph19010519",
+          "cited_by": 40
+        },
+        {
+          "id": "MED:35168546",
+          "title": "Working in a care home during the COVID-19 pandemic: How has the pandemic changed working practices? A qualitative study.",
+          "year": 2022,
+          "doi": "10.1186/s12877-022-02822-0",
+          "cited_by": 34
+        },
+        {
+          "id": "MED:34929196",
+          "title": "Caring for a Relative With Dementia in Long-Term Care During COVID-19.",
+          "year": 2022,
+          "doi": "10.1016/j.jamda.2021.11.026",
+          "cited_by": 26
+        },
+        {
+          "id": "MED:34370003",
+          "title": "Assisted Living Residents With Dementia: Being Out in the World and Negotiating Connections.",
+          "year": 2022,
+          "doi": "10.1093/geront/gnab113",
+          "cited_by": 16
+        }
+      ]
+    },
+    "truth-telling / deception": {
+      "papers": 135,
+      "terms": [
+        [
+          [
+            "truth telling",
+            "deception",
+            "deceptive",
+            "therapeutic lying",
+            "white lies",
+            "validation therapy"
+          ]
+        ],
+        [
+          [
+            "lying",
+            "lies"
+          ],
+          [
+            "truth",
+            "honesty",
+            "deception",
+            "ethical",
+            "ethics"
+          ]
+        ]
+      ],
+      "most_cited": [
+        {
+          "id": "MED:28302633",
+          "title": "Systematic review of systematic reviews of non-pharmacological interventions to treat behavioural disturbances in older patients with dementia. The SENATOR-OnTop series.",
+          "year": 2017,
+          "doi": "10.1136/bmjopen-2016-012759",
+          "cited_by": 302
+        },
+        {
+          "id": "MED:25985438",
+          "title": "Tools to Promote Shared Decision Making in Serious Illness: A Systematic Review.",
+          "year": 2015,
+          "doi": "10.1001/jamainternmed.2015.1679",
+          "cited_by": 215
+        },
+        {
+          "id": "MED:29361069",
+          "title": "Evidence-Based Nonpharmacological Practices to Address Behavioral and Psychological Symptoms of Dementia.",
+          "year": 2018,
+          "doi": "10.1093/geront/gnx167",
+          "cited_by": 183
+        },
+        {
+          "id": "MED:31357918",
+          "title": "A systematic review and meta-analysis of the Test of Memory Malingering in adults: Two decades of deception detection.",
+          "year": 2020,
+          "doi": "10.1080/13854046.2019.1637027",
+          "cited_by": 122
+        },
+        {
+          "id": "MED:21978867",
+          "title": "Comprehension of insincere communication in neurodegenerative disease: lies, sarcasm, and theory of mind.",
+          "year": 2012,
+          "doi": "10.1016/j.cortex.2011.08.003",
+          "cited_by": 111
+        }
+      ]
+    },
+    "privacy / consent / surveillance": {
+      "papers": 317,
+      "terms": [
+        [
+          [
+            "privacy"
+          ]
+        ],
+        [
+          [
+            "surveillance"
+          ],
+          [
+            "camera",
+            "cameras",
+            "video",
+            "sensor",
+            "sensors",
+            "gps",
+            "wearable",
+            "wearables",
+            "smart"
+          ]
+        ],
+        [
+          [
+            "consent"
+          ],
+          [
+            "camera",
+            "cameras",
+            "video",
+            "sensor",
+            "sensors",
+            "gps",
+            "wearable",
+            "wearables",
+            "smart"
+          ],
+          [
+            "recording",
+            "recordings",
+            "recorded",
+            "monitoring",
+            "data"
+          ]
+        ]
+      ],
+      "most_cited": [
+        {
+          "id": "MED:12473010",
+          "title": "Nursing home facility risk factors for infection and hospitalization: importance of registered nurse turnover, administration, and social factors.",
+          "year": 2002,
+          "doi": "10.1046/j.1532-5415.2002.50610.x",
+          "cited_by": 163
+        },
+        {
+          "id": "MED:39293530",
+          "title": "AI-driven innovations in Alzheimer's disease: Integrating early diagnosis, personalized treatment, and prognostic modelling.",
+          "year": 2024,
+          "doi": "10.1016/j.arr.2024.102497",
+          "cited_by": 107
+        },
+        {
+          "id": "MED:21500008",
+          "title": "Ethics of using assistive technology in the care for community-dwelling elderly people: an overview of the literature.",
+          "year": 2011,
+          "doi": "10.1080/13607863.2010.543662",
+          "cited_by": 101
+        },
+        {
+          "id": "MED:20646105",
+          "title": "In situ monitoring of health in older adults: technologies and issues.",
+          "year": 2010,
+          "doi": "10.1111/j.1532-5415.2010.02959.x",
+          "cited_by": 99
+        },
+        {
+          "id": "MED:33480172",
+          "title": "MarkVCID cerebral small vessel consortium: I. Enrollment, clinical, fluid protocols.",
+          "year": 2021,
+          "doi": "10.1002/alz.12215",
+          "cited_by": 97
+        }
+      ]
+    },
+    "bystanders / others on camera": {
+      "papers": 6,
+      "terms": [
+        [
+          [
+            "bystander",
+            "bystanders"
+          ]
+        ],
+        [
+          [
+            "privacy"
+          ],
+          [
+            "camera",
+            "cameras",
+            "video"
+          ],
+          [
+            "residents",
+            "staff",
+            "visitors",
+            "roommates"
+          ]
+        ]
+      ],
+      "most_cited": [
+        {
+          "id": "MED:40454424",
+          "title": "Virtual Data Collection Strategies in Research on Alzheimer's Disease and Related Dementias (ADRD).",
+          "year": 2025,
+          "doi": "10.1093/geroni/igaf026",
+          "cited_by": 4
+        },
+        {
+          "id": "MED:36681841",
+          "title": "Privacy-protecting behaviours of risk detection in people with dementia using videos.",
+          "year": 2023,
+          "doi": "10.1186/s12938-023-01065-3",
+          "cited_by": 3
+        },
+        {
+          "id": "MED:40900593",
+          "title": "Telehealth Care for People With Serious Illnesses and Preferred Languages Other Than English.",
+          "year": 2025,
+          "doi": "10.1001/jamanetworkopen.2025.29880",
+          "cited_by": 2
+        },
+        {
+          "id": "MED:34971068",
+          "title": "Developing a digital assistive tool for dementia patients and their caregivers: A qualitative study on needs, potential functions, practical requirements, user acceptance, and ethical considerations.",
+          "year": 2021,
+          "doi": "10.1002/alz.056015",
+          "cited_by": 1
+        },
+        {
+          "id": "MED:40445956",
+          "title": "Staff, resident, and care partner perceptions on the use of a personalized tablet to mitigate the impact of isolation in long-term care residents.",
+          "year": 2025,
+          "doi": "10.1371/journal.pone.0319005",
+          "cited_by": 0
+        }
+      ]
+    },
+    "staff turnover / agency staff": {
+      "papers": 53,
+      "terms": [
+        [
+          [
+            "staff turnover",
+            "agency staff",
+            "staff shortages",
+            "staffing levels"
+          ]
+        ],
+        [
+          [
+            "turnover"
+          ],
+          [
+            "staff",
+            "workforce",
+            "nurses",
+            "employee",
+            "employees"
+          ]
+        ]
+      ],
+      "most_cited": [
+        {
+          "id": "MED:12473010",
+          "title": "Nursing home facility risk factors for infection and hospitalization: importance of registered nurse turnover, administration, and social factors.",
+          "year": 2002,
+          "doi": "10.1046/j.1532-5415.2002.50610.x",
+          "cited_by": 163
+        },
+        {
+          "id": "MED:20500254",
+          "title": "A systematic review of what factors attract and retain nurses in aged and dementia care.",
+          "year": 2010,
+          "doi": "10.1111/j.1365-2702.2009.02955.x",
+          "cited_by": 74
+        },
+        {
+          "id": "MED:32029016",
+          "title": "Systematic review on barriers and facilitators of complex interventions for residents with dementia in long-term care.",
+          "year": 2021,
+          "doi": "10.1017/s1041610220000034",
+          "cited_by": 51
+        },
+        {
+          "id": "MED:15840073",
+          "title": "Working in long-term care settings for older people with dementia: nurses' aides.",
+          "year": 2005,
+          "doi": "10.1111/j.1365-2702.2004.01111.x",
+          "cited_by": 43
+        },
+        {
+          "id": "MED:26374231",
+          "title": "COSMOS--improving the quality of life in nursing home patients: protocol for an effectiveness-implementation cluster randomized clinical hybrid trial.",
+          "year": 2015,
+          "doi": "10.1186/s13012-015-0310-5",
+          "cited_by": 35
+        }
+      ]
+    }
+  }
+}

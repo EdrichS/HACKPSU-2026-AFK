@@ -1,0 +1,48 @@
+[
+  {
+    "id": "MED:21867384",
+    "verdict": "corrected",
+    "problems": [
+      "Minor: method_and_sample says 'two rounds of one-to-one interviews', but the abstract only says that phase one involved 'a series of one-to-one interviews with People with Dementia' and that in phase two 'the participants were re-interviewed'. It does not say the phase-two interviews were one-to-one."
+    ],
+    "corrected_fields": {
+      "method_and_sample": "qualitative Grounded Theory study with a two-phased design: a series of one-to-one interviews with people with dementia, then re-interviews of the same participants to develop the emerging theory; sample size, dementia stage and country not given in the abstract"
+    },
+    "checked_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:21867384%20AND%20SRC:MED&format=json&resultType=core"
+  },
+  {
+    "id": "MED:34081019",
+    "verdict": "corrected",
+    "problems": [
+      "finding_for_nametags overstates the usability problem. It says skills that needed exact commands or pronunciations 'were hard to use even for the researchers'. The paper says the evaluators had trouble getting the voice skills started, because some instances of Alexa voice recognition 'were not flexible with the user’s pronunciation of commands or required a specific command to get started', and that limited programmed content 'created challenges when evaluators did not use specific commands'. But it also says '5 of the 6 chatbots were found to be easy to use once the researchers were able to get the programs started', and the abstract says the chatbots 'were generally found to be easy to use'.",
+      "Minor: finding_for_nametags says none of the apps 'had peer-reviewed research behind it'. The paper says 'no peer-reviewed research was identified for any of the apps', and adds that after the review the CogniCare developers 'published a peer-reviewed article on the development of their apps', which 'did not report outcome findings for users'."
+    ],
+    "corrected_fields": {
+      "finding_for_nametags": "In this review of commercial dementia chatbots, only 6 of the 505 found met the criteria (5 were Alexa voice skills), and no peer-reviewed research was identified for any of them (after the review, the CogniCare developers published a peer-reviewed article on developing their apps that reported no outcome findings for users). The researchers had trouble getting some voice skills started, because Alexa's voice recognition was not always flexible with their pronunciation or a skill needed a specific command to start, and most apps' limited programmed content created challenges whenever the evaluators did not use specific commands, although 5 of the 6 were easy to use once started; the authors warn this may create barriers for people with cognitive impairment. For Nova that is a caution about depending on a spoken wake word (\"Nova\", \"Hey Nova\"), not evidence about Nova itself: no person with dementia tested the apps in this review, and their dialog was pre-programmed and narrow, unlike Nova's language model."
+    },
+    "checked_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC8212632/fullTextXML"
+  },
+  {
+    "id": "MED:34170256",
+    "verdict": "confirmed",
+    "problems": [],
+    "checked_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC8386369/fullTextXML"
+  },
+  {
+    "id": "MED:21500008",
+    "verdict": "confirmed",
+    "problems": [],
+    "checked_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:21500008%20AND%20SRC:MED&format=json&resultType=core"
+  },
+  {
+    "id": "MED:36681841",
+    "verdict": "corrected",
+    "problems": [
+      "finding_for_nametags attaches '(AUC 0.823 vs 0.822)' to 'skeletons or masks', but 0.823 is the segmentation-mask result alone; the best skeleton result was 0.812 (Table 2 and the Conclusions; the abstract gives 0.807 for the skeleton approach). Both hold only with the background kept: when the background was removed as well, the privacy-protecting inputs scored 0.640 to 0.765, below raw video (0.791 to 0.822). The paper's own Background section uses the same 0.823 vs 0.822 shorthand, so this is a precision fix, not a reversal."
+    ],
+    "corrected_fields": {
+      "finding_for_nametags": "In a Toronto dementia unit whose common-area camera feed also caught other residents, staff and visitors, the study turned audio off, kept cameras out of bedrooms and washrooms, and had staff and participants' substitute decision-makers give written consent. Replacing people with skeletons or segmentation masks while keeping the background kept risk detection about as good as raw video (best AUC(ROC) 0.812 for skeletons and 0.823 for masks, vs 0.822 for raw video); removing the background as well lowered it to 0.640 to 0.765. That is a concrete precedent for tension 3, set against glasses that go wherever the wearer goes, transcribe what everyone says and exist to identify people, the very information this study removed."
+    },
+    "checked_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC9863094/fullTextXML"
+  }
+]
