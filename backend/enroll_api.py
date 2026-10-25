@@ -20,6 +20,7 @@ from contract.setup_api import Person, PersonIn
 from db import people as people_db
 from db import photos as photos_db
 from db import voice as voice_db
+from db import context as context_db
 from db.errors import Conflict
 from embedders.voice import decode_wav, encode_wav
 from enroll import store
@@ -187,14 +188,31 @@ def enroll(
                 path = store.new_file(state.data_dir, "voice", "wav", data)
                 written.append(path)
                 sample_ids.append(voice_db.add_voice(conn, person.id, str(path), embedding, state.voice_embedder.spec.model))
-            facts = 0
-            if notes.strip():
-                person = store.save_context_of(conn, person.id, notes)
-                facts = len(store.split_facts(notes))
-            else:
-                person = people_db.get_person(conn, person.id)
+            person = people_db.get_person(conn, person.id)
     except BaseException:
         for path in written:
             path.unlink(missing_ok=True)
         raise
+    facts = 0
+    if notes.strip():
+        person, facts = store_notes(state, person.id, notes)
     return EnrollOut(person=person, photo_ids=photo_ids, face_ids=face_ids, voice_sample_ids=sample_ids, facts=facts, skipped_photos=skipped)
+
+
+def store_notes(state, person_id: int, notes: str) -> tuple[Person, int]:
+    """The wizard's notes become facts and a card the context owner's way (backend.gemini, the
+    same call as POST /people/{id}/notes). Without Gemini, or if it adds nothing, the notes are
+    stored as typed so nothing the family wrote is lost."""
+    if getattr(state, "gemini", False):
+        from backend import gemini
+
+        with state.pool.connection() as conn:
+            before = {f.id for f in context_db.list_facts(conn, person_id)}
+        person = gemini.update_context(state.pool, person_id, notes, "notes")
+        with state.pool.connection() as conn:
+            added = len([f for f in context_db.list_facts(conn, person_id) if f.id not in before])
+        if added:
+            return person, added
+        log.warning("Gemini added no facts from the notes for person %s; storing them as typed", person_id)
+    with state.pool.connection() as conn:
+        return store.save_context_of(conn, person_id, notes), len(store.split_facts(notes))

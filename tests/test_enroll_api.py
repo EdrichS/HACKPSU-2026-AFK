@@ -126,3 +126,27 @@ def test_the_test_ui_is_served(backend_client):
     assert backend_client.get("/ui/live.html").status_code == 200
     assert backend_client.get("/ui/common.js").status_code == 200
     assert backend_client.get("/", follow_redirects=False).headers["location"] == "/ui/"
+
+
+def test_enroll_notes_go_through_gemini_when_it_is_on(backend_client, backend_module, monkeypatch, speech_as_is, conn):
+    from tests.gemini_fakes import FakeGemini
+
+    fake = FakeGemini(facts={"new_facts": ["Maya is studying nursing.", "Maya visits most Sundays."]}, card={"small_context": "Studying nursing | Ask about: Sunday visits"})
+    monkeypatch.setattr("backend.gemini.get_client", lambda: fake)
+    backend_module.app.state.gemini = True
+    r = backend_client.post("/enroll", data={"name": "Maya", "relationship": "granddaughter", "notes": "I'm studying nursing and I visit most Sundays."})
+    assert r.status_code == 201, r.text
+    assert r.json()["facts"] == 2
+    assert r.json()["person"]["small_context"] == "Studying nursing | Ask about: Sunday visits"
+    assert fake.kinds() == ["facts", "card"] and "Typed notes" in fake.contents("facts")
+    assert [f.text for f in list_facts(conn, r.json()["person"]["id"])] == ["Maya is studying nursing.", "Maya visits most Sundays."]
+
+
+def test_enroll_notes_are_kept_as_typed_when_gemini_adds_nothing(backend_client, backend_module, monkeypatch, speech_as_is):
+    from tests.gemini_fakes import FakeGemini
+
+    monkeypatch.setattr("backend.gemini.get_client", lambda: FakeGemini(facts=RuntimeError("quota")))
+    backend_module.app.state.gemini = True
+    r = backend_client.post("/enroll", data={"name": "Maya", "relationship": "granddaughter", "notes": "I visit most Sundays."})
+    assert r.status_code == 201 and r.json()["facts"] == 1
+    assert r.json()["person"]["small_context"] == "I visit most Sundays."

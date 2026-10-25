@@ -71,7 +71,8 @@ deletes every person, photo and recording.
 
 | Variable | Default | Meaning |
 |---|---|---|
-| `ANTHROPIC_API_KEY` | empty | visit summaries and Nova; without it the API still recognizes and captions |
+| `GEMINI_API_KEY` | empty | notes and visit summaries into facts and cards; without it notes are stored as typed and visits aren't summarized |
+| `ANTHROPIC_API_KEY` | empty | Nova; without it the API still recognizes, captions and summarizes |
 | `NAMETAGS_CORS_ORIGINS` | `*` | origins the UI is served from; `*` for any |
 | `NAMETAGS_PORT` | `8000` | host port |
 | `NAMETAGS_EMBEDDERS` | `real` | `fake` uses the contract's stand-ins (tests only) |

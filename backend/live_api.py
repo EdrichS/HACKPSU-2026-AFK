@@ -179,14 +179,15 @@ class LiveSession:
         return [WhoAnswer(text=self.presence.who_answer())]
 
     def end_visit(self) -> list:
+        """The transcript goes to the context owner's Gemini flow, once per visitor."""
         visit, self.visit = self.visit, Visit()
-        if not visit.lines or self.state.claude is None:
+        if not visit.lines:
             return []
         out = []
-        for r in save_visit(self.pool, self.state.claude, visit, self.user_name, self.user_id):
+        for r in save_visit(self.pool, visit, self.user_id):
             if r.updated is not None:
                 self._facts.pop(r.person.person_id, None)
-                out.append(VisitSaved(person_id=r.person.person_id, name=r.person.name, new_facts=r.summary.new_facts, small_context=r.updated.small_context))
+                out.append(VisitSaved(person_id=r.person.person_id, name=r.person.name, new_facts=r.new_facts, small_context=r.updated.small_context))
         return out
 
     def handle(self, msg) -> list:

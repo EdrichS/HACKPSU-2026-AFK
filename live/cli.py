@@ -15,7 +15,9 @@ from db.connect import DEFAULT_URL, DatabaseUnavailable, EmbedderMismatch, check
 from enroll import store
 from enroll.cli import bold, dim, green, red, yellow
 from live.presence import Presence
-from live.visit import MODEL, Visit, VisitResult, save_visit
+from live.visit import Visit, VisitResult, save_visit
+
+MODEL = "claude-opus-5-5"  # Nova's brain; visit summaries are Gemini's (backend.gemini)
 
 ROOT = Path(__file__).resolve().parents[1]
 log = logging.getLogger("live")
@@ -82,7 +84,8 @@ class Session:
         self.nova_state = ""
         self.speaker = None
         self.assistant = None
-        self.client = None
+        self.client = None  # Anthropic, for Nova only
+        self.gemini = False  # whether visits can become facts and cards
         self.logfile = open(args.log, "a", encoding="utf-8") if args.log else None
 
     # -- output -----------------------------------------------------------------------------
@@ -141,26 +144,24 @@ class Session:
             return
         known = [p for pid, p in visit.people.items() if pid != self.user_id]
         print(f"\n{bold('visit over')} ({reason}): {len(visit.lines)} line(s), {', '.join(p.name for p in known) or 'no one known'}", flush=True)
-        if not known or self.client is None or self.args.no_summary:
-            if known and (self.client is None or self.args.no_summary):
-                print(dim("  not summarized (no Claude)"), flush=True)
+        if not known:
+            return
+        if self.args.no_summary or not self.gemini:
+            print(dim("  not summarized (" + ("--no-summary" if self.args.no_summary else "no GEMINI_API_KEY") + ")"), flush=True)
             return
         self.nova_state = "summarizing the visit..."
-        for r in save_visit(self.pool, self.client, visit, self.user_name, self.user_id, self.args.model):
+        for r in save_visit(self.pool, visit, self.user_id):
             self._report(r)
         self.nova_state = ""
 
     def _report(self, r: VisitResult) -> None:
-        if r.summary is None:
-            print(red(f"  {r.person.name}: summary failed; card and facts unchanged"), flush=True)
+        if r.updated is None:
+            print(yellow(f"  {r.person.name}: nothing stored (Gemini failed, or nothing new was said)"), flush=True)
             return
-        print(green(f"  {r.person.name}: {len(r.summary.new_facts)} new fact(s)"), flush=True)
-        for fact in r.summary.new_facts:
+        print(green(f"  {r.person.name}: {len(r.new_facts)} new fact(s)"), flush=True)
+        for fact in r.new_facts:
             print(f"    + {fact}", flush=True)
-        if r.updated is not None:
-            print(f"    card: {r.updated.small_context}", flush=True)
-        else:
-            print(yellow("    nothing stored"), flush=True)
+        print(f"    card: {r.updated.small_context}", flush=True)
 
     def idle_watch(self) -> None:
         """Ends a visit after a long silence."""
@@ -216,14 +217,20 @@ def run(args) -> int:
         from live.nova import NovaBrain, make_speaker
 
         session.speaker = make_speaker(not args.no_tts, args.tts_voice, say=lambda t: None)
-        want_claude = (not args.no_nova or not args.no_summary) and transcriber is not None
-        if want_claude:
+        if transcriber is not None and not args.no_summary:
+            from backend import gemini
+
+            gemini.load_env()
+            session.gemini = bool(os.environ.get("GEMINI_API_KEY"))
+            if not session.gemini:
+                print(yellow("no GEMINI_API_KEY in the environment or .env: visits won't be summarized"), flush=True)
+        if not args.no_nova and transcriber is not None:
             if os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("ANTHROPIC_AUTH_TOKEN"):
                 import anthropic
 
                 session.client = anthropic.Anthropic()
             else:
-                print(yellow("no ANTHROPIC_API_KEY in the environment or .env: no Nova, no visit summaries"), flush=True)
+                print(yellow("no ANTHROPIC_API_KEY in the environment or .env: no Nova"), flush=True)
         if session.client is not None and not args.no_nova:
             from voice_rec.assistant import Assistant, WakeWord
 
