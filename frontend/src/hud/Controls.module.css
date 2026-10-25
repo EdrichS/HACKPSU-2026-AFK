@@ -28,6 +28,16 @@
   opacity: 0.45;
 }
 
+/* Top right, level with the live pill, above where the info panel starts (112px). */
+.home {
+  top: calc(36px * var(--hud-scale, 1));
+  right: calc(44px * var(--hud-scale, 1));
+  padding: 10px 18px;
+  font-size: 14px;
+  color: #ffffff;
+  text-decoration: none;
+}
+
 /* Centered on the stage, at screen size. */
 .start {
   inset: 0;

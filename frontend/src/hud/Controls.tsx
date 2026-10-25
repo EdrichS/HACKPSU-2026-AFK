@@ -1,7 +1,18 @@
-// The HUD's two buttons. Neither is designed; both wear the live pill's glass.
+// The HUD's buttons and its way home. None is designed; all wear the live pill's glass.
+
+import { Link } from "react-router";
 
 import styles from "./Controls.module.css";
 import pill from "./Pill.module.css";
+
+/** Back to the launcher. Top right, above the info panel. */
+export function HomeLink() {
+  return (
+    <Link to="/" className={`${pill.glass} ${styles.button} ${styles.home}`}>
+      Home
+    </Link>
+  );
+}
 
 /** Browsers need a click before speech and before the camera and mic prompts. */
 export function StartButton({ onClick }: { onClick: () => void }) {

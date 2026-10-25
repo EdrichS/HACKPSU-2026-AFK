@@ -103,6 +103,9 @@ export function PersonScreen() {
           <Button variant="secondary" to="/manage" icon="arrow-left">
             People
           </Button>
+          <Button variant="secondary" to="/">
+            Home
+          </Button>
         </ActionBar>
       }
     >
