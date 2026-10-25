@@ -16,6 +16,14 @@ def fake(monkeypatch):
     return fake
 
 
+@pytest.fixture
+def no_key(monkeypatch):
+    def missing():
+        raise RuntimeError("GEMINI_API_KEY is not set")
+
+    monkeypatch.setattr(gemini, "get_client", missing)
+
+
 def new_person(client, name="David", relationship="grandson") -> int:
     return client.post("/people", json={"name": name, "relationship": relationship}).json()["id"]
 
@@ -80,14 +88,30 @@ def test_a_failed_card_call_keeps_the_facts_and_the_old_card(backend_client, fak
     assert ("David is a nurse.", "notes") in facts_of(backend_client, pid)
 
 
-def test_without_a_key_the_route_still_answers(backend_client, monkeypatch):
-    def no_key():
-        raise RuntimeError("GEMINI_API_KEY is not set")
-
-    monkeypatch.setattr(gemini, "get_client", no_key)
+def test_without_a_key_the_route_still_answers(backend_client, no_key):
     pid = new_person(backend_client)
     r = backend_client.post(f"/people/{pid}/notes", json={"text": "I'm a nurse."})
     assert r.status_code == 200 and r.json()["small_context"] == ""
+
+
+def test_without_a_key_notes_are_kept_as_typed(backend_client, no_key):
+    pid = new_person(backend_client)
+    backend_client.post(f"/people/{pid}/notes", json={"text": "I am a nurse. I love cars."})
+    assert facts_of(backend_client, pid) == [("I am a nurse.", "notes"), ("I love cars.", "notes")]
+
+
+def test_without_a_key_a_conversation_says_it_was_not_stored(backend_client, no_key):
+    pid = new_person(backend_client)
+    r = backend_client.post(f"/people/{pid}/conversation", json=VISIT)
+    assert r.status_code == 503
+    assert facts_of(backend_client, pid) == []
+
+
+def test_without_a_key_unknown_people_and_blank_text_answer_as_before(backend_client, no_key):
+    assert backend_client.post("/people/999/notes", json={"text": "Hi"}).status_code == 404
+    assert backend_client.post("/people/999/conversation", json=VISIT).status_code == 404
+    pid = new_person(backend_client)
+    assert backend_client.post(f"/people/{pid}/conversation", json={"lines": []}).status_code == 200
 
 
 def test_blank_text_makes_no_call(backend_client, fake):
