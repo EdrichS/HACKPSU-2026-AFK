@@ -1,4 +1,4 @@
-"""Person context with Gemini: new text -> new facts -> a fresh card.
+"""Person context with Claude: new text -> new facts -> a fresh card.
 
 Two calls, each with its own prompt, because the two jobs have different scopes:
 
@@ -8,8 +8,11 @@ Two calls, each with its own prompt, because the two jobs have different scopes:
 - The card call reads the stored facts plus the new ones (never the raw text) and writes the card:
   at most CARD_LIMIT characters, recent, upbeat, with things to ask about. No bad news.
 
-update_context runs the flow for one person, holding no database connection while Gemini works.
+update_context runs the flow for one person, holding no database connection while Claude works.
 A failed facts call changes nothing. A failed card call still stores the facts and keeps the old card.
+
+Each call uses structured output (output_config.format with a JSON schema), so the reply is always
+a JSON object of the schema's shape: the facts list, or the card. The same ANTHROPIC_API_KEY as Nova's.
 """
 
 import json
@@ -26,12 +29,11 @@ from contract.setup_api import Fact, Person, TranscriptLine
 from db import context, people
 from db.errors import NotFound
 
-log = logging.getLogger("backend.gemini")
+log = logging.getLogger("backend.context")
 
 ROOT = Path(__file__).resolve().parents[1]
-# Newest stable Flash model as of 2026-10-24 (https://ai.google.dev/gemini-api/docs/models).
-DEFAULT_MODEL = "gemini-3.8-flash"
-THINKING_LEVEL = "low"  # 3.8 Flash takes low, medium (its default) or high; low keeps "End visit" quick
+DEFAULT_MODEL = "claude-opus-5-5"  # the same model as Nova (live/cli.py); CONTEXT_MODEL overrides it
+MAX_TOKENS = 1024  # a reply is a short list of facts, or one card
 CARD_LIMIT = 200  # characters; the database allows 300, the card is kept shorter to read at a glance
 FACT_LIMIT = context.LIMIT  # 300 characters, the database's limit
 
@@ -93,15 +95,18 @@ Rules:
    graduated") or leave it out.
 """
 
+# The reply shapes, as JSON schemas for structured output (objects must close additionalProperties).
 FACTS_SCHEMA = {
     "type": "object",
     "properties": {"new_facts": {"type": "array", "items": {"type": "string"}}},
     "required": ["new_facts"],
+    "additionalProperties": False,
 }
 CARD_SCHEMA = {
     "type": "object",
     "properties": {"small_context": {"type": "string"}},
     "required": ["small_context"],
+    "additionalProperties": False,
 }
 
 Source = Literal["conversation", "notes"]
@@ -109,20 +114,22 @@ Text = str | list[TranscriptLine]
 
 
 def load_env() -> None:
-    """GEMINI_API_KEY (and GEMINI_MODEL) from the repo's gitignored .env, never overriding real env vars."""
+    """ANTHROPIC_API_KEY (and CONTEXT_MODEL) from the repo's gitignored .env, never overriding real env vars."""
     load_dotenv(ROOT / ".env")
 
 
-def make_client():
-    from google import genai
-    from google.genai import types
-
+def configured() -> bool:
+    """Whether notes and visits can become facts and cards: an Anthropic key is set."""
     load_env()
-    if not os.environ.get("GEMINI_API_KEY"):
-        raise RuntimeError("GEMINI_API_KEY is not set; put it in the repo's .env")
-    # Flash answers 503 "high demand" now and then; retry a few times before giving up.
-    retry = types.HttpRetryOptions(attempts=4, initial_delay=1.0, max_delay=8.0, http_status_codes=[429, 500, 503, 504])
-    return genai.Client(http_options=types.HttpOptions(retry_options=retry))  # reads GEMINI_API_KEY
+    return bool(os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("ANTHROPIC_AUTH_TOKEN"))
+
+
+def make_client():
+    import anthropic
+
+    if not configured():
+        raise RuntimeError("ANTHROPIC_API_KEY is not set; put it in the repo's .env")
+    return anthropic.Anthropic(max_retries=3)  # reads ANTHROPIC_API_KEY; retries 429, 5xx and overloads
 
 
 _client = None
@@ -193,20 +200,26 @@ def card_request(person: Person, existing: list[Fact], new_facts: list[str], sou
     )
 
 
-def _ask(client, system: str, contents: str, schema: dict) -> dict:
-    from google.genai import types
+def model_name() -> str:
+    """CONTEXT_MODEL when set to something; docker-compose passes it through empty otherwise."""
+    return os.environ.get("CONTEXT_MODEL", "").strip() or DEFAULT_MODEL
 
-    response = client.models.generate_content(
-        model=os.environ.get("GEMINI_MODEL", DEFAULT_MODEL),
-        contents=contents,
-        config=types.GenerateContentConfig(
-            system_instruction=system,
-            response_mime_type="application/json",
-            response_json_schema=schema,
-            thinking_config=types.ThinkingConfig(thinking_level=THINKING_LEVEL),
-        ),
+
+def _ask(client, system: str, contents: str, schema: dict) -> dict:
+    """One call: the system prompt, the request, and the schema the JSON reply must follow."""
+    response = client.messages.create(
+        model=model_name(),
+        max_tokens=MAX_TOKENS,
+        system=system,
+        messages=[{"role": "user", "content": contents}],
+        output_config={"format": {"type": "json_schema", "schema": schema}},
     )
-    data = json.loads(response.text)
+    if getattr(response, "stop_reason", None) == "max_tokens":
+        raise ValueError("the reply was cut off")
+    text = next((block.text for block in response.content if getattr(block, "type", "") == "text"), None)
+    if text is None:
+        raise ValueError("the reply holds no text")
+    data = json.loads(text)
     if not isinstance(data, dict):
         raise ValueError("the reply is not a JSON object")
     return data
@@ -259,7 +272,7 @@ def _patient_name(conn) -> str | None:
 def update_context(pool: ConnectionPool, person_id: int, text: Text, source: Source, client=None, today: date | None = None) -> Person:
     """New text about one person -> new facts -> a fresh card. Returns the person as stored afterwards.
 
-    Raises NotFound for an unknown person. Every Gemini failure is logged and leaves the old card.
+    Raises NotFound for an unknown person. Every Claude failure is logged and leaves the old card.
     """
     today = today or date.today()
     with pool.connection() as conn:
@@ -273,8 +286,8 @@ def update_context(pool: ConnectionPool, person_id: int, text: Text, source: Sou
 
     try:
         client = client or get_client()
-    except Exception as e:  # noqa: BLE001  (no key, or no SDK: the app keeps working without Gemini)
-        log.error("no Gemini client, %s's context is unchanged: %s", person.name, e)
+    except Exception as e:  # noqa: BLE001  (no key, or no SDK: the app keeps working without Claude)
+        log.error("no Claude client, %s's context is unchanged: %s", person.name, e)
         return person
 
     new_facts = extract_facts(client, person, existing, text, today, patient)

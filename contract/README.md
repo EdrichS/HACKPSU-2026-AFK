@@ -69,17 +69,17 @@ It makes no network calls.
 | `GET /photos/{id}/image` | — | the stored image; 404 for an unknown photo |
 | `DELETE /photos/{id}` | — | `204`, the photo and every face in it are gone; 404 for an unknown photo *(real backend)* |
 | `POST /faces/{face_id}/assign` | `AssignIn` (`person_id`, or null to unlabel) | `204`; 404 for an unknown face or person; 409 if that person is already labelled on another face in this photo |
-| `POST /people/{id}/voice` | multipart `file` (WAV) | `201 VoiceOut`; 422 for a wrong format or a recording under 1 second; 404 for an unknown person |
+| `POST /people/{id}/voice` | multipart `file` (WAV) | `201 VoiceOut` with the first sample's id; the real backend stores the recording and each 4-second slice of it as samples; 422 for a wrong format or a recording under 1 second; 404 for an unknown person |
 | `GET /people/{id}/voice` | — | `list[VoiceSample]`, oldest first; 404 for an unknown person |
 | `GET /people/{id}/voice/{voice_sample_id}/audio` | — | the recording (WAV); 404 if that person has no such recording *(real backend)* |
 | `DELETE /people/{id}/voice/{voice_sample_id}` | — | `204`; 404 if that person has no such recording |
 | `POST /people/{id}/notes` | `NotesIn` | `Person` with the updated card; 404 for an unknown person |
 | `POST /people/{id}/conversation` | `ConversationIn` | `Person` with the updated card; 404 for an unknown person |
 | `GET /people/{id}/facts` | — | `list[Fact]`; 404 for an unknown person |
-| `POST /people/{id}/facts` | `FactIn` | `201 Fact` stored as typed (source `notes`, no Gemini); 409 for a repeat; 422 if blank *(real backend)* |
+| `POST /people/{id}/facts` | `FactIn` | `201 Fact` stored as typed (source `notes`, no Claude); 409 for a repeat; 422 if blank *(real backend)* |
 | `PATCH /people/{id}/facts/{fact_id}` | `FactIn` | `Fact` reworded; 404; 409 if another fact already says that *(real backend)* |
 | `DELETE /people/{id}/facts/{fact_id}` | — | `204`; 404 if that person has no such fact |
-| `POST /people/{id}/card` | — | `Person` with the card written again by Gemini from the stored facts; 422 with no facts, 503 without Gemini, 502 when it gives no usable card (the old card stays) *(real backend)* |
+| `POST /people/{id}/card` | — | `Person` with the card written again by Claude from the stored facts; 422 with no facts, 503 without Claude, 502 when it gives no usable card (the old card stays) *(real backend)* |
 
 "The same name and relationship" ignores case and surrounding spaces.
 
@@ -92,7 +92,7 @@ upload at the end carries everything. Run the real backend with Docker or on a l
 
 | Method and path | Body | Returns |
 |---|---|---|
-| `GET /health` | — | `{status, face_model, voice_model, transcription, captions, gemini, claude}`: `captions` is `speechmatics`, `local` or `off`; `gemini` false means notes and visits are stored as typed or not at all |
+| `GET /health` | — | `{status, face_model, voice_model, transcription, captions, claude, claude}`: `captions` is `speechmatics`, `local` or `off`; `claude` false means notes and visits are stored as typed or not at all |
 | `GET /user` | — | `Person` for the app's user: the earliest person whose relationship is `user` or `patient`, in any case; 404 if none yet |
 | `POST /enroll/check/photo` | multipart `file` (JPEG or PNG) | `{ok, faces, box, width, height, reason}`: `ok` when the photo has one face, or one face at least 1.5 times the area of the next; 422 for a non-image |
 | `POST /enroll/check/voice` | multipart `file` (WAV, 16 kHz mono 16-bit) | `{ok, seconds, speech_seconds, reason}`: `ok` with 3+ seconds of speech |
@@ -103,7 +103,7 @@ upload at the end carries everything. Run the real backend with Docker or on a l
 it on the thank-you page. A photo without one clear face isn't stored, and `skipped_photos` says
 why. Each stored photo keeps every face found: the chosen face labelled, any others unlabelled.
 The recording stores the whole speech and each 4-second slice as separate voice samples; notes
-become `facts` (source `notes`) and the card, through Gemini when it is on and as typed otherwise.
+become `facts` (source `notes`) and the card, through Claude when it is on and as typed otherwise.
 Relationship is free text (son, daughter, grandson, granddaughter, friend, caregiver, or whatever
 "Other" says), 1-40 characters.
 
@@ -158,8 +158,9 @@ The real backend (`backend/`) adds, in both directions:
 - `answer` is Nova's reply when a caption started with the wake word.
 - `visit_saved` follows `end_visit`, once per visitor whose facts or card changed. Closing the
   socket also ends the visit and saves it, without these messages.
-- `present.people[].facts` carries each person's three newest facts, oldest first, for the bullets
-  beside a name. The mock sends it empty, and sends no `caption`, `answer` or `visit_saved`.
+- `present.people[].facts` carries each person's three newest facts, oldest first. The glasses show
+  the card (`small_context`) beside a name, not the facts; the field is there for a client that
+  wants them. The mock sends it empty, and sends no `caption`, `answer` or `visit_saved`.
 
 These examples were generated with `model_dump_json()` from the models in `live.py`. After
 changing the models, regenerate them.

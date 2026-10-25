@@ -7,6 +7,7 @@ import { Button } from "../../components/Button";
 import { VoicePrompt } from "../../components/Cards";
 import { ActionBar, FormMain, Notice, PageShell, TitleBlock } from "../../components/PageShell";
 import { Recorder } from "../../components/Recorder";
+import { VOICE_PASSAGE } from "../../lib/passage";
 import { useRecorder } from "../../lib/useRecorder";
 import { useGlassesUserFlow } from "./state";
 
@@ -58,7 +59,7 @@ export function GlassesUserVoiceScreen() {
       <FormMain width={780}>
         <TitleBlock title="Read this out loud" lead="This helps your glasses tell your voice apart from the people around you." />
         <VoicePrompt
-          text={`Hello, this is ${name}. I'm reading this so my glasses can learn what my own voice sounds like. On quiet mornings I like to sit by the window with a warm cup of tea and watch the street wake up. When my family calls, I want to catch every word they say.`}
+          text={VOICE_PASSAGE}
         />
         <Recorder recorder={recorder} />
         {failure && <Notice>{failure}</Notice>}

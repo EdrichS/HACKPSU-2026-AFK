@@ -1,10 +1,10 @@
-"""The glasses user's own notes go through Gemini like everyone else's, as facts about themselves."""
+"""The glasses user's own notes go through Claude like everyone else's, as facts about themselves."""
 
 from datetime import date
 
-from backend import gemini
+from backend import context_ai
 from db.people import create_person
-from tests.gemini_fakes import FakeGemini
+from tests.claude_fakes import FakeClaude
 
 
 def test_the_users_own_notes_are_facts_about_the_patient(conn, test_db):
@@ -12,10 +12,10 @@ def test_the_users_own_notes_are_facts_about_the_patient(conn, test_db):
 
     rose = create_person(conn, "Rose", "user")
     conn.commit()
-    fake = FakeGemini(facts={"new_facts": ["Rose is a botanist.", "Rose has a cat called Mabel."]}, card={"small_context": "Botanist · Cat Mabel | Ask about: the garden"})
+    fake = FakeClaude(facts={"new_facts": ["Rose is a botanist.", "Rose has a cat called Mabel."]}, card={"small_context": "Botanist · Cat Mabel | Ask about: the garden"})
     pool = psycopg_pool.ConnectionPool(test_db, min_size=1, max_size=2, open=True)
     try:
-        person = gemini.update_context(pool, rose.id, "I am a botanist and I have a cat called Mabel.", "notes", client=fake, today=date(2026, 10, 25))
+        person = context_ai.update_context(pool, rose.id, "I am a botanist and I have a cat called Mabel.", "notes", client=fake, today=date(2026, 10, 25))
     finally:
         pool.close()
     assert fake.kinds() == ["facts", "card"]
@@ -34,10 +34,10 @@ def test_a_visitors_notes_still_name_the_patient(conn, test_db):
     create_person(conn, "Rose", "user")
     david = create_person(conn, "David", "grandson")
     conn.commit()
-    fake = FakeGemini(facts={"new_facts": ["David is a nurse."]}, card={"small_context": "Nurse | Ask about: work"})
+    fake = FakeClaude(facts={"new_facts": ["David is a nurse."]}, card={"small_context": "Nurse | Ask about: work"})
     pool = psycopg_pool.ConnectionPool(test_db, min_size=1, max_size=2, open=True)
     try:
-        gemini.update_context(pool, david.id, "I'm a nurse.", "notes", client=fake)
+        context_ai.update_context(pool, david.id, "I'm a nurse.", "notes", client=fake)
     finally:
         pool.close()
     request = fake.contents("facts")
@@ -45,13 +45,13 @@ def test_a_visitors_notes_still_name_the_patient(conn, test_db):
     conn.rollback()
 
 
-def test_enroll_sends_the_users_notes_through_gemini(backend_client, backend_module, monkeypatch, conn):
+def test_enroll_sends_the_users_notes_through_claude(backend_client, backend_module, monkeypatch, conn):
     """The wizard's setup for the wearer: /enroll with relationship 'user' and notes."""
     from db.context import list_facts
 
-    fake = FakeGemini(facts={"new_facts": ["Rose likes the garden."]}, card={"small_context": "Likes the garden"})
-    monkeypatch.setattr("backend.gemini.get_client", lambda: fake)
-    backend_module.app.state.gemini = True
+    fake = FakeClaude(facts={"new_facts": ["Rose likes the garden."]}, card={"small_context": "Likes the garden"})
+    monkeypatch.setattr("backend.context_ai.get_client", lambda: fake)
+    backend_module.app.state.context_ready = True
     r = backend_client.post("/enroll", data={"name": "Rose", "relationship": "user", "notes": "I like the garden."})
     assert r.status_code == 201, r.text
     assert r.json()["person"]["small_context"] == "Likes the garden" and r.json()["facts"] == 1

@@ -24,3 +24,12 @@
 .xl:focus {
   outline: none;
 }
+
+a.sm {
+  text-decoration: none;
+  transition: filter 80ms ease-out;
+}
+
+a.sm:hover {
+  filter: var(--hover-darken);
+}

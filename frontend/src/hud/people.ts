@@ -1,35 +1,46 @@
 import type { PresentPerson } from "../api/contract";
 import type { TrackView } from "./tracker";
 
-const MAX_BULLETS = 3;
-
 function stripMarker(line: string): string {
   return line.replace(/^\s*[-•*]+\s*/, "").trim();
 }
 
-/** A sentence can't end on "Dr.", "St.", "e.g." or an initial like "J.". */
-const ABBREVIATION = /(?:\b(?:Dr|Mr|Mrs|Ms|Mx|Prof|St|Mt|Jr|Sr|Ave|Rd|vs|etc|approx|e\.g|i\.e)|(?:^|\s)[A-Z])\.$/;
-
-function sentences(text: string): string[] {
-  const out: string[] = [];
-  for (const part of text.split(/(?<=[.!?])\s+/)) {
-    if (out.length > 0 && ABBREVIATION.test(out[out.length - 1])) out[out.length - 1] += ` ${part}`;
-    else out.push(part);
-  }
-  return out;
+function tidy(text: string): string {
+  return stripMarker(text).replace(/(?<!\.)\.$/, "");
 }
 
+/** The card as the panel shows it: the latest conversation, the standing context, what to ask about. */
+export interface CardSections {
+  /** "Last spoke about: ..." */
+  recent: string | null;
+  /** The card's other fragments, in order. */
+  about: string[];
+  /** "Ask about: ..." */
+  ask: string | null;
+}
+
+const RECENT = /^last spoke about:\s*/i;
+const ASK = /^ask about:\s*/i;
+
 /**
- * The info panel's bullets from a person's small_context: one per line or per " · " / " | " part
- * (the card's own separators: "Last spoke about: x · Works as a nurse | Ask about: y"), else one
- * per sentence; the newest facts when there is no card yet; at most 3. The design's bullets have
- * no closing period.
+ * Reads the card Claude writes ("Last spoke about: x · Works as a nurse | Ask about: y, z") into
+ * its sections, so the panel can set each one in its own type. A hand-written card without those
+ * markers is all "about": one fragment per line, or per " · ". Nothing here comes from the facts.
  */
-export function toBullets(smallContext: string, facts: readonly string[] = []): string[] {
-  let lines = smallContext.split(/\r?\n|\s*[|·•]\s*/).map(stripMarker).filter(Boolean);
-  if (lines.length === 1) lines = sentences(lines[0]).map(stripMarker).filter(Boolean);
-  if (lines.length === 0) lines = facts.map(stripMarker).filter(Boolean);
-  return lines.slice(0, MAX_BULLETS).map((line) => line.replace(/(?<!\.)\.$/, ""));
+export function parseCard(smallContext: string): CardSections {
+  const sections: CardSections = { recent: null, about: [], ask: null };
+  for (const part of smallContext.split(/\r?\n|\s*\|\s*/)) {
+    const text = stripMarker(part);
+    if (!text) continue;
+    if (ASK.test(text)) {
+      sections.ask = tidy(text.replace(ASK, ""));
+      continue;
+    }
+    const pieces = text.split(/\s*[·•]\s*/).map(tidy).filter(Boolean);
+    if (pieces.length > 0 && RECENT.test(pieces[0])) sections.recent = tidy(pieces.shift()!.replace(RECENT, ""));
+    sections.about.push(...pieces);
+  }
+  return sections;
 }
 
 /** "granddaughter" (as the visitor flow stores it) to "Granddaughter" (as the HUD shows it). */

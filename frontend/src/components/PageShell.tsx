@@ -32,7 +32,7 @@ export function PageShell({ title, header = true, step, footer, children }: Page
     <div className={styles.page} ref={root}>
       {header && (
         <header className={step ? styles.header : `${styles.header} ${styles.headerLogoOnly}`}>
-          <LogoTag />
+          <LogoTag to="/" />
           {step && <StepIndicator current={step.current} total={step.total} />}
         </header>
       )}

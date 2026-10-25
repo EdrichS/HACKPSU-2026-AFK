@@ -165,7 +165,7 @@ export async function addNotes(personId: number, text: string): Promise<Person> 
   return (await request(`/people/${personId}/notes`, { method: "POST", ...json({ text }) })).json();
 }
 
-// The record behind the card, as the family manages it (no Gemini): facts as typed.
+// The record behind the card, as the family manages it (no Claude): facts as typed.
 
 export async function listFacts(personId: number): Promise<Fact[]> {
   return (await request(`/people/${personId}/facts`)).json();
@@ -184,7 +184,7 @@ export async function deleteFact(personId: number, factId: number): Promise<void
   await request(`/people/${personId}/facts/${factId}`, { method: "DELETE" });
 }
 
-/** Gemini writes the card again from the stored facts. 422 with no facts, 503 without Gemini, 502 when it fails. */
+/** Claude writes the card again from the stored facts. 422 with no facts, 503 without Claude, 502 when it fails. */
 export async function rewriteCard(personId: number): Promise<Person> {
   return (await request(`/people/${personId}/card`, { method: "POST" })).json();
 }

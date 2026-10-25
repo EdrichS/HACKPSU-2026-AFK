@@ -1,5 +1,5 @@
 // The card: the few lines the glasses show beside the name. Edited by hand, or written again by
-// Gemini from the facts. Not designed.
+// Claude from the facts. Not designed.
 
 import { useState } from "react";
 
@@ -34,7 +34,7 @@ export function CardSection({ person, factCount, onSaved, reload }: CardSectionP
       const saved = await updatePerson(person.id, { small_context: text.trim() });
       onSaved(saved);
       setText(saved.small_context);
-      setNote(text.trim() ? "Saved. The card is also kept as a note, so Gemini's next rewrite starts from it." : "Saved: the card is empty.");
+      setNote(text.trim() ? "Saved. The card is also kept as a note, so Claude's next rewrite starts from it." : "Saved: the card is empty.");
       if (text.trim()) reload();
     } catch (e) {
       setFailure(describe(e, "saving the card"));
@@ -50,9 +50,9 @@ export function CardSection({ person, factCount, onSaved, reload }: CardSectionP
       const saved = await rewriteCard(person.id);
       onSaved(saved);
       setText(saved.small_context);
-      setNote("Gemini wrote the card again from the facts.");
+      setNote("Claude wrote the card again from the facts.");
     } catch (e) {
-      if (e instanceof ApiError && e.status === 503) setFailure("Rewriting needs a Gemini key on the server. The card is unchanged; you can still edit it by hand.");
+      if (e instanceof ApiError && e.status === 503) setFailure("Rewriting needs a Claude key on the server. The card is unchanged; you can still edit it by hand.");
       else if (e instanceof ApiError && e.status === 502) setFailure(e.message);
       else setFailure(describe(e, "rewriting the card"));
     }
@@ -81,7 +81,7 @@ export function CardSection({ person, factCount, onSaved, reload }: CardSectionP
           {busy === "rewrite" ? "Writing…" : "Rewrite from the facts"}
         </Button>
       </div>
-      {factCount === 0 && <p className={styles.help}>Add a fact below and Gemini can write the card from it.</p>}
+      {factCount === 0 && <p className={styles.help}>Add a fact below and Claude can write the card from it.</p>}
       {note && <Notice tone="info">{note}</Notice>}
       {failure && <Notice>{failure}</Notice>}
     </Section>

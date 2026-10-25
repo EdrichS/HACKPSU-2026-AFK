@@ -2,7 +2,7 @@
 
 `python -m live` is the demo-day program. It opens the webcam and the microphone and names the
 people it sees and hears from the database, announces them, keeps the visit's transcript, has
-Gemini summarize it into each visitor's facts and card, and answers questions as Nova.
+Claude summarize it into each visitor's facts and card, and answers questions as Nova.
 
 ```
 docker compose up -d --wait db
@@ -10,7 +10,7 @@ uv run python -m live
 ```
 
 Add `--no-camera` for microphone only, `--no-tts` to print instead of speaking, `--no-nova` to
-turn off Nova (Claude), `--no-summary` to skip the Gemini visit summary, and `--help` for the
+turn off Nova (Claude), `--no-summary` to skip the Claude visit summary, and `--help` for the
 rest.
 
 ## One id for a face and a voice
@@ -59,15 +59,15 @@ To prove the voice-only path, or to demo without talking, play a recording throu
 uv run python -m live --no-camera --audio-file data/voice/<some-enrollment>.wav --audio-speed 4
 ```
 
-## The visit and Gemini
+## The visit and Claude
 
 Every utterance is transcribed locally (Moonshine via sherpa-onnx) and logged as a speaker-labelled
 line. The visit ends on `e` in the window, after `--visit-timeout` seconds of silence (120 by
 default), or when the program exits. Then the transcript goes, once per known visitor, to the
-context owner's `backend.gemini.update_context`: a facts call adds new facts (source
+context owner's `backend.context_ai.update_context`: a facts call adds new facts (source
 `conversation`) and a card call rewrites `people.small_context`, with no database connection held
 meanwhile. A failed facts call changes nothing; a failed card call still keeps the facts. It needs
-`GEMINI_API_KEY` in the repo's `.env`. The same call serves `POST /people/{id}/conversation` and
+`ANTHROPIC_API_KEY` in the repo's `.env`. The same call serves `POST /people/{id}/conversation` and
 the wizard's notes, so there is one path for context.
 
 ## Nova
@@ -85,7 +85,7 @@ The answer is spoken with the local Supertonic voice (macOS `say` if the model f
 
 The microphone keeps listening while the program speaks. Only Nova's echo suppression drops the
 program's own voice, so without Nova its announcements can land in the transcript as the user's
-lines. Visit transcripts go to Gemini, and Nova sends names, cards, facts and the recent
+lines. Visit transcripts go to Claude, and Nova sends names, cards, facts and the recent
 conversation to Anthropic; photos and audio stay on the laptop.
 
 ## Keys and setup
@@ -94,7 +94,7 @@ In the camera window, `q` quits, `e` ends the visit now and `w` asks who is here
 from the terminal. With `--no-camera` there is no window, so Ctrl-C is the only key, and the
 visit ends on the silence timeout or when you quit.
 
-- `ANTHROPIC_API_KEY` (Nova) and `GEMINI_API_KEY` (visit summaries) go in the repo's gitignored
+- `ANTHROPIC_API_KEY` (Nova) and `ANTHROPIC_API_KEY` (visit summaries) go in the repo's gitignored
   `.env`.
 - Models in `hackpsu_voice_rec/models/`: TitaNet and Silero (enrollment too), Moonshine for
   transcription, Supertonic for the voice. `hackpsu_voice_rec/scripts/download_models.sh` fetches

@@ -18,8 +18,10 @@ import threading
 import time
 
 from fastapi import APIRouter, WebSocket, WebSocketDisconnect
+from starlette.websockets import WebSocketDisconnected
 from pydantic import ValidationError
 
+from contract.embedders import Box
 from contract.live import (
     Answer,
     Arrived,
@@ -53,6 +55,8 @@ router = APIRouter(tags=["live"])
 
 CARD_FACTS = 3  # bullets beside a name
 FACTS_CACHE_SECONDS = 10.0
+STICKY_SECONDS = 2.0  # a named face keeps its name this long through frames the matcher is unsure about
+STICKY_DISTANCE = 0.6  # ...when the new box's centre is within this many face widths of the named one
 VISIT_IDLE_SECONDS = 120.0  # a visit with no word for this long is over (python -m live does the same)
 UNRECOGNISED = "Unrecognised message; expected frame, audio, who or end_visit."
 
@@ -73,6 +77,8 @@ class LiveSession:
         self.audio_seconds = 0.0
         self.cloud = None  # a CloudCaptions while Speechmatics captions this connection
         self._partial: tuple[str, str] | None = None  # the partial caption on screen: (label, text)
+        self._named: dict[int, tuple[PresentPerson, Box, float]] = {}  # person id -> (person, last box, when)
+        self._label_lines: dict[str, list] = {}  # cloud label -> transcript lines said before it was named
         self._lock = threading.RLock()  # messages and cloud turns both change the room's state
         self._facts: dict[int, tuple[float, list[str]]] = {}
         try:
@@ -127,9 +133,13 @@ class LiveSession:
         except Exception as e:  # noqa: BLE001  (a bad frame must not end the connection)
             return [self.safe_present(), Error(message=f"Bad frame: {type(e).__name__}: {e}")]
         out, tracked, unmatched = [], [], False
+        now = time.monotonic()
         for face in detections:
             person, verdict, _ = self.faces.identify(face)
+            if person is None:
+                person = self.sticky_name(face.box, now)  # a turned head is still who it was a moment ago
             if person is not None:
+                self._named[person.person_id] = (person, face.box, now)
                 text = self.presence.saw(person, "face")
                 if text:
                     out.append(Arrived(person=self.card(person), via="face", text=text))
@@ -145,6 +155,21 @@ class LiveSession:
             out.append(Unknown())
         present = self.present()
         return [Present(people=present.people, faces=tracked)] + out
+
+    def sticky_name(self, box: Box, now: float) -> PresentPerson | None:
+        """The person named at about this spot within STICKY_SECONDS, if any.
+
+        The matcher answers "not sure" on a frame where the face is turned, or sits as close to a
+        stranger's sample as to the person's own. Without this, every such frame would drop the
+        tag and the card from the glasses for a moment."""
+        cx, cy = box.x + box.width / 2, box.y + box.height / 2
+        for person, last, when in self._named.values():
+            if now - when > STICKY_SECONDS:
+                continue
+            lx, ly = last.x + last.width / 2, last.y + last.height / 2
+            if ((lx - cx) ** 2 + (ly - cy) ** 2) ** 0.5 <= STICKY_DISTANCE * max(box.width, last.width):
+                return person
+        return None
 
     def on_audio(self, msg: Audio) -> list:
         try:
@@ -231,30 +256,68 @@ class LiveSession:
         return [Caption(person_id=person_id, speaker=self.shown(speaker, person), text=text, final=False, start=now, end=now)]
 
     def cloud_turn(self, label: str, text: str, start: float, end: float) -> list:
-        """A finished turn: the same bookkeeping as a local utterance, on a worker thread."""
+        """A finished turn: the same bookkeeping as a local utterance, on a worker thread.
+
+        Nova and the visit summary take seconds, so they run outside the lock: a frame must never
+        wait for them, or every tag on the glasses would blink out meanwhile."""
         if not text.strip():
             return []
         self._partial = None
         with self._lock:
-            out = self.end_idle_visit()
+            ended = self.take_idle_visit()
             speaker, person_id, person = self.cloud_speaker(label)
             if person is not None:
                 arrival = self.presence.saw(person, "voice")
                 if arrival:
-                    out.append(Arrived(person=self.card(person), via="voice", text=arrival))
+                    out_arrival = Arrived(person=self.card(person), via="voice", text=arrival)
+                else:
+                    out_arrival = None
                 self.visit.note(person)
-            self.visit.add(speaker, person_id, text)
+            else:
+                out_arrival = None
+            line = self.visit.add(speaker, person_id, text)
+            if person is None and line is not None:
+                self._label_lines.setdefault(label, []).append(line)
             log.info("caption %6.1fs  %s: %s", start, speaker, text)
-            out.append(Caption(person_id=person_id, speaker=self.shown(speaker, person), text=text, start=start, end=end))
-            return out + self.ask_nova(text, speaker)
+            caption = Caption(person_id=person_id, speaker=self.shown(speaker, person), text=text, start=start, end=end)
+        out = self.save_ended(ended)
+        if out_arrival is not None:
+            out.append(out_arrival)
+        out.append(caption)
+        return out + self.ask_nova(text, speaker)
+
+    def cloud_relabel(self, label: str) -> list:
+        """A label just got its name: the lines it said before that are theirs in the transcript too,
+        and they have arrived. (Captions already on screen stay as they were.)"""
+        with self._lock:
+            person = self.cloud.namer.person_for(label) if self.cloud is not None else None
+            if person is None:
+                return []
+            for line in self._label_lines.pop(label, []):
+                line.speaker, line.person_id = person.name, person.person_id
+            self.visit.note(person)
+            arrival = self.presence.saw(person, "voice")
+            return [Arrived(person=self.card(person), via="voice", text=arrival)] if arrival else []
 
     def on_who(self) -> list:
         return [WhoAnswer(text=self.presence.who_answer())]
 
-    def end_visit(self) -> list:
-        """The transcript goes to the context owner's Gemini flow, once per visitor, and to a file."""
+    def take_visit(self) -> Visit | None:
+        """Close the visit and hand it over for saving (under the lock); None when nothing was said."""
         visit, self.visit = self.visit, Visit()
-        if not visit.lines:
+        self._label_lines.clear()
+        return visit if visit.lines else None
+
+    def take_idle_visit(self) -> Visit | None:
+        """A visit nobody has spoken in for a while is over, even if the glasses stay on."""
+        if self.visit.lines and time.time() - self.visit.last_line > self.visit_idle:
+            return self.take_visit()
+        return None
+
+    def save_ended(self, visit: Visit | None) -> list:
+        """The transcript goes to the context owner's Claude flow, once per visitor, and to a file.
+        Runs outside the lock: Claude takes seconds."""
+        if visit is None:
             return []
         self.save_transcript(visit)
         out = []
@@ -279,35 +342,37 @@ class LiveSession:
         except OSError as e:
             log.error("could not save the visit transcript: %s", e)
 
-    def end_idle_visit(self) -> list:
-        """A visit nobody has spoken in for a while is over, even if the glasses stay on."""
-        if self.visit.lines and time.time() - self.visit.last_line > self.visit_idle:
-            return self.end_visit()
-        return []
+    def end_visit(self) -> list:
+        """For tests and the laptop program: close the visit and save it, in one go."""
+        with self._lock:
+            visit = self.take_visit()
+        return self.save_ended(visit)
 
     def handle(self, msg) -> list:
         try:
             with self._lock:
-                out = self.end_idle_visit()
+                ended = self.take_idle_visit()
                 if isinstance(msg, Frame):
-                    return out + self.on_frame(msg)
-                if isinstance(msg, Audio):
-                    return out + self.on_audio(msg)
-                if isinstance(msg, Who):
-                    return out + self.on_who()
-                if isinstance(msg, EndVisit):
-                    return out + self.end_visit()
+                    out = self.on_frame(msg)
+                elif isinstance(msg, Audio):
+                    out = self.on_audio(msg)
+                elif isinstance(msg, Who):
+                    out = self.on_who()
+                elif isinstance(msg, EndVisit):
+                    ended = ended or self.take_visit()
+                    out = []
+                else:
+                    return [Error(message=UNRECOGNISED)]
+            return self.save_ended(ended) + out  # Claude, outside the lock
         except Exception as e:  # noqa: BLE001  (the socket must stay open; a frame always gets a present)
             log.exception("live message failed")
             answer = [self.safe_present()] if isinstance(msg, Frame) else []
             return answer + [Error(message=f"{type(e).__name__}: {e}")]
-        return [Error(message=UNRECOGNISED)]
 
     def close(self) -> None:
         """The connection dropped: keep what the visit taught us."""
         try:
-            with self._lock:
-                self.end_visit()
+            self.end_visit()
         except Exception:  # noqa: BLE001
             log.exception("could not save the visit on close")
         if self.state.presence is self.presence:
@@ -359,7 +424,7 @@ async def live(ws: WebSocket) -> None:
                 await cloud.flush()  # the sentence being said belongs to this visit
             for out in await asyncio.to_thread(session.handle, msg):
                 outbox.put_nowait(out)
-    except WebSocketDisconnect:
+    except (WebSocketDisconnect, WebSocketDisconnected):
         pass
     finally:
         if cloud is not None:
