@@ -1,0 +1,415 @@
+/* The manage pages are not designed. They borrow the flows' tokens and card vocabulary
+   (HomePage's list links, ConsentList's rows, the fields) for a family-facing admin view. */
+
+.main {
+  flex: 1;
+  width: 100%;
+  max-width: 760px;
+  min-width: 0; /* a flex item: never wider than the page because of a long line inside */
+  margin: 0 auto;
+  padding: 8px var(--gutter-content) 32px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--stack);
+}
+
+.loading {
+  color: var(--muted);
+  font-size: var(--type-item-body);
+}
+
+/* -- people list ------------------------------------------------------------------------ */
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 8px;
+}
+
+.list > li {
+  min-width: 0;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  min-width: 0;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-control);
+  color: var(--ink);
+  text-decoration: none;
+  transition: border-color 80ms ease-out;
+}
+
+.row:hover,
+.row:focus-visible {
+  border-color: var(--ink);
+}
+
+.avatar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--ground);
+  overflow: hidden;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.rowText {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.rowTitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: var(--type-item-title);
+  font-weight: 600;
+}
+
+.rowMeta {
+  font-size: var(--type-item-body);
+  line-height: 1.45;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-strong);
+  font-size: var(--type-small-xs);
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.pillAccent {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--ink);
+}
+
+.empty {
+  padding: 20px;
+  text-align: center;
+  color: var(--muted);
+  background: var(--surface);
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-control);
+}
+
+/* -- sections on a person's page ---------------------------------------------------------- */
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-width: 0;
+  padding: 18px 20px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-consent);
+}
+
+.sectionHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.sectionTitle {
+  margin: 0;
+  font-size: var(--type-small);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.help {
+  margin: 0;
+  font-size: var(--type-small-xs);
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+/* Fields side by side with their button; wraps to one column on phones. */
+.inline {
+  display: flex;
+  gap: 12px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.inline > * {
+  flex: 1 1 200px;
+  min-width: 0;
+}
+
+.inline > .inlineAction {
+  flex: 0 0 auto;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.actions > * {
+  flex: 0 1 auto;
+  min-width: 160px;
+}
+
+/* 44px square icon-only button: edit and delete on a row. */
+.iconButton {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 12px;
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  transition: filter 80ms ease-out, transform 80ms ease-out;
+}
+
+.iconButton:hover:not(:disabled) {
+  filter: var(--hover-darken);
+}
+
+.iconButton:active:not(:disabled) {
+  transform: scale(var(--press-scale));
+}
+
+.iconButton:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.iconDanger {
+  color: var(--danger);
+}
+
+/* -- facts -------------------------------------------------------------------------------- */
+
+.facts {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.fact {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 12px 0;
+}
+
+.fact + .fact {
+  border-top: 1px solid var(--divider);
+}
+
+.factText {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 16px;
+  line-height: 1.45;
+  overflow-wrap: anywhere;
+}
+
+.factMeta {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: var(--type-small-xs);
+  color: var(--muted);
+}
+
+.factEdit {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* -- photos ------------------------------------------------------------------------------- */
+
+.photos {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.photo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.frame {
+  position: relative;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: var(--radius-control);
+  border: 1px solid var(--border);
+  background: var(--camera-bg);
+}
+
+.frame img {
+  display: block;
+  width: 100%;
+  max-width: 100%; /* the width attribute (the photo's pixels) must not set the grid's minimum */
+  height: 100%;
+  object-fit: cover;
+}
+
+/* A face box over the photo, in the photo's own proportions (object-fit: contain in .frameFit). */
+.frameFit {
+  aspect-ratio: auto;
+}
+
+.frameFit img {
+  height: auto; /* the frame takes the photo's own proportions, so the boxes line up */
+  object-fit: contain;
+}
+
+.box {
+  position: absolute;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  border-radius: 6px;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4);
+}
+
+.boxLabel {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  margin-top: 4px;
+  padding: 2px 6px;
+  background: var(--tag-bg);
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.boxUnlabelled {
+  border-color: var(--accent);
+}
+
+.photoActions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+/* -- voice -------------------------------------------------------------------------------- */
+
+.samples {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.sample {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 10px 0;
+}
+
+.sample + .sample {
+  border-top: 1px solid var(--divider);
+}
+
+.sample audio {
+  flex: 1 1 180px;
+  min-width: 0;
+  height: 44px;
+}
+
+.sampleMeta {
+  flex: 1 1 100%;
+  font-size: var(--type-small-xs);
+  color: var(--muted);
+}
+
+/* -- controls the fields don't have ------------------------------------------------------- */
+
+/* Not designed: a native select drawn like the text input. */
+.select {
+  width: 100%;
+  height: var(--input-h);
+  padding: 0 16px;
+  border-radius: var(--radius-control);
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: var(--type-input);
+}
+
+.select:focus-visible {
+  border-color: var(--ink);
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.fileInput {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--field-gap);
+}
+
+.label {
+  font-size: var(--type-label);
+  font-weight: 600;
+}

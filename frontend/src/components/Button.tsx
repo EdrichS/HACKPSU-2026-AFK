@@ -5,7 +5,8 @@ import styles from "./Button.module.css";
 import { Icon, type IconName } from "./Icon";
 
 interface CommonProps {
-  variant?: "primary" | "secondary";
+  /** danger is not designed: the manage pages' delete buttons, a secondary button in --danger. */
+  variant?: "primary" | "secondary" | "danger";
   icon?: IconName;
   /** Continue puts its arrow after the label; Retry and Upload put theirs before. */
   iconAfter?: boolean;
@@ -21,7 +22,8 @@ type LinkProps = CommonProps & { to: string; replace?: boolean };
 type NativeProps = CommonProps & Omit<ButtonHTMLAttributes<HTMLButtonElement>, "children"> & { to?: undefined };
 
 function classes({ variant = "primary", intro }: CommonProps) {
-  return [styles.button, variant === "primary" ? styles.primary : styles.secondary, intro && styles.intro]
+  const look = variant === "primary" ? styles.primary : variant === "danger" ? `${styles.secondary} ${styles.danger}` : styles.secondary;
+  return [styles.button, look, intro && styles.intro]
     .filter(Boolean)
     .join(" ");
 }

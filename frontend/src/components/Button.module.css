@@ -71,3 +71,9 @@
     transform: rotate(360deg);
   }
 }
+
+/* Not designed: delete on the manage pages. A secondary button in the inline-error color. */
+.danger {
+  border-color: var(--danger);
+  color: var(--danger);
+}

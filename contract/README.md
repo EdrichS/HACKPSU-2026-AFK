@@ -60,20 +60,26 @@ It makes no network calls.
 | Method and path | Body | Returns |
 |---|---|---|
 | `GET /people` | — | `list[Person]` |
+| `GET /people/{id}` | — | `Person`, or 404 *(real backend only)* |
 | `POST /people` | `PersonIn` | `201 Person`; 409 if a person with the same name and relationship exists |
 | `PATCH /people/{id}` | `PersonPatch` | `Person`; 404; 409 as for POST |
 | `DELETE /people/{id}` | — | `204`, or 404 |
 | `POST /photos` | multipart `file` (JPEG or PNG) | `201 PhotoOut` |
 | `GET /photos` | — | `list[PhotoOut]`, with each face's current label |
 | `GET /photos/{id}/image` | — | the stored image; 404 for an unknown photo |
+| `DELETE /photos/{id}` | — | `204`, the photo and every face in it are gone; 404 for an unknown photo *(real backend)* |
 | `POST /faces/{face_id}/assign` | `AssignIn` (`person_id`, or null to unlabel) | `204`; 404 for an unknown face or person; 409 if that person is already labelled on another face in this photo |
 | `POST /people/{id}/voice` | multipart `file` (WAV) | `201 VoiceOut`; 422 for a wrong format or a recording under 1 second; 404 for an unknown person |
 | `GET /people/{id}/voice` | — | `list[VoiceSample]`, oldest first; 404 for an unknown person |
+| `GET /people/{id}/voice/{voice_sample_id}/audio` | — | the recording (WAV); 404 if that person has no such recording *(real backend)* |
 | `DELETE /people/{id}/voice/{voice_sample_id}` | — | `204`; 404 if that person has no such recording |
 | `POST /people/{id}/notes` | `NotesIn` | `Person` with the updated card; 404 for an unknown person |
 | `POST /people/{id}/conversation` | `ConversationIn` | `Person` with the updated card; 404 for an unknown person |
 | `GET /people/{id}/facts` | — | `list[Fact]`; 404 for an unknown person |
+| `POST /people/{id}/facts` | `FactIn` | `201 Fact` stored as typed (source `notes`, no Gemini); 409 for a repeat; 422 if blank *(real backend)* |
+| `PATCH /people/{id}/facts/{fact_id}` | `FactIn` | `Fact` reworded; 404; 409 if another fact already says that *(real backend)* |
 | `DELETE /people/{id}/facts/{fact_id}` | — | `204`; 404 if that person has no such fact |
+| `POST /people/{id}/card` | — | `Person` with the card written again by Gemini from the stored facts; 422 with no facts, 503 without Gemini, 502 when it gives no usable card (the old card stays) *(real backend)* |
 
 "The same name and relationship" ignores case and surrounding spaces.
 
@@ -86,7 +92,7 @@ upload at the end carries everything. Run the real backend with Docker or on a l
 
 | Method and path | Body | Returns |
 |---|---|---|
-| `GET /health` | — | `{status, face_model, voice_model, transcription, gemini, claude}` |
+| `GET /health` | — | `{status, face_model, voice_model, transcription, captions, gemini, claude}`: `captions` is `speechmatics`, `local` or `off`; `gemini` false means notes and visits are stored as typed or not at all |
 | `GET /user` | — | `Person` for the app's user: the earliest person whose relationship is `user` or `patient`, in any case; 404 if none yet |
 | `POST /enroll/check/photo` | multipart `file` (JPEG or PNG) | `{ok, faces, box, width, height, reason}`: `ok` when the photo has one face, or one face at least 1.5 times the area of the next; 422 for a non-image |
 | `POST /enroll/check/voice` | multipart `file` (WAV, 16 kHz mono 16-bit) | `{ok, seconds, speech_seconds, reason}`: `ok` with 3+ seconds of speech |
@@ -138,14 +144,17 @@ The real backend (`backend/`) adds, in both directions:
 ```
 
 ```json
-{"type":"caption","person_id":1,"speaker":"David","text":"Hi Grandma, I brought the photos.","start":12.4,"end":15.1}
+{"type":"caption","person_id":1,"speaker":"David","text":"Hi Grandma, I brought","final":false,"start":12.4,"end":12.4}
+{"type":"caption","person_id":1,"speaker":"David","text":"Hi Grandma, I brought the photos.","final":true,"start":12.4,"end":15.1}
 {"type":"answer","question":"who is David?","text":"David's your grandson. He just moved to Pittsburgh."}
 {"type":"visit_saved","person_id":1,"name":"David","new_facts":["David moved to Pittsburgh in September 2026."],"small_context":"Last spoke about: the move · Lives in Pittsburgh · Works as a nurse | Ask about: the new apartment"}
 ```
 
-- `caption` is one finished utterance with who said it. A voice the database can't name,
-  including a not-sure match, is captioned as the user: `person_id` is the user's id, or null when
-  no user is registered.
+- `caption` is an utterance with who said it. Only a voice matched in `voice_samples` (the
+  user's own included) gets a `speaker` and a `person_id`; any other voice, a not-sure match
+  included, has both null. With cloud captions on (`SPEECHMATICS_API_KEY`) a sentence first
+  arrives while it is being said, with `final: false`, each such caption replacing the previous
+  one, and then once more finished with `final: true`; local captions send finished sentences only.
 - `answer` is Nova's reply when a caption started with the wake word.
 - `visit_saved` follows `end_visit`, once per visitor whose facts or card changed. Closing the
   socket also ends the visit and saves it, without these messages.

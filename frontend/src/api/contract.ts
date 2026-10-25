@@ -27,6 +27,15 @@ export interface PersonIn {
 export const PERSON_NAME_MAX = 80;
 export const PERSON_RELATIONSHIP_MAX = 40;
 
+export interface PersonPatch {
+  name?: string;
+  relationship?: string;
+  small_context?: string;
+}
+
+/** The glasses user is a Person with this relationship; GET /user finds them. */
+export const USER_RELATIONSHIP = "user";
+
 export interface DetectedFace {
   face_id: number;
   box: Box;
@@ -42,6 +51,37 @@ export interface PhotoOut {
 
 export interface VoiceOut {
   voice_sample_id: number;
+}
+
+export interface VoiceSample {
+  voice_sample_id: number;
+  created_at: string; // ISO 8601
+}
+
+/** Person context (contract/setup_api.py): one fact of the record behind the card. */
+export interface Fact {
+  id: number;
+  text: string;
+  source: "conversation" | "notes";
+  created_at: string; // ISO 8601
+}
+
+/** A fact typed by the family: POST adds one, PATCH rewords one. Stored as written, source "notes". */
+export interface FactIn {
+  text: string; // 1 to 300 characters, not blank
+}
+
+export const FACT_MAX = 300;
+export const CARD_MAX = 300;
+
+/** What the real backend's one-shot sign-up, POST /enroll, returns. */
+export interface EnrollOut {
+  person: Person;
+  photo_ids: number[];
+  face_ids: number[];
+  voice_sample_ids: number[];
+  facts: number;
+  skipped_photos: string[];
 }
 
 // Live socket (contract/live.py). Client to server:
@@ -62,7 +102,12 @@ export interface WhoMessage {
   type: "who";
 }
 
-export type ClientMessage = FrameMessage | AudioMessage | WhoMessage;
+/** The visit is over: the server turns its transcript into facts and a card for each visitor. */
+export interface EndVisitMessage {
+  type: "end_visit";
+}
+
+export type ClientMessage = FrameMessage | AudioMessage | WhoMessage | EndVisitMessage;
 
 // Server to client:
 
@@ -71,6 +116,8 @@ export interface PresentPerson {
   name: string;
   relationship: string;
   small_context: string;
+  /** The newest few facts, for the bullets beside the name (empty before the first notes). */
+  facts?: string[];
 }
 
 export interface TrackedFace {
@@ -108,16 +155,36 @@ export interface ErrorMessage {
 }
 
 /**
- * PROPOSED, not in contract/live.py yet. The HUD caption bar needs a transcript line and the
- * speaker voice recognition picked; nothing on the server sends this today, so the bar stays
- * hidden until it does. See report.txt.
+ * An utterance, transcribed, with the speaker voice recognition picked. Only a voice that matches
+ * someone enrolled (the glasses user included) gets a name and an id; any other voice has
+ * speaker and person_id null, and the bar shows it as "Someone".
  */
 export interface CaptionMessage {
   type: "caption";
-  speaker: string | null; // the recognized person's name; null for an unknown speaker
+  speaker: string | null;
   person_id: number | null;
-  text: string; // the line so far
-  final: boolean; // false while the last word is still being transcribed
+  text: string;
+  /** False while the last word is still being transcribed; the server sends finished lines only. */
+  final?: boolean;
+  /** Seconds of audio since the connection opened. */
+  start?: number;
+  end?: number;
+}
+
+/** Nova's reply to a question that started with the wake word; spoken like any other sentence. */
+export interface AnswerMessage {
+  type: "answer";
+  question: string;
+  text: string;
+}
+
+/** After end_visit (or the connection closing): what was learned about one visitor. */
+export interface VisitSavedMessage {
+  type: "visit_saved";
+  person_id: number;
+  name: string;
+  new_facts: string[];
+  small_context: string;
 }
 
 export type ServerMessage =
@@ -126,4 +193,6 @@ export type ServerMessage =
   | UnknownMessage
   | WhoAnswerMessage
   | ErrorMessage
-  | CaptionMessage;
+  | CaptionMessage
+  | AnswerMessage
+  | VisitSavedMessage;

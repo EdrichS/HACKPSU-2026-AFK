@@ -3,7 +3,8 @@
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 
-import { resolveGlassesUserName } from "../../config";
+import { syncGlassesUser } from "../../api/glassesUser";
+import { linkedGlassesUserName, resolveGlassesUserName } from "../../config";
 import { previewEnabled, samplePhotos, sampleRecording } from "../../dev/preview";
 import type { Recording } from "../../lib/recording";
 
@@ -66,7 +67,18 @@ const Context = createContext<VisitorFlow | null>(null);
 
 export function VisitorFlowProvider({ children }: { children: ReactNode }) {
   // Resolved once, so a ?for= link keeps working after the flow's own navigation drops the query.
-  const [glassesUserName] = useState(() => resolveGlassesUserName());
+  const [glassesUserName, setGlassesUserName] = useState(() => resolveGlassesUserName());
+  // The API knows who the glasses user is; the link still wins.
+  useEffect(() => {
+    if (linkedGlassesUserName()) return;
+    let cancelled = false;
+    void syncGlassesUser().then((user) => {
+      if (user && !cancelled) setGlassesUserName(user.name);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
   const [preview] = useState(previewEnabled);
   const [consent, setConsent] = useState(preview);
   const [photos, setPhotosState] = useState<CapturedPhoto[]>(() => (preview ? samplePhotos() : []));

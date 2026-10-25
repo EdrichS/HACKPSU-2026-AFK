@@ -25,16 +25,17 @@ export function GlassesUserVoiceScreen() {
     setBusy(true);
     setFailure(null);
     try {
-      await saveGlassesUser({ name, context: flow.context.trim() }, recording.wav);
-      flow.setDoneName(name);
+      const result = await saveGlassesUser({ name, context: flow.context.trim() }, recording.wav);
+      flow.setDoneName(result.name);
       navigate("/setup/done", { replace: true });
     } catch (e) {
-      // Upload's error and offline states aren't designed; same plain notice as About you.
-      setFailure(
-        e instanceof ApiError && e.status === 0
-          ? "You seem to be offline. Check your connection, then press Upload again."
-          : "We couldn't save your setup. Please press Upload to try again.",
-      );
+      // Upload's error and offline states aren't designed; same plain notice as About you. The
+      // server's own sentences (a recording with too little speech, a bad name) are shown as is.
+      let message = "We couldn't save your setup. Please press Upload to try again.";
+      if (e instanceof ApiError && e.status === 0) message = "You seem to be offline. Check your connection, then press Upload again.";
+      else if (e instanceof ApiError && e.status === 422) message = `${e.message} Press Retry to record again.`;
+      else if (e instanceof ApiError && e.status >= 400) message = e.message;
+      setFailure(message);
       setBusy(false);
     }
   };

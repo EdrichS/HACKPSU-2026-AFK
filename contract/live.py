@@ -11,6 +11,7 @@ from contract.embedders import Box
 
 UNKNOWN_TEXT = "I don't recognize this person."
 EMPTY_ROOM_TEXT = "I don't see anyone I know right now."
+UNKNOWN_SPEAKER = "Someone"  # a voice that matches nobody in the transcript; captions carry null instead
 
 
 # From the client. The frontend sends no audio while the app is speaking; that mutes the mic.
@@ -82,12 +83,19 @@ class WhoAnswer(BaseModel):
 
 
 class Caption(BaseModel):
-    """One finished utterance, transcribed, with who said it. Live captions on screen."""
+    """An utterance, transcribed, with who said it. Live captions on screen.
+
+    Only a voice that matches someone in voice_samples gets a name and an id, the user's own
+    voice included; any other voice has speaker and person_id None. With cloud captions a
+    sentence arrives while it is being said (`final` false, each caption replacing the last) and
+    then once more finished.
+    """
 
     type: Literal["caption"] = "caption"
-    person_id: int | None  # a voice the database can't name is the user's; None when no user is registered
-    speaker: str
+    person_id: int | None
+    speaker: str | None
     text: str
+    final: bool = True  # False: still being said; local captions send finished sentences only
     start: float  # seconds of audio since the connection opened
     end: float
 

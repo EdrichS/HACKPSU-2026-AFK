@@ -106,6 +106,18 @@ def load_claude():
     return anthropic.Anthropic()
 
 
+def speechmatics_key() -> str | None:
+    """The key for live cloud captions (backend/cloud_captions.py); None keeps captions local."""
+    from backend.cloud_captions import configured_key
+
+    key = configured_key()
+    if key:
+        log.info("live captions: Speechmatics real-time (audio from /live is streamed to the service)")
+    else:
+        log.info("live captions: local model (set SPEECHMATICS_API_KEY for word-by-word cloud captions)")
+    return key
+
+
 def gemini_ready() -> bool:
     """Whether notes and visits can become facts and cards (backend.gemini needs GEMINI_API_KEY)."""
     from backend import gemini
@@ -133,6 +145,7 @@ async def lifespan(app: FastAPI):
         app.state.transcriber = load_transcriber()
         app.state.claude = load_claude()
         app.state.gemini = gemini_ready()
+        app.state.speechmatics_key = speechmatics_key()
         app.state.presence = None  # the latest /live connection's, for /nova/ask
         yield
     finally:
@@ -199,6 +212,7 @@ def health(request: Request) -> dict:
         "face_model": face_embedder.spec.model,
         "voice_model": voice_embedder.spec.model,
         "transcription": state.transcriber is not None,
+        "captions": "speechmatics" if state.speechmatics_key else ("local" if state.transcriber is not None else "off"),
         "gemini": state.gemini,  # notes and visit summaries
         "claude": state.claude is not None,  # Nova
     }
@@ -218,6 +232,15 @@ def get_user(request: Request) -> Person:
 def list_people(request: Request) -> list[Person]:
     with request.app.state.pool.connection() as conn:
         return people.list_people(conn)
+
+
+@app.get("/people/{person_id}")
+def get_person(request: Request, person_id: int) -> Person:
+    with request.app.state.pool.connection() as conn:
+        person = people.get_person(conn, person_id)
+    if person is None:
+        raise NotFound("person")
+    return person
 
 
 @app.post("/people", status_code=201)
@@ -271,9 +294,20 @@ def list_photos(request: Request) -> list[PhotoOut]:
 def photo_image(request: Request, photo_id: int) -> FileResponse:
     with request.app.state.pool.connection() as conn:
         path = photos.photo_file(conn, photo_id)
-    if path is None:
+    if path is None or not Path(path).is_file():  # the row outlived its file (a cleaned data folder)
         raise NotFound("photo")
     return FileResponse(path)
+
+
+@app.delete("/photos/{photo_id}", status_code=204)
+def delete_photo(request: Request, photo_id: int) -> Response:
+    """Remove a photo and every face in it: a shot with no face, or a sign-up that failed halfway."""
+    with request.app.state.pool.connection() as conn:
+        path = photos.delete_photo(conn, photo_id)
+    if path is None:
+        raise NotFound("photo")
+    Path(path).unlink(missing_ok=True)  # only after the commit
+    return Response(status_code=204)
 
 
 @app.post("/faces/{face_id}/assign", status_code=204)
@@ -309,6 +343,16 @@ def list_voice(request: Request, person_id: int) -> list[VoiceSample]:
         return voice.list_voice(conn, person_id)
 
 
+@app.get("/people/{person_id}/voice/{voice_sample_id}/audio")
+def voice_audio(request: Request, person_id: int, voice_sample_id: int) -> FileResponse:
+    """The recording itself (16 kHz mono WAV), to play back in the management view."""
+    with request.app.state.pool.connection() as conn:
+        path = voice.voice_file(conn, person_id, voice_sample_id)
+    if path is None or not Path(path).is_file():
+        raise NotFound("voice")
+    return FileResponse(path, media_type="audio/wav")
+
+
 @app.delete("/people/{person_id}/voice/{voice_sample_id}", status_code=204)
 def delete_voice(request: Request, person_id: int, voice_sample_id: int) -> Response:
     with request.app.state.pool.connection() as conn:
@@ -329,15 +373,54 @@ app.include_router(enroll_router)
 app.include_router(live_router)
 app.include_router(nova_router)
 
-# The rough test UI (ui/): the enrollment wizard at /ui/ and the live view at /ui/live.html.
-# It covers the wizard, /live and Nova from a browser; the product UI (frontend/) replaces it.
-UI_DIR = Path(__file__).resolve().parents[1] / "ui"
-if UI_DIR.is_dir():
-    from fastapi.responses import RedirectResponse
-    from fastapi.staticfiles import StaticFiles
+# The frontend (frontend/, built to frontend/dist) is served from here, so the pages and the API
+# share one origin. The pages call /api/<route>; ApiPrefix rewrites that to /<route> for HTTP and
+# the WebSocket alike, exactly as the Vite dev server's proxy does. Every path that isn't a route or
+# a built file is the app's index.html, for the browser router (/visitor/..., /setup/..., /live).
 
-    app.mount("/ui", StaticFiles(directory=UI_DIR, html=True), name="ui")
 
-    @app.get("/", include_in_schema=False)
-    def root() -> RedirectResponse:
-        return RedirectResponse("/ui/")
+class ApiPrefix:
+    """ASGI middleware: /api/<path> -> /<path>."""
+
+    def __init__(self, app):
+        self.app = app
+
+    async def __call__(self, scope, receive, send):
+        if scope["type"] in ("http", "websocket"):
+            path = scope.get("path", "")
+            if path == "/api" or path.startswith("/api/"):
+                new = path[4:] or "/"
+                # Remembered so an unknown /api/... path is a 404, never the frontend's index.html.
+                scope = dict(scope, path=new, raw_path=new.encode(), state=dict(scope.get("state") or {}, api=True))
+        await self.app(scope, receive, send)
+
+
+app.add_middleware(ApiPrefix)
+
+ROOT = Path(__file__).resolve().parents[1]
+
+
+def frontend_dist() -> Path:
+    """Where the built frontend is (NAMETAGS_FRONTEND_DIST, default frontend/dist), read per request."""
+    return Path(os.environ.get("NAMETAGS_FRONTEND_DIST", str(ROOT / "frontend" / "dist")))
+
+
+@app.get("/{path:path}", include_in_schema=False, response_model=None)
+def frontend(path: str, request: Request) -> Response:
+    if getattr(request.state, "api", False):
+        return JSONResponse({"detail": "Not Found"}, status_code=404)
+    dist = frontend_dist()
+    index = dist / "index.html"
+    if not index.is_file():
+        return JSONResponse(
+            {"detail": "The frontend isn't built here. For development run `npm run dev` in frontend/ (it serves "
+             "http://localhost:5173 and proxies /api to this server); `npm run build` or the Docker image builds it."},
+            status_code=404,
+        )
+    if path:
+        candidate = (dist / path).resolve()
+        if candidate.is_file() and dist.resolve() in candidate.parents:
+            # Built assets carry a content hash in their name, so they can be cached for good.
+            cache = "public, max-age=31536000, immutable" if path.startswith("assets/") else "no-cache"
+            return FileResponse(candidate, headers={"Cache-Control": cache})
+    return FileResponse(index, headers={"Cache-Control": "no-cache"})  # always refetched: it names the current assets

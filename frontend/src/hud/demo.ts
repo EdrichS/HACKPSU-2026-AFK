@@ -2,7 +2,7 @@
 // laid over Design/screens/glasses/live-view.html at 1600 × 900 for visual QA.
 
 import type { PresentPerson } from "../api/contract";
-import type { CaptionLine } from "./captions";
+import type { CaptionLine } from "./captionLines";
 import type { FaceSnapshot } from "./tracker";
 
 export const DEMO_PERSON: PresentPerson = {

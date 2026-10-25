@@ -1,7 +1,7 @@
 import { memo } from "react";
 
 import { Icon } from "../components/Icon";
-import type { CaptionLine } from "./captions";
+import type { CaptionLine } from "./captionLines";
 import styles from "./Captions.module.css";
 
 /** The word still being transcribed is dimmed and followed by a blinking cursor. */

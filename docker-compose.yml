@@ -28,7 +28,10 @@ services:
       NAMETAGS_DATA: data   # /app/data, the repo's data/ mounted below
       NAMETAGS_CORS_ORIGINS: ${NAMETAGS_CORS_ORIGINS:-}   # empty: pages on localhost only
       GEMINI_API_KEY: ${GEMINI_API_KEY:-}        # notes and visit summaries (facts + cards)
+      GEMINI_MODEL: ${GEMINI_MODEL:-}            # empty: backend/gemini.py's default; set when that model is overloaded
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}  # Nova
+      SPEECHMATICS_API_KEY: ${SPEECHMATICS_API_KEY:-${SPEECHMATICS:-}}  # live word-by-word captions; empty: local captions
+      NAMETAGS_CAPTIONS: ${NAMETAGS_CAPTIONS:-}  # "local" keeps captions on this machine even with a key
     ports:
       - "${NAMETAGS_BIND:-127.0.0.1}:${NAMETAGS_PORT:-8000}:8000"   # this host only: the API has no login
     volumes:

@@ -37,6 +37,12 @@ export function HomePage() {
           <Link to="/setup">Set up the glasses user</Link>
         </li>
       </ol>
+      <h2 className={styles.heading}>Manage</h2>
+      <ol className={styles.list}>
+        <li>
+          <Link to="/manage">People, photos, voices and notes</Link>
+        </li>
+      </ol>
     </main>
   );
 }
