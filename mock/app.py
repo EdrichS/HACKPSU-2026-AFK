@@ -1,13 +1,13 @@
 """The contract's routes, served from memory with the fake embedders. No network calls."""
 
 import io
-import wave
 from datetime import datetime, timezone
 
 from fastapi import FastAPI, HTTPException, Response, UploadFile, WebSocket, WebSocketDisconnect
 from PIL import Image, UnidentifiedImageError
 from pydantic import ValidationError
 
+from contract.audio import check_wav
 from contract.embedders import Box
 from contract.fakes import FakeFaceEmbedder, FakeVoiceEmbedder
 from contract.live import Arrived, Error, Frame, Present, PresentPerson, TrackedFace, Who, WhoAnswer, parse_client, who_text
@@ -192,20 +192,13 @@ def assign_face(face_id: int, body: AssignIn) -> Response:
     return Response(status_code=204)
 
 
-def _check_wav(data: bytes) -> None:
-    try:
-        with wave.open(io.BytesIO(data)) as w:
-            ok = (w.getnchannels(), w.getsampwidth(), w.getframerate()) == (1, 2, 16000)
-    except (wave.Error, EOFError):
-        ok = False
-    if not ok:
-        raise HTTPException(422, "Voice recordings must be WAV, 16 kHz, mono, 16-bit.")
-
-
 @app.post("/people/{person_id}/voice", status_code=201)
 def upload_voice(person_id: int, file: UploadFile) -> VoiceOut:
     data = file.file.read()
-    _check_wav(data)
+    try:
+        check_wav(data)
+    except ValueError as e:
+        raise HTTPException(422, str(e)) from None
     _person_or_404(person_id)
     voice_embedder.embed_voice(data)
     sample_id = _new_id()

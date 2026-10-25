@@ -1,5 +1,10 @@
+import pytest
+
 from contract.fakes import FakeFaceEmbedder, make_wav
 from tests.helpers import PNG_1x1
+
+# The contract: the mock and the real backend must both pass every test here.
+pytestmark = pytest.mark.parametrize("app_module", ["mock", "backend"], indirect=True)
 
 
 def add_person(client, name="David", relationship="grandson"):
