@@ -6,8 +6,8 @@ database calls in one `with pool.connection()` block (one transaction), deletes 
 wrote if that block fails, and deletes files it no longer needs only after the commit.
 
 The face and voice embedders are the real ones (embedders/) unless NAMETAGS_EMBEDDERS=fake, which
-the tests and the mock use. The context owner's router (notes, conversation, facts) calls
-db.context and gets mounted here with app.include_router once it exists.
+the tests and the mock use. The context owner's router (notes, conversation, facts) lives in
+backend/context_routes.py and is mounted here with app.include_router.
 """
 
 import io
@@ -283,10 +283,12 @@ def delete_voice(request: Request, person_id: int, voice_sample_id: int) -> Resp
     return Response(status_code=204)
 
 
-from backend.enroll_api import router as enroll_router  # noqa: E402  (they import nothing from here)
+from backend.context_routes import router as context_router  # noqa: E402  (they import nothing from here)
+from backend.enroll_api import router as enroll_router  # noqa: E402
 from backend.live_api import router as live_router  # noqa: E402
 from backend.nova_api import router as nova_router  # noqa: E402
 
+app.include_router(context_router)
 app.include_router(enroll_router)
 app.include_router(live_router)
 app.include_router(nova_router)

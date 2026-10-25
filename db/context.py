@@ -36,22 +36,45 @@ def save_context(
         raise ValueError("The card is blank.")  # the family clears a card with PATCH, not Gemini
     if len(small_context) > LIMIT:
         raise ValueError(f"The card is {len(small_context)} characters; the limit is {LIMIT}.")
-    for fact in new_facts:
-        if not fact.strip() or len(fact) > LIMIT:
-            raise ValueError(f"Each fact must be 1-{LIMIT} characters and not blank: {fact!r}")
+    _check_facts(new_facts)
     params = {"person_id": person_id, "small_context": small_context, "source": source}
     if conn.execute(
         "UPDATE people SET small_context = %(small_context)s WHERE id = %(person_id)s RETURNING id", params
     ).fetchone() is None:
         raise NotFound("person")
+    _insert_facts(conn, person_id, new_facts, source)
+    return get_person(conn, person_id)
+
+
+def add_facts(
+    conn: psycopg.Connection,
+    person_id: int,
+    new_facts: list[str],
+    source: Literal["conversation", "notes"],
+) -> Person:
+    """Add facts and leave the card as it is: for when the card call failed, or there's no card yet."""
+    _check_facts(new_facts)
+    person = get_person(conn, person_id)
+    if person is None:
+        raise NotFound("person")
+    _insert_facts(conn, person_id, new_facts, source)
+    return person
+
+
+def _check_facts(new_facts: list[str]) -> None:
+    for fact in new_facts:
+        if not fact.strip() or len(fact) > LIMIT:
+            raise ValueError(f"Each fact must be 1-{LIMIT} characters and not blank: {fact!r}")
+
+
+def _insert_facts(conn: psycopg.Connection, person_id: int, new_facts: list[str], source: str) -> None:
     for fact in new_facts:
         # Exact repeats (ignoring case and surrounding spaces) are skipped by facts_person_text_key.
         conn.execute(
             "INSERT INTO facts (person_id, text, source) VALUES (%(person_id)s, %(text)s, %(source)s)"
             " ON CONFLICT DO NOTHING",
-            {**params, "text": fact},
+            {"person_id": person_id, "text": fact, "source": source},
         )
-    return get_person(conn, person_id)
 
 
 def delete_fact(conn: psycopg.Connection, person_id: int, fact_id: int) -> bool:

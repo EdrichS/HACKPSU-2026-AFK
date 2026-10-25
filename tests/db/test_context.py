@@ -1,6 +1,6 @@
 import pytest
 
-from db.context import delete_fact, list_facts, save_context
+from db.context import add_facts, delete_fact, list_facts, save_context
 from db.errors import NotFound
 from db.people import create_person, get_person
 
@@ -55,3 +55,15 @@ def test_deleting_one_fact(conn):
 def test_context_for_unknown_person(conn):
     with pytest.raises(NotFound, match="person"):
         save_context(conn, 999, ["Works as a nurse"], "notes", "Card.")
+    with pytest.raises(NotFound, match="person"):
+        add_facts(conn, 999, ["Works as a nurse"], "notes")
+
+
+def test_add_facts_keeps_the_card(conn):
+    pid = create_person(conn, "David", "grandson").id
+    save_context(conn, pid, [], "notes", "Card.")
+    person = add_facts(conn, pid, ["Works as a nurse", "works as a nurse"], "conversation")
+    assert person.small_context == "Card."
+    assert [(f.text, f.source) for f in list_facts(conn, pid)] == [("Works as a nurse", "conversation")]
+    with pytest.raises(ValueError):
+        add_facts(conn, pid, ["x" * 301], "notes")
