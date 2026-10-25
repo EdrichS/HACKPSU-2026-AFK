@@ -1,0 +1,31 @@
+.indicator {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.label {
+  font-size: var(--type-small);
+  font-weight: 600;
+  color: var(--muted);
+}
+
+.segments {
+  display: flex;
+  gap: 4px;
+}
+
+.done,
+.todo {
+  width: 22px;
+  height: 6px;
+  border-radius: 3px;
+}
+
+.done {
+  background: var(--ink);
+}
+
+.todo {
+  background: var(--track);
+}

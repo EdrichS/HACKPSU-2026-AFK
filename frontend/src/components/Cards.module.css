@@ -1,0 +1,26 @@
+.prompt {
+  padding: clamp(20px, 3vw, 36px);
+  border-radius: var(--radius-card);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-card);
+}
+
+.promptText {
+  margin: 0;
+  font-size: var(--type-prompt);
+  font-weight: 500;
+  line-height: 1.5;
+  text-wrap: pretty;
+}
+
+.nameTag {
+  display: inline-block;
+  padding: 5px 12px 7px;
+  background: var(--tag-bg);
+  color: #ffffff;
+  font-family: var(--font-pixel);
+  font-size: clamp(22px, 2vw, 28px);
+  font-weight: 500;
+  line-height: 1;
+}

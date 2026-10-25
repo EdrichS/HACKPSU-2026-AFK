@@ -1,0 +1,71 @@
+.panel {
+  position: absolute;
+  top: 112px;
+  right: 44px;
+  width: 380px;
+  padding: 30px 30px 34px;
+  border-radius: 34px;
+  overflow: hidden;
+  background: var(--hud-glass-bg);
+  -webkit-backdrop-filter: var(--hud-glass-blur);
+  backdrop-filter: var(--hud-glass-blur);
+  border: var(--hud-glass-border);
+  box-shadow:
+    var(--hud-glass-edge),
+    0 30px 70px rgba(0, 0, 0, 0.32);
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.sheen {
+  position: absolute;
+  inset: 0;
+  border-radius: 34px;
+  background: var(--hud-glass-sheen);
+  pointer-events: none;
+}
+
+/* Everything after the sheen is position: relative so it paints above it. */
+.name {
+  position: relative;
+  margin: 0;
+  font-size: 46px;
+  font-weight: 700;
+  line-height: 1.04;
+  letter-spacing: -0.015em;
+}
+
+.divider {
+  position: relative;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.bullets {
+  position: relative;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.bullet {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.square {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  margin-top: 10px;
+  background: var(--hud-accent);
+}

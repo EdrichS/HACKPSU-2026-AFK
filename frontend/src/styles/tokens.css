@@ -1,0 +1,87 @@
+/* Design tokens from Design/HANDOFF.md. Components use these, never raw values from the mockups. */
+
+:root {
+  /* Color: web */
+  --ink: #131418;
+  --ground: #f3f3f0;
+  --ground-dots: rgba(19, 20, 24, 0.09);
+  --surface: #ffffff;
+  --muted: #5b5e66;
+  --border-strong: #cfd0d4;
+  --border: #e2e3e6;
+  --divider: #edeef0;
+  --track: #d3d4d8;
+  --accent: #ffd84d;
+  --tag-bg: rgba(19, 20, 24, 0.9);
+  --camera-bg: #1a1b20;
+  --camera-scrim: rgba(12, 13, 16, 0.5);
+  /* Not in the handoff: inline errors are undesigned. #B42318 is 6.1:1 on ground. */
+  --danger: #b42318;
+
+  /* Color: glasses live view. The three marked adjustable are overridden from the URL (see hud/settings.ts). */
+  --hud-tag-bg: rgba(0, 0, 0, 0.45); /* adjustable 0.2 to 0.85 */
+  --hud-accent: #ffd84d; /* alternates: #7FDBFF, #9EF0B4, #FFFFFF */
+  --hud-glass-bg: rgba(18, 20, 26, 0.5); /* adjustable 0.1 to 0.85 */
+  --hud-glass-blur: blur(30px) saturate(175%);
+  --hud-glass-border: 1px solid rgba(255, 255, 255, 0.26);
+  --hud-glass-edge: inset 0 1px 0 rgba(255, 255, 255, 0.55), inset 0 -1px 0 rgba(255, 255, 255, 0.1);
+  --hud-glass-sheen: linear-gradient(155deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.05) 34%, rgba(255, 255, 255, 0) 58%);
+  --hud-caption-bg: rgba(12, 13, 17, 0.6);
+  --hud-caption-blur: blur(18px) saturate(140%);
+  --hud-caption-border: 1px solid rgba(255, 255, 255, 0.12);
+  --hud-pill-bg: rgba(18, 20, 26, 0.55);
+  --hud-pill-blur: blur(20px) saturate(160%);
+  --hud-pill-border: 1px solid rgba(255, 255, 255, 0.18);
+  --hud-live: #ff5a4f;
+  --hud-bracket: 3px solid rgba(255, 255, 255, 0.9);
+
+  /* Typography */
+  --font-sans: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-pixel: "Pixelify Sans", "Courier New", monospace;
+  --type-tag-xl: clamp(46px, 7.2vw, 112px);
+  --type-tag-sm: 20px;
+  --type-display: clamp(32px, 4.2vw, 62px);
+  --type-title-final: clamp(34px, 4.6vw, 66px);
+  --type-title: clamp(30px, 3.4vw, 48px);
+  --type-lead: clamp(16px, 1.3vw, 19px);
+  --type-prompt: clamp(19px, 1.9vw, 27px);
+  --type-input: 17px;
+  --type-button: 17px;
+  --type-button-intro: 18px;
+  --type-label: 15px;
+  --type-item-title: 17px;
+  --type-item-body: 15px;
+  --type-small: 14px;
+  --type-small-xs: 13px;
+
+  /* Spacing, sizes, radius, elevation */
+  --gutter: clamp(20px, 5vw, 64px);
+  --gutter-content: clamp(20px, 5vw, 32px);
+  --gutter-content-wide: clamp(20px, 5vw, 48px);
+  --header-pad: clamp(16px, 2.2vw, 28px);
+  --footer-pad-top: 12px;
+  --footer-pad-bottom: clamp(24px, 4vw, 44px);
+  --stack: clamp(18px, 2.2vw, 28px);
+  --stack-form: clamp(18px, 2.2vw, 26px);
+  --stack-tight: 10px;
+  --field-gap: 8px;
+  --control-h: 56px;
+  --control-h-intro: 58px;
+  --input-h: 54px;
+  --chip-h: 44px;
+  --radius-control: 14px;
+  --radius-consent: 18px;
+  --radius-card: 20px;
+  --radius-camera: 24px;
+  --radius-pill: 999px;
+  --shadow-card: 0 1px 2px rgba(19, 20, 24, 0.04), 0 10px 30px rgba(19, 20, 24, 0.05);
+  --shadow-photo: 0 1px 2px rgba(19, 20, 24, 0.08), 0 20px 44px rgba(19, 20, 24, 0.16);
+
+  /* Interaction states. Not designed; these are the handoff's "Suggested" values. */
+  --hover-darken: brightness(0.92);
+  --press-scale: 0.98;
+  --focus-ring: 3px solid var(--accent);
+  /* Under the ring: a ground gap, then a 1px ink edge just outside it (accent alone is 1.24:1 on
+     ground). The ring sits 2px out (outline-offset), so the edge is at 5 to 6px. */
+  --focus-edge: 0 0 0 2px var(--ground), 0 0 0 6px var(--ink);
+}

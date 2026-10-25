@@ -1,0 +1,148 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--field-gap);
+}
+
+.label,
+.legend {
+  font-size: var(--type-label);
+  font-weight: 600;
+}
+
+.labelRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.optional {
+  font-size: var(--type-small-xs);
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.input,
+.textarea {
+  width: 100%;
+  border-radius: var(--radius-control);
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: var(--type-input);
+}
+
+.input {
+  height: var(--input-h);
+  padding: 0 16px;
+}
+
+.textarea {
+  padding: 14px 16px;
+  line-height: 1.45;
+  resize: vertical;
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--muted); /* 6.3:1 on surface */
+  opacity: 1;
+}
+
+.input:focus-visible,
+.textarea:focus-visible {
+  border-color: var(--ink);
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.input[aria-invalid="true"] {
+  border-color: var(--danger);
+}
+
+.helper {
+  font-size: var(--type-small-xs);
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.error {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-size: var(--type-small);
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--danger);
+}
+
+.fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.legend {
+  padding: 0;
+  margin: 0 0 10px;
+}
+
+.error svg {
+  flex: none;
+  margin-top: 2px;
+}
+
+.fieldset .error {
+  margin-top: var(--field-gap);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--chip-h);
+  padding: 0 18px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: filter 80ms ease-out;
+}
+
+.chip:hover {
+  filter: var(--hover-darken);
+}
+
+.chipOn {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: #ffffff;
+}
+
+.chip:has(.radio:focus-visible) {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+  box-shadow: var(--focus-edge);
+}
+
+.radio {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+  opacity: 0;
+}

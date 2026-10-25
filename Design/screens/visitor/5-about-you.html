@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Name Tags · About you</title>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Pixelify+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.nt-chip:has(input:checked){background:#131418 !important;color:#FFFFFF !important;border-color:#131418 !important}
+.nt-chip:has(input:focus-visible){outline:3px solid #FFD84D;outline-offset:2px}
+</style>
+</head>
+<body>
+<div style="min-height: 100vh; box-sizing: border-box; display: flex; flex-direction: column; background-color: #F3F3F0; background-image: radial-gradient(circle, rgba(19, 20, 24, 0.09) 1px, transparent 1.6px); background-size: 22px 22px; font-family: 'Figtree', system-ui, -apple-system, 'Segoe UI', sans-serif; color: #131418">
+
+<header style="display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: clamp(16px, 2.2vw, 28px) clamp(20px, 5vw, 64px)">
+<span style="display: inline-block; padding: 4px 9px 6px; background: rgba(19, 20, 24, 0.9); color: #FFFFFF; font-family: 'Pixelify Sans', 'Courier New', monospace; font-size: 20px; font-weight: 500; line-height: 1">Name Tags</span>
+<div style="display: flex; align-items: center; gap: 12px">
+<span style="font-size: 14px; font-weight: 600; color: #5B5E66">Step 4 of 4</span>
+<div aria-hidden="true" style="display: flex; gap: 4px">
+<span style="width: 22px; height: 6px; border-radius: 3px; background: #131418"></span>
+<span style="width: 22px; height: 6px; border-radius: 3px; background: #131418"></span>
+<span style="width: 22px; height: 6px; border-radius: 3px; background: #131418"></span>
+<span style="width: 22px; height: 6px; border-radius: 3px; background: #131418"></span>
+</div>
+</div>
+</header>
+
+<main style="flex: 1; display: flex; flex-direction: column; justify-content: center; gap: clamp(18px, 2.2vw, 26px); width: 100%; max-width: 640px; margin: 0 auto; box-sizing: border-box; padding: 8px clamp(20px, 5vw, 32px) 16px">
+<div style="display: flex; flex-direction: column; gap: 10px">
+<h1 style="margin: 0; font-size: clamp(30px, 3.4vw, 48px); font-weight: 700; line-height: 1.1; letter-spacing: -0.02em">Tell Rose about you</h1>
+<p style="margin: 0; font-size: clamp(16px, 1.3vw, 19px); line-height: 1.5; color: #5B5E66; text-wrap: pretty">This is what Rose will see next to your face.</p>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<label for="first-name" style="font-size: 15px; font-weight: 600">First name</label>
+<input id="first-name" type="text" autocomplete="given-name" placeholder="e.g. Maya" style="height: 54px; box-sizing: border-box; padding: 0 16px; border-radius: 14px; border: 1px solid #CFD0D4; background: #FFFFFF; color: #131418; font-family: inherit; font-size: 17px">
+</div>
+
+<fieldset style="margin: 0; padding: 0; border: 0; min-width: 0">
+<legend style="padding: 0; margin: 0 0 10px; font-size: 15px; font-weight: 600">How are you related to Rose?</legend>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<label class="nt-chip" for="relationship-0" style="position: relative; display: inline-flex; align-items: center; min-height: 44px; box-sizing: border-box; padding: 0 18px; border-radius: 999px; border: 1px solid #CFD0D4; background: #FFFFFF; color: #131418; font-size: 16px; font-weight: 600; cursor: pointer">
+<input id="relationship-0" type="radio" name="relationship" value="Son" style="position: absolute; left: 0; top: 0; width: 1px; height: 1px; margin: 0; opacity: 0">
+<span>Son</span>
+</label>
+<label class="nt-chip" for="relationship-1" style="position: relative; display: inline-flex; align-items: center; min-height: 44px; box-sizing: border-box; padding: 0 18px; border-radius: 999px; border: 1px solid #CFD0D4; background: #FFFFFF; color: #131418; font-size: 16px; font-weight: 600; cursor: pointer">
+<input id="relationship-1" type="radio" name="relationship" value="Daughter" style="position: absolute; left: 0; top: 0; width: 1px; height: 1px; margin: 0; opacity: 0">
+<span>Daughter</span>
+</label>
+<label class="nt-chip" for="relationship-2" style="position: relative; display: inline-flex; align-items: center; min-height: 44px; box-sizing: border-box; padding: 0 18px; border-radius: 999px; border: 1px solid #CFD0D4; background: #FFFFFF; color: #131418; font-size: 16px; font-weight: 600; cursor: pointer">
+<input id="relationship-2" type="radio" name="relationship" value="Grandson" style="position: absolute; left: 0; top: 0; width: 1px; height: 1px; margin: 0; opacity: 0">
+<span>Grandson</span>
+</label>
+<label class="nt-chip" for="relationship-3" style="position: relative; display: inline-flex; align-items: center; min-height: 44px; box-sizing: border-box; padding: 0 18px; border-radius: 999px; border: 1px solid #CFD0D4; background: #FFFFFF; color: #131418; font-size: 16px; font-weight: 600; cursor: pointer">
+<input id="relationship-3" type="radio" name="relationship" value="Granddaughter" checked style="position: absolute; left: 0; top: 0; width: 1px; height: 1px; margin: 0; opacity: 0">
+<span>Granddaughter</span>
+</label>
+<label class="nt-chip" for="relationship-4" style="position: relative; display: inline-flex; align-items: center; min-height: 44px; box-sizing: border-box; padding: 0 18px; border-radius: 999px; border: 1px solid #CFD0D4; background: #FFFFFF; color: #131418; font-size: 16px; font-weight: 600; cursor: pointer">
+<input id="relationship-4" type="radio" name="relationship" value="Friend" style="position: absolute; left: 0; top: 0; width: 1px; height: 1px; margin: 0; opacity: 0">
+<span>Friend</span>
+</label>
+<label class="nt-chip" for="relationship-5" style="position: relative; display: inline-flex; align-items: center; min-height: 44px; box-sizing: border-box; padding: 0 18px; border-radius: 999px; border: 1px solid #CFD0D4; background: #FFFFFF; color: #131418; font-size: 16px; font-weight: 600; cursor: pointer">
+<input id="relationship-5" type="radio" name="relationship" value="Caregiver" style="position: absolute; left: 0; top: 0; width: 1px; height: 1px; margin: 0; opacity: 0">
+<span>Caregiver</span>
+</label>
+<label class="nt-chip" for="relationship-6" style="position: relative; display: inline-flex; align-items: center; min-height: 44px; box-sizing: border-box; padding: 0 18px; border-radius: 999px; border: 1px solid #CFD0D4; background: #FFFFFF; color: #131418; font-size: 16px; font-weight: 600; cursor: pointer">
+<input id="relationship-6" type="radio" name="relationship" value="Other" style="position: absolute; left: 0; top: 0; width: 1px; height: 1px; margin: 0; opacity: 0">
+<span>Other</span>
+</label>
+</div>
+</fieldset>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; align-items: baseline; justify-content: space-between; gap: 12px">
+<label for="context" style="font-size: 15px; font-weight: 600">Anything else Rose should know?</label>
+<span style="font-size: 13px; font-weight: 500; color: #5B5E66">Optional</span>
+</div>
+<textarea id="context" rows="4" placeholder="How you know each other, what you like to talk about, when you usually visit" style="min-height: 124px; box-sizing: border-box; padding: 14px 16px; border-radius: 14px; border: 1px solid #CFD0D4; background: #FFFFFF; color: #131418; font-family: inherit; font-size: 17px; line-height: 1.45; resize: vertical"></textarea>
+<span style="font-size: 13px; line-height: 1.45; color: #5B5E66">Rose will see this as a few short notes beside your name.</span>
+</div>
+</main>
+
+<footer style="display: flex; justify-content: center; padding: 12px clamp(20px, 5vw, 64px) clamp(24px, 4vw, 44px)">
+<div style="display: flex; width: 100%; max-width: 560px">
+<a href="6-thank-you.html" style="flex: 1 1 0; display: flex; align-items: center; justify-content: center; gap: 10px; height: 56px; box-sizing: border-box; padding: 0 20px; border-radius: 14px; background: #131418; color: #FFFFFF; font-size: 17px; font-weight: 600; text-decoration: none"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m17 8-5-5-5 5"/><path d="M12 3v12"/></svg>Upload</a>
+</div>
+</footer>
+
+</div>
+</body>
+</html>
