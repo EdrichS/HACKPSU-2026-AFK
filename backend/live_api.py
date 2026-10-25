@@ -78,6 +78,7 @@ class LiveSession:
         self.cloud = None  # a CloudCaptions while Speechmatics captions this connection
         self._partial: tuple[str, str] | None = None  # the partial caption on screen: (label, text)
         self._named: dict[int, tuple[PresentPerson, Box, float]] = {}  # person id -> (person, last box, when)
+        self._label_lines: dict[str, list] = {}  # cloud label -> transcript lines said before it was named
         self._lock = threading.RLock()  # messages and cloud turns both change the room's state
         self._facts: dict[int, tuple[float, list[str]]] = {}
         try:
@@ -274,7 +275,9 @@ class LiveSession:
                 self.visit.note(person)
             else:
                 out_arrival = None
-            self.visit.add(speaker, person_id, text)
+            line = self.visit.add(speaker, person_id, text)
+            if person is None and line is not None:
+                self._label_lines.setdefault(label, []).append(line)
             log.info("caption %6.1fs  %s: %s", start, speaker, text)
             caption = Caption(person_id=person_id, speaker=self.shown(speaker, person), text=text, start=start, end=end)
         out = self.save_ended(ended)
@@ -283,12 +286,26 @@ class LiveSession:
         out.append(caption)
         return out + self.ask_nova(text, speaker)
 
+    def cloud_relabel(self, label: str) -> list:
+        """A label just got its name: the lines it said before that are theirs in the transcript too,
+        and they have arrived. (Captions already on screen stay as they were.)"""
+        with self._lock:
+            person = self.cloud.namer.person_for(label) if self.cloud is not None else None
+            if person is None:
+                return []
+            for line in self._label_lines.pop(label, []):
+                line.speaker, line.person_id = person.name, person.person_id
+            self.visit.note(person)
+            arrival = self.presence.saw(person, "voice")
+            return [Arrived(person=self.card(person), via="voice", text=arrival)] if arrival else []
+
     def on_who(self) -> list:
         return [WhoAnswer(text=self.presence.who_answer())]
 
     def take_visit(self) -> Visit | None:
         """Close the visit and hand it over for saving (under the lock); None when nothing was said."""
         visit, self.visit = self.visit, Visit()
+        self._label_lines.clear()
         return visit if visit.lines else None
 
     def take_idle_visit(self) -> Visit | None:

@@ -170,7 +170,9 @@ class FakeSpeechmatics:
             if stop():
                 break
             self.sent_samples += len(block)
-            namer.offer("S1", block)
+            named = namer.offer("S1", block)
+            if named:
+                self.kwargs["on_event"]("mapping", {"label": "S1", "speaker": named})
             n += 1
             on_partial("S1", "Hi Grandma, I")
             on_turn(Turn("S1", [Word("Hi", 0.0, 0.4, "S1"), Word("Grandma,", 0.5, 1.0, "S1"), Word(f"visit {n}.", 1.1, 1.6, "S1", is_eos=True)]), "S1")
@@ -189,18 +191,20 @@ def test_cloud_captions_arrive_live_and_name_the_voice(backend_client, backend_m
     try:
         with backend_client.websocket_connect("/live") as ws:
             ws.send_text(json.dumps({"type": "audio", "ts": 1, "wav": b64(make_wav(5.0))}))  # Maya's enrolled recording
-            first = receive_until(ws, "caption")
-            assert [m["type"] for m in first] == ["caption"] and first[0]["final"] is False and first[0]["text"] == "Hi Grandma, I"
-            partial_then_final = receive_until(ws, "caption")
-            assert partial_then_final[-1]["final"] is True and partial_then_final[-1]["text"] == "Hi Grandma, visit 1."
-            assert partial_then_final[-1]["speaker"] is None  # one vote so far: not matched yet, so no name
-            ws.send_text(json.dumps({"type": "audio", "ts": 2, "wav": b64(make_wav(5.0))}))
             msgs = receive_until(ws, "caption")
             msgs += receive_until(ws, "caption")
             kinds = [m["type"] for m in msgs]
-            assert "arrived" in kinds, msgs  # the second vote names S1: Maya, by voice
+            assert "arrived" in kinds, msgs  # a clear match names S1 on the first attempt: Maya, by voice
+            partial = next(m for m in msgs if m["type"] == "caption" and not m["final"])
+            assert partial["text"] == "Hi Grandma, I" and partial["speaker"] == "Maya"
             final = [m for m in msgs if m["type"] == "caption" and m["final"]][-1]
-            assert final["speaker"] == "Maya" and final["person_id"] == maya["id"] and final["text"] == "Hi Grandma, visit 2."
+            assert final["speaker"] == "Maya" and final["person_id"] == maya["id"] and final["text"] == "Hi Grandma, visit 1."
+            ws.send_text(json.dumps({"type": "audio", "ts": 2, "wav": b64(make_wav(5.0))}))
+            msgs = receive_until(ws, "caption")
+            msgs += receive_until(ws, "caption")
+            assert "arrived" not in [m["type"] for m in msgs]  # announced once
+            final = [m for m in msgs if m["type"] == "caption" and m["final"]][-1]
+            assert final["speaker"] == "Maya" and final["text"] == "Hi Grandma, visit 2."
             ws.send_text('{"type":"who"}')
             who = receive_until(ws, "who_answer")[-1]
             assert "Maya" in who["text"]
@@ -213,6 +217,42 @@ def test_cloud_captions_arrive_live_and_name_the_voice(backend_client, backend_m
     assert made[0].kwargs["extra_vocab"] == ["Maya", "Nova"]
     visits = list((Path(backend_module.app.state.data_dir) / "visits").glob("*.txt"))
     assert len(visits) == 1 and "Maya: Hi Grandma, visit 2." in visits[0].read_text()
+
+
+def test_lines_said_before_a_voice_was_named_become_theirs(backend_client, backend_module, monkeypatch, maya):
+    """The first attempt matched nobody (a cough, a short word); the second names Maya, and the
+    transcript line from before is hers too, so the visit summary doesn't lose it."""
+    import backend.cloud_captions as cloud
+    from live.voices import VoiceIdentifier
+
+    real = VoiceIdentifier.identify
+    calls = []
+
+    def flaky(self, samples):
+        calls.append(1)
+        return (None, "no_match", 0.9) if len(calls) == 1 else real(self, samples)
+
+    monkeypatch.setattr(VoiceIdentifier, "identify", flaky)
+    monkeypatch.setattr(cloud, "RawLabelSession", lambda **kw: FakeSpeechmatics(**kw))
+    backend_module.app.state.speechmatics_key = "test-key"
+    try:
+        with backend_client.websocket_connect("/live") as ws:
+            ws.send_text(json.dumps({"type": "audio", "ts": 1, "wav": b64(make_wav(5.0))}))
+            first = [m for m in receive_until(ws, "caption") + receive_until(ws, "caption") if m["type"] == "caption" and m["final"]][-1]
+            assert first["speaker"] is None and first["text"] == "Hi Grandma, visit 1."
+            ws.send_text(json.dumps({"type": "audio", "ts": 2, "wav": b64(make_wav(5.0))}))
+            msgs = receive_until(ws, "caption") + receive_until(ws, "caption")
+            if "arrived" not in [m["type"] for m in msgs]:
+                msgs += receive_until(ws, "arrived")
+            assert [m for m in msgs if m["type"] == "caption" and m["final"]][-1]["speaker"] == "Maya"
+            ws.send_text('{"type":"end_visit"}')
+            ws.send_text('{"type":"who"}')
+            receive_until(ws, "who_answer")
+    finally:
+        backend_module.app.state.speechmatics_key = None
+    [visit] = (Path(backend_module.app.state.data_dir) / "visits").glob("*.txt")
+    text = visit.read_text()
+    assert "Maya: Hi Grandma, visit 1." in text and "Someone:" not in text
 
 
 def test_an_unknown_voice_is_nobody_even_with_a_user_registered(backend_client, backend_module, monkeypatch):

@@ -43,6 +43,8 @@ from db.errors import Conflict, NotFound
 from enroll import store
 
 log = logging.getLogger("backend")
+if not logging.getLogger().handlers:  # uvicorn configures only its own loggers; ours would be silent
+    logging.basicConfig(level=logging.INFO, format="%(name)s: %(message)s")
 
 EXIF_ORIENTATION = 0x0112
 

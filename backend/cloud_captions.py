@@ -25,8 +25,10 @@ from voice_rec.config import SAMPLE_RATE
 
 log = logging.getLogger("backend.cloud")
 
-MIN_AUDIO = 2.0  # seconds of a label's speech per matching attempt
-VOTES_NEEDED = 2  # attempts that must agree before a label is named
+MIN_AUDIO = 1.5  # seconds of a label's speech per matching attempt
+VOTES_NEEDED = 2  # attempts that must agree before a borderline match names a label
+CONFIDENT_DISTANCE = 0.40  # a match this close (cosine; the cutoff is 0.55) names the label on the first attempt
+NOBODY_WEIGHT = 0.3  # an attempt that matched no one counts this much, so a later real match wins over it
 MAX_AUDIO = 8.0  # the speaker model needs no more than this per attempt
 MAX_SPEAKERS = 4
 STOP_GRACE = 5.0  # seconds to let the last turn through when the connection closes
@@ -43,9 +45,10 @@ def configured_key() -> str | None:
 class DbLabelNamer:
     """Turns Speechmatics' S1/S2/... labels into people from voice_samples.
 
-    The audio behind a label is gathered until MIN_AUDIO seconds are in, matched, and counted as a
-    vote for that person (or for "nobody we know"). A label is decided once a candidate has
-    VOTES_NEEDED votes and more weight than any other. Fits voice_rec.cloud.LiveSession's `namer`.
+    The audio behind a label is gathered until MIN_AUDIO seconds are in, then matched. A confident
+    match (closer than CONFIDENT_DISTANCE) names the label at once; a borderline one is a vote, and
+    the label is decided once a candidate has VOTES_NEEDED votes and more weight than any other
+    (an attempt that matched nobody counts NOBODY_WEIGHT). Fits voice_rec.cloud.LiveSession's `namer`.
     """
 
     def __init__(self, identifier, min_audio: float = MIN_AUDIO, votes_needed: int = VOTES_NEEDED):
@@ -72,7 +75,9 @@ class DbLabelNamer:
         key = person.person_id if person is not None else None
         if person is not None:
             self._candidates.setdefault(label, {})[key] = person
-        weight = (1.0 - distance) if (person is not None and distance is not None) else 0.5
+            if distance is not None and distance <= CONFIDENT_DISTANCE:
+                return self._decide(label, key)  # clear enough: don't wait for a second attempt
+        weight = (1.0 - distance) if (person is not None and distance is not None) else NOBODY_WEIGHT
         votes = self._votes.setdefault(label, {})
         votes.setdefault(key, []).append(weight)
         totals = {k: sum(v) for k, v in votes.items()}
@@ -81,9 +86,13 @@ class DbLabelNamer:
             return None
         if totals[best] <= max([w for k, w in totals.items() if k != best] or [0.0]):
             return None
-        if label in self._decided and self._decided[label] == best:
+        return self._decide(label, best)
+
+    def _decide(self, label: str, key: int | None) -> str | None:
+        """Record the decision; the name when it is new or changed (nobody -> None)."""
+        if label in self._decided and self._decided[label] == key:
             return None
-        self._decided[label] = best
+        self._decided[label] = key
         chosen = self.person_for(label)
         return chosen.name if chosen else None
 
@@ -220,3 +229,15 @@ class CloudCaptions:
             log.warning("Speechmatics %s: %s", kind, payload)
         elif kind == "mapping":
             log.info("Speechmatics label %s is %s", payload.get("label"), payload.get("speaker"))
+            task = self.loop.create_task(self._relabel(payload.get("label")))  # earlier lines were theirs too
+            self.turns.add(task)
+            task.add_done_callback(self.turns.discard)
+
+    async def _relabel(self, label: str) -> None:
+        try:
+            messages = await asyncio.to_thread(self.session.cloud_relabel, label)
+        except Exception:  # noqa: BLE001
+            log.exception("relabel failed")
+            return
+        for message in messages:
+            self.outbox.put_nowait(message)
