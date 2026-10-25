@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A.R glasses live view</title>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&family=Pixelify+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#0B0C0F}
+@keyframes ntPulse{0%{box-shadow:0 0 0 0 rgba(255,90,79,0.6)}70%{box-shadow:0 0 0 9px rgba(255,90,79,0)}100%{box-shadow:0 0 0 0 rgba(255,90,79,0)}}
+@keyframes ntBlink{0%,49%{opacity:1}50%,100%{opacity:0}}
+:root{--nt-accent:#FFD84D;--nt-tag-bg:rgba(0, 0, 0, 0.45);--nt-glass-bg:rgba(18, 20, 26, 0.5)}
+@media (prefers-reduced-motion: reduce){*{animation:none !important}}
+</style>
+</head>
+<body>
+<div style="position: relative; width: 1600px; height: 900px; overflow: hidden; background: #2A2622; font-family: 'Figtree', system-ui, -apple-system, 'Segoe UI', sans-serif; color: #FFFFFF">
+
+<svg width="1600" height="900" viewBox="0 0 1600 900" aria-hidden="true" style="position: absolute; left: 0; top: 0; display: block">
+<defs>
+<linearGradient id="ntWall" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#DCCFBC"/><stop offset="0.55" stop-color="#C2B19B"/><stop offset="1" stop-color="#9C8974"/></linearGradient>
+<linearGradient id="ntFloor" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#73553F"/><stop offset="1" stop-color="#3E2C21"/></linearGradient>
+<linearGradient id="ntSky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#B7D3E2"/><stop offset="1" stop-color="#EAF0EB"/></linearGradient>
+<radialGradient id="ntSpill" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFF7E8" stop-opacity="0.7"/><stop offset="1" stop-color="#FFF7E8" stop-opacity="0"/></radialGradient>
+<radialGradient id="ntLamp" cx="0.5" cy="0.5" r="0.5"><stop offset="0" stop-color="#FFD98F" stop-opacity="0.75"/><stop offset="0.5" stop-color="#FFD98F" stop-opacity="0.22"/><stop offset="1" stop-color="#FFD98F" stop-opacity="0"/></radialGradient>
+<radialGradient id="ntVignette" cx="0.5" cy="0.48" r="0.75"><stop offset="0.6" stop-color="#000000" stop-opacity="0"/><stop offset="1" stop-color="#000000" stop-opacity="0.45"/></radialGradient>
+<radialGradient id="ntFace" cx="0.42" cy="0.38" r="0.75"><stop offset="0" stop-color="#D6A07C"/><stop offset="1" stop-color="#BC8160"/></radialGradient>
+<linearGradient id="ntSweater" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#88A38C"/><stop offset="1" stop-color="#67826C"/></linearGradient>
+<clipPath id="ntGlass"><rect x="114" y="110" width="364" height="404"/></clipPath>
+</defs>
+
+<rect x="0" y="0" width="1600" height="660" fill="url(#ntWall)"/>
+<ellipse cx="300" cy="330" rx="440" ry="340" fill="url(#ntSpill)"/>
+
+<rect x="30" y="58" width="520" height="8" rx="4" fill="#5A4C40"/>
+<rect x="96" y="92" width="400" height="440" rx="6" fill="#EEE6D8"/>
+<rect x="114" y="110" width="364" height="404" fill="url(#ntSky)"/>
+<g clip-path="url(#ntGlass)">
+<ellipse cx="180" cy="500" rx="160" ry="110" fill="#9DB898"/>
+<ellipse cx="420" cy="520" rx="140" ry="96" fill="#88A684"/>
+<ellipse cx="300" cy="570" rx="220" ry="80" fill="#7C9B79"/>
+</g>
+<rect x="292" y="110" width="8" height="404" fill="#EEE6D8"/>
+<rect x="114" y="306" width="364" height="8" fill="#EEE6D8"/>
+<rect x="82" y="526" width="428" height="16" rx="3" fill="#F5EFE5"/>
+<path d="M40 66 L112 66 C100 200 122 360 106 566 L40 566 Z" fill="#B5A28A"/>
+<path d="M70 80 C64 220 80 380 70 552" fill="none" stroke="#A08D76" stroke-width="6" stroke-linecap="round"/>
+<path d="M480 66 L552 66 L552 566 L486 566 C504 380 482 220 480 66 Z" fill="#B5A28A"/>
+<path d="M524 80 C530 220 516 380 526 552" fill="none" stroke="#A08D76" stroke-width="6" stroke-linecap="round"/>
+
+<rect x="1000" y="150" width="140" height="180" rx="4" fill="#3A322C"/>
+<rect x="1012" y="162" width="116" height="156" fill="#E4D9C7"/>
+<path d="M1012 286 L1048 246 L1076 272 L1100 252 L1128 280 L1128 318 L1012 318 Z" fill="#9EB29F"/>
+<circle cx="1096" cy="204" r="14" fill="#E8B46E"/>
+
+<circle cx="1420" cy="250" r="270" fill="url(#ntLamp)"/>
+<path d="M1352 196 L1488 196 L1520 300 L1320 300 Z" fill="#F4E4C4"/>
+<rect x="1416" y="300" width="8" height="352" fill="#3A322C"/>
+<ellipse cx="1420" cy="654" rx="64" ry="11" fill="#2C2622"/>
+
+<rect x="0" y="646" width="1600" height="16" fill="#E6DCCC"/>
+<rect x="0" y="660" width="1600" height="240" fill="url(#ntFloor)"/>
+<path d="M0 724 H1600 M0 806 H1600" stroke="#5B4334" stroke-width="2" opacity="0.5"/>
+<ellipse cx="760" cy="852" rx="660" ry="100" fill="#B39E83" opacity="0.5"/>
+
+<rect x="300" y="430" width="900" height="210" rx="42" fill="#5B7176"/>
+<rect x="372" y="468" width="150" height="116" rx="26" fill="#D3A86B" transform="rotate(6 447 526)"/>
+<rect x="962" y="470" width="140" height="110" rx="26" fill="#C98B7A" transform="rotate(-7 1032 525)"/>
+<rect x="272" y="566" width="956" height="104" rx="30" fill="#4C6166"/>
+<rect x="246" y="500" width="112" height="176" rx="38" fill="#536A6F"/>
+<rect x="1142" y="500" width="112" height="176" rx="38" fill="#536A6F"/>
+
+<ellipse cx="150" cy="690" rx="26" ry="86" fill="#4E7A56" transform="rotate(-24 150 690)"/>
+<ellipse cx="196" cy="672" rx="26" ry="96" fill="#5C8A63" transform="rotate(16 196 672)"/>
+<ellipse cx="118" cy="730" rx="22" ry="70" fill="#5C8A63" transform="rotate(-52 118 730)"/>
+<ellipse cx="234" cy="724" rx="22" ry="72" fill="#4E7A56" transform="rotate(48 234 724)"/>
+<ellipse cx="172" cy="648" rx="20" ry="82" fill="#6A9970" transform="rotate(-4 172 648)"/>
+<rect x="102" y="758" width="142" height="20" rx="6" fill="#C97A5D"/>
+<path d="M112 776 L234 776 L218 900 L128 900 Z" fill="#B96A4F"/>
+
+<path d="M606 336 C598 224 654 168 720 168 C786 168 842 224 834 336 L846 548 C806 574 634 574 594 548 Z" fill="#2B1F1B"/>
+<path d="M448 900 L466 700 C476 616 540 570 632 552 L808 552 C900 570 964 616 974 700 L992 900 Z" fill="url(#ntSweater)"/>
+<path d="M684 396 L756 396 L762 556 C742 576 698 576 678 556 Z" fill="#B27756"/>
+<ellipse cx="720" cy="414" rx="36" ry="16" fill="#985F42" opacity="0.5"/>
+<path d="M640 552 C668 600 772 600 800 552 L818 556 C794 622 646 622 622 556 Z" fill="#6A866F"/>
+<path d="M598 360 C590 470 598 566 640 650 C622 660 594 660 576 650 C560 560 566 460 580 360 Z" fill="#2B1F1B"/>
+<path d="M842 360 C850 470 842 566 800 650 C818 660 846 660 864 650 C880 560 874 460 860 360 Z" fill="#2B1F1B"/>
+<ellipse cx="720" cy="318" rx="78" ry="96" fill="url(#ntFace)"/>
+<path d="M640 300 C638 226 678 196 726 196 C780 196 808 234 802 296 C778 258 732 242 690 258 C666 268 650 282 640 300 Z" fill="#2B1F1B"/>
+
+<rect x="0" y="0" width="1600" height="900" fill="url(#ntVignette)"/>
+</svg>
+
+<div style="position: absolute; top: 36px; left: 40px; display: flex; align-items: center; gap: 14px; padding: 10px 18px 10px 14px; border-radius: 999px; background: rgba(18, 20, 26, 0.55); backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%); border: 1px solid rgba(255, 255, 255, 0.18); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28); font-size: 14px; font-weight: 600; letter-spacing: 0.02em">
+<div style="display: flex; align-items: center; gap: 8px">
+<span style="width: 8px; height: 8px; border-radius: 50%; background: #FF5A4F; animation: ntPulse 1.8s ease-out infinite"></span>
+<span>LIVE</span>
+</div>
+<span aria-hidden="true" style="width: 1px; height: 16px; background: rgba(255, 255, 255, 0.24)"></span>
+<div style="display: flex; align-items: center; gap: 7px">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><path d="M9 9h.01"/><path d="M15 9h.01"/></svg>
+<span>Face</span>
+</div>
+<div style="display: flex; align-items: center; gap: 7px">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><path d="M12 19v3"/></svg>
+<span>Voice</span>
+</div>
+<div style="display: flex; align-items: center; gap: 7px">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 15h4M15 15h2M7 11h2M13 11h4"/></svg>
+<span>Captions</span>
+</div>
+</div>
+
+<div aria-hidden="true" style="position: absolute; left: 626px; top: 204px; width: 188px; height: 232px">
+<span style="position: absolute; left: 0; top: 0; width: 28px; height: 28px; border-left: 3px solid rgba(255, 255, 255, 0.9); border-top: 3px solid rgba(255, 255, 255, 0.9); border-top-left-radius: 12px"></span>
+<span style="position: absolute; right: 0; top: 0; width: 28px; height: 28px; border-right: 3px solid rgba(255, 255, 255, 0.9); border-top: 3px solid rgba(255, 255, 255, 0.9); border-top-right-radius: 12px"></span>
+<span style="position: absolute; left: 0; bottom: 0; width: 28px; height: 28px; border-left: 3px solid rgba(255, 255, 255, 0.9); border-bottom: 3px solid rgba(255, 255, 255, 0.9); border-bottom-left-radius: 12px"></span>
+<span style="position: absolute; right: 0; bottom: 0; width: 28px; height: 28px; border-right: 3px solid rgba(255, 255, 255, 0.9); border-bottom: 3px solid rgba(255, 255, 255, 0.9); border-bottom-right-radius: 12px"></span>
+</div>
+
+<div style="position: absolute; left: 720px; top: 80px; transform: translateX(-50%); padding: 6px 16px 8px; background: var(--nt-tag-bg); color: #FFFFFF; font-family: 'Pixelify Sans', 'Courier New', monospace; font-size: 40px; font-weight: 500; line-height: 1; white-space: nowrap; text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.28)">Maya</div>
+
+<div style="position: absolute; left: 720px; top: 452px; transform: translateX(-50%); padding: 5px 12px 7px; background: var(--nt-tag-bg); color: var(--nt-accent); font-family: 'Pixelify Sans', 'Courier New', monospace; font-size: 26px; font-weight: 500; line-height: 1; white-space: nowrap; text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.28)">Granddaughter</div>
+
+<aside aria-label="About Maya" style="position: absolute; top: 112px; right: 44px; width: 380px; box-sizing: border-box; padding: 30px 30px 34px; border-radius: 34px; overflow: hidden; background: var(--nt-glass-bg); backdrop-filter: blur(30px) saturate(175%); -webkit-backdrop-filter: blur(30px) saturate(175%); border: 1px solid rgba(255, 255, 255, 0.26); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.55), inset 0 -1px 0 rgba(255, 255, 255, 0.1), 0 30px 70px rgba(0, 0, 0, 0.32); display: flex; flex-direction: column; gap: 22px">
+<div aria-hidden="true" style="position: absolute; left: 0; top: 0; right: 0; bottom: 0; border-radius: 34px; background: linear-gradient(155deg, rgba(255, 255, 255, 0.22) 0%, rgba(255, 255, 255, 0.05) 34%, rgba(255, 255, 255, 0) 58%); pointer-events: none"></div>
+<h1 style="position: relative; margin: 0; font-size: 46px; font-weight: 700; line-height: 1.04; letter-spacing: -0.015em">Maya</h1>
+<div aria-hidden="true" style="position: relative; height: 1px; background: rgba(255, 255, 255, 0.2)"></div>
+<ul style="position: relative; margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 16px">
+<li style="display: flex; gap: 14px; align-items: flex-start; font-size: 20px; font-weight: 500; line-height: 1.4; color: rgba(255, 255, 255, 0.95)"><span aria-hidden="true" style="flex: none; width: 8px; height: 8px; margin-top: 10px; background: var(--nt-accent)"></span><span>Anita's daughter, your oldest grandchild</span></li>
+<li style="display: flex; gap: 14px; align-items: flex-start; font-size: 20px; font-weight: 500; line-height: 1.4; color: rgba(255, 255, 255, 0.95)"><span aria-hidden="true" style="flex: none; width: 8px; height: 8px; margin-top: 10px; background: var(--nt-accent)"></span><span>Studying nursing, in her final year</span></li>
+<li style="display: flex; gap: 14px; align-items: flex-start; font-size: 20px; font-weight: 500; line-height: 1.4; color: rgba(255, 255, 255, 0.95)"><span aria-hidden="true" style="flex: none; width: 8px; height: 8px; margin-top: 10px; background: var(--nt-accent)"></span><span>Visits most Sundays after lunch</span></li>
+</ul>
+</aside>
+
+<section aria-label="Live captions" style="position: absolute; left: 320px; bottom: 44px; width: 960px; box-sizing: border-box; padding: 18px 28px 22px; border-radius: 24px; background: rgba(12, 13, 17, 0.6); backdrop-filter: blur(18px) saturate(140%); -webkit-backdrop-filter: blur(18px) saturate(140%); border: 1px solid rgba(255, 255, 255, 0.12); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.16); display: flex; flex-direction: column; gap: 8px">
+<div style="display: flex; align-items: center; gap: 10px; color: var(--nt-accent); font-size: 15px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase">
+<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 10v3"/><path d="M6 6v11"/><path d="M10 3v18"/><path d="M14 8v7"/><path d="M18 5v13"/><path d="M22 10v3"/></svg>
+<span>Maya</span>
+</div>
+<p style="margin: 0; font-size: 31px; font-weight: 600; line-height: 1.32; color: #FFFFFF; text-wrap: pretty">Hi Grandma! I brought the photos from our beach trip. Want to see <span style="color: rgba(255, 255, 255, 0.55)">them?</span><span aria-hidden="true" style="display: inline-block; width: 3px; height: 30px; margin-left: 5px; vertical-align: -5px; background: #FFFFFF; animation: ntBlink 1s steps(1) infinite"></span></p>
+</section>
+
+</div>
+</body>
+</html>

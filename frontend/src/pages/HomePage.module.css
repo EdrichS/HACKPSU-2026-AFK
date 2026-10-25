@@ -1,0 +1,47 @@
+.main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 48px 20px 64px;
+}
+
+.intro,
+.hint {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.hint code {
+  font-size: 0.95em;
+}
+
+.heading {
+  margin: 32px 0 10px;
+  font-size: var(--type-small);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 8px;
+}
+
+.list a {
+  display: block;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-control);
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.list a:hover,
+.list a:focus-visible {
+  border-color: var(--ink);
+}

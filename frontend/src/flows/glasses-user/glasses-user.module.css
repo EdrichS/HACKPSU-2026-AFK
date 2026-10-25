@@ -1,0 +1,50 @@
+/* All set */
+
+.doneMain {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(18px, 2.4vw, 28px);
+  padding: 8px var(--gutter) 16px;
+  text-align: center;
+}
+
+.badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(72px, 6vw, 96px);
+  height: clamp(72px, 6vw, 96px);
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--ink);
+}
+
+.badgeIcon {
+  width: 46%;
+  height: 46%;
+}
+
+.doneTitle {
+  margin: 0;
+  font-size: var(--type-title-final);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.doneTitle:focus {
+  outline: none;
+}
+
+.doneLead {
+  margin: 0;
+  max-width: 34ch;
+  font-size: clamp(17px, 1.5vw, 21px);
+  line-height: 1.5;
+  color: var(--muted);
+  text-wrap: pretty;
+}

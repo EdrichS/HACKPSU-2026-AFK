@@ -1,0 +1,29 @@
+/* #0B0C0F is the mockup's letterbox (live-view.html body); there is no token for it. */
+.viewport {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  background: #0b0c0f;
+}
+
+.stage {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1600px;
+  height: 900px;
+  overflow: hidden;
+  transform-origin: 0 0;
+  font-family: var(--font-sans);
+  color: #ffffff;
+}
+
+.controls {
+  position: absolute;
+  pointer-events: none;
+  font-family: var(--font-sans);
+}
+
+.controls > * {
+  pointer-events: auto;
+}

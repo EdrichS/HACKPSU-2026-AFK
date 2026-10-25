@@ -1,0 +1,82 @@
+.list {
+  margin: 0;
+  padding: 4px 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-consent);
+}
+
+.row {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 16px 20px;
+}
+
+.row + .row {
+  border-top: 1px solid var(--divider);
+}
+
+.iconTile {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--ground);
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.title {
+  font-size: var(--type-item-title);
+  font-weight: 600;
+}
+
+.body {
+  font-size: var(--type-item-body);
+  line-height: 1.45;
+  color: var(--muted);
+}
+
+.checkbox {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 16px 18px;
+  border-radius: var(--radius-control);
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.45;
+  cursor: pointer;
+}
+
+.checkbox:has(.box:focus-visible) {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+  box-shadow: var(--focus-edge);
+}
+
+.box {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  accent-color: var(--ink);
+}
+
+.box:focus-visible {
+  outline: none;
+  box-shadow: none; /* the card around it shows the focus */
+}

@@ -1,0 +1,68 @@
+.box {
+  position: absolute;
+}
+
+/* The mockup's corners are 28px boxes plus their 3px border (content-box), so 31px on screen. */
+.corner {
+  position: absolute;
+  box-sizing: content-box;
+  width: 28px;
+  height: 28px;
+}
+
+.topLeft {
+  left: 0;
+  top: 0;
+  border-left: var(--hud-bracket);
+  border-top: var(--hud-bracket);
+  border-top-left-radius: 12px;
+}
+
+.topRight {
+  right: 0;
+  top: 0;
+  border-right: var(--hud-bracket);
+  border-top: var(--hud-bracket);
+  border-top-right-radius: 12px;
+}
+
+.bottomLeft {
+  left: 0;
+  bottom: 0;
+  border-left: var(--hud-bracket);
+  border-bottom: var(--hud-bracket);
+  border-bottom-left-radius: 12px;
+}
+
+.bottomRight {
+  right: 0;
+  bottom: 0;
+  border-right: var(--hud-bracket);
+  border-bottom: var(--hud-bracket);
+  border-bottom-right-radius: 12px;
+}
+
+.tag {
+  position: absolute;
+  background: var(--hud-tag-bg);
+  font-family: var(--font-pixel);
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* Placed by StageTag: its bottom center on the spot, kept inside the frame. */
+.name {
+  padding: 6px 16px 8px;
+  color: #ffffff;
+  font-size: 40px;
+  text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.28);
+}
+
+/* Placed by StageTag: its top center on the spot, kept inside the frame. */
+.relationship {
+  padding: 5px 12px 7px;
+  color: var(--hud-accent);
+  font-size: 26px;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.28);
+}

@@ -1,0 +1,26 @@
+.sm,
+.xl {
+  display: inline-block;
+  background: var(--tag-bg);
+  color: #ffffff;
+  font-family: var(--font-pixel);
+  font-weight: 500;
+  line-height: 1;
+}
+
+.sm {
+  padding: 4px 9px 6px;
+  font-size: var(--type-tag-sm);
+}
+
+.xl {
+  margin: 0;
+  padding: 0.12em 0.42em 0.2em;
+  font-size: var(--type-tag-xl);
+  letter-spacing: 0.01em;
+  text-shadow: 0.05em 0.05em 0 rgba(0, 0, 0, 0.35);
+}
+
+.xl:focus {
+  outline: none;
+}

@@ -1,0 +1,105 @@
+.recorder {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Always mounted (it's the live region); only takes space when it holds a message. */
+.messages:not(:empty) {
+  margin-top: var(--stack-tight);
+}
+
+.panel {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 20px 12px 12px;
+  border-radius: var(--radius-card);
+  background: var(--ink);
+  color: #ffffff;
+}
+
+.control {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  /* Hover and press aren't designed; same suggested values as Button. */
+  transition:
+    filter 80ms ease-out,
+    transform 80ms ease-out;
+}
+
+.control:hover:not([aria-disabled="true"]) {
+  filter: var(--hover-darken);
+}
+
+.control:active:not([aria-disabled="true"]) {
+  transform: scale(var(--press-scale));
+}
+
+.control:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.control[aria-disabled="true"] {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.wave {
+  flex: 1;
+  min-width: 0;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3px;
+  overflow: hidden;
+}
+
+.waveBar {
+  flex: 1 1 0;
+  min-width: 2px;
+  max-width: 4px;
+  border-radius: 2px;
+  background: var(--accent);
+}
+
+/* Undesigned: nothing recorded yet. */
+.flat {
+  opacity: 0.35;
+}
+
+/* Undesigned: the part of the recording not played yet. */
+.ahead {
+  opacity: 0.4;
+}
+
+.meta {
+  flex: none;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.duration {
+  font-size: 16px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.state {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.72);
+}
