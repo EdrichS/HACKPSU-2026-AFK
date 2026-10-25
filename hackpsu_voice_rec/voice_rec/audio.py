@@ -99,6 +99,15 @@ class Microphone:
             except queue.Empty:
                 continue
 
+    def pending(self) -> list[np.ndarray]:
+        """The blocks that have arrived since the last call, without waiting (for GUI loops)."""
+        out = []
+        while True:
+            try:
+                out.append(self._q.get_nowait())
+            except queue.Empty:
+                return out
+
 
 def rms(x: np.ndarray) -> float:
     if len(x) == 0:
