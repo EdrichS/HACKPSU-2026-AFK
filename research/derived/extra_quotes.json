@@ -1,0 +1,148 @@
+[
+  {
+    "id": "mccarron2019-too-slow",
+    "authors": "McCarron HR, Zmora R, Gaugler JE",
+    "year": 2019,
+    "title": "A Web-Based Mobile App With a Smartwatch to Support Social Engagement in Persons With Memory Loss: Pilot Randomized Controlled Trial",
+    "doi": "10.2196/13378",
+    "quote": "She said that by the time the SSA recognized the face, her husband had already asked her who the person was.",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC6715400/fullTextXML",
+    "status": "kept"
+  },
+  {
+    "id": "mccarron2019-lighting",
+    "authors": "McCarron HR, Zmora R, Gaugler JE",
+    "year": 2019,
+    "title": "A Web-Based Mobile App With a Smartwatch to Support Social Engagement in Persons With Memory Loss: Pilot Randomized Controlled Trial",
+    "doi": "10.2196/13378",
+    "quote": "Several participants reported that the SSA only worked in certain lighting.",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC6715400/fullTextXML",
+    "status": "kept"
+  },
+  {
+    "id": "mccarron2019-son-in-law",
+    "authors": "McCarron HR, Zmora R, Gaugler JE",
+    "year": 2019,
+    "title": "A Web-Based Mobile App With a Smartwatch to Support Social Engagement in Persons With Memory Loss: Pilot Randomized Controlled Trial",
+    "doi": "10.2196/13378",
+    "quote": "Marge (caregiver, age 67) mentioned that the software could not distinguish her son from her son-in-law, both of whom were bald and had beards but otherwise had little physical resemblance.",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC6715400/fullTextXML",
+    "status": "kept"
+  },
+  {
+    "id": "abraha2017-simulated-presence",
+    "authors": "Abraha I, Rimland JM, Trotta FM, Dell'Aquila G, Cruz-Jentoft A, Petrovic M, et al.",
+    "year": 2017,
+    "title": "Systematic review of systematic reviews of non-pharmacological interventions to treat behavioural disturbances in older patients with dementia. The SENATOR-OnTop series",
+    "doi": "10.1136/bmjopen-2016-012759",
+    "quote": "cognitive/emotion-oriented interventions (13 SRs; 26 primary studies) that included cognitive stimulation, reminiscence therapy, validation therapy, simulated presence therapy",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:28302633%20AND%20SRC:MED&format=json&resultType=core",
+    "status": "kept"
+  },
+  {
+    "id": "scales2018-person-centered",
+    "authors": "Scales K, Zimmerman S, Miller SJ",
+    "year": 2018,
+    "title": "Evidence-Based Nonpharmacological Practices to Address Behavioral and Psychological Symptoms of Dementia",
+    "doi": "10.1093/geront/gnx167",
+    "quote": "Nonpharmacological practices are person-centered, and their selection can be informed by considering the cause and meaning of the individual's behavioral and psychological symptoms.",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:29361069%20AND%20SRC:MED&format=json&resultType=core",
+    "status": "kept"
+  },
+  {
+    "id": "clare2002-relearning",
+    "authors": "Clare L, Wilson BA, Carter G, Roth I, Hodges JR",
+    "year": 2002,
+    "title": "Relearning face-name associations in early Alzheimer's disease",
+    "venue": "Neuropsychology",
+    "doi": "10.1037//0894-4105.16.4.538",
+    "pmid": "12382992",
+    "quote": "Training produced a significant group improvement in recall of trained, but not control, items. Gains were largely maintained 6 months later, in the absence of practice.",
+    "status": "kept",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:12382992%20AND%20SRC:MED&format=json&resultType=core"
+  },
+  {
+    "id": "clare2002-awareness",
+    "authors": "Clare L, Wilson BA, Carter G, Roth I, Hodges JR",
+    "year": 2002,
+    "title": "Relearning face-name associations in early Alzheimer's disease",
+    "venue": "Neuropsychology",
+    "doi": "10.1037//0894-4105.16.4.538",
+    "pmid": "12382992",
+    "quote": "participants who were more aware of their memory difficulties achieved better outcomes.",
+    "status": "kept",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:12382992%20AND%20SRC:MED&format=json&resultType=core"
+  },
+  {
+    "id": "dunn2007-errors",
+    "authors": "Dunn J, Clare L",
+    "year": 2007,
+    "title": "Learning face-name associations in early-stage dementia: comparing the effects of errorless learning and effortful processing",
+    "venue": "Neuropsychological rehabilitation",
+    "doi": "10.1080/09602010701218317",
+    "pmid": "17852759",
+    "quote": "Reducing errors did not produce any benefits.",
+    "status": "kept",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:17852759%20AND%20SRC:MED&format=json&resultType=core"
+  },
+  {
+    "id": "dunn2007-effort",
+    "authors": "Dunn J, Clare L",
+    "year": 2007,
+    "title": "Learning face-name associations in early-stage dementia: comparing the effects of errorless learning and effortful processing",
+    "venue": "Neuropsychological rehabilitation",
+    "doi": "10.1080/09602010701218317",
+    "pmid": "17852759",
+    "quote": "Effort enhancement may be more important, especially when learning novel associations.",
+    "status": "kept",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:17852759%20AND%20SRC:MED&format=json&resultType=core"
+  },
+  {
+    "id": "woods2012-cst",
+    "authors": "Woods B, Aguirre E, Spector AE, Orrell M",
+    "year": 2012,
+    "title": "Cognitive stimulation to improve cognitive functioning in people with dementia",
+    "venue": "The Cochrane database of systematic reviews",
+    "doi": "10.1002/14651858.cd005562.pub2",
+    "pmid": "22336813",
+    "quote": "There was consistent evidence from multiple trials that cognitive stimulation programmes benefit cognition in people with mild to moderate dementia over and above any medication effects.",
+    "status": "kept",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:22336813%20AND%20SRC:MED&format=json&resultType=core"
+  },
+  {
+    "id": "woods2012-ro",
+    "authors": "Woods B, Aguirre E, Spector AE, Orrell M",
+    "year": 2012,
+    "title": "Cognitive stimulation to improve cognitive functioning in people with dementia",
+    "venue": "The Cochrane database of systematic reviews",
+    "doi": "10.1002/14651858.cd005562.pub2",
+    "pmid": "22336813",
+    "quote": "RO emphasised the engagement of nursing assistants in a hopeful, therapeutic process but became associated with a rigid, confrontational approach to people with dementia, leading to its use becoming less and less common.",
+    "status": "kept",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:22336813%20AND%20SRC:MED&format=json&resultType=core"
+  },
+  {
+    "id": "clare2019-great",
+    "authors": "Clare L, Kudlicka A, Oyebode JR, Jones RW, Bayer A, Leroi I, et al.",
+    "year": 2019,
+    "title": "Individual goal-oriented cognitive rehabilitation to improve everyday functioning for people with early-stage dementia: A multicentre randomised controlled trial (the GREAT trial)",
+    "venue": "International journal of geriatric psychiatry",
+    "doi": "10.1002/gps.5076",
+    "pmid": "30724405",
+    "quote": "CR enables people with early-stage dementia to improve their everyday functioning in relation to individual goals targeted in the therapy.",
+    "status": "kept",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:30724405%20AND%20SRC:MED&format=json&resultType=core"
+  },
+  {
+    "id": "yamaguchi2010-errorless",
+    "authors": "Yamaguchi H, Maki Y, Yamagami T",
+    "year": 2010,
+    "title": "Overview of non-pharmacological intervention for dementia and principles of brain-activating rehabilitation",
+    "venue": "Psychogeriatrics : the official journal of the Japanese Psychogeriatric Society",
+    "doi": "10.1111/j.1479-8301.2010.00323.x",
+    "pmid": "21159057",
+    "quote": "the activities should be based on errorless learning to ensure a pleasant atmosphere and to maintain a patient's dignity.",
+    "status": "kept",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:21159057%20AND%20SRC:MED&format=json&resultType=core"
+  }
+]

@@ -1,0 +1,338 @@
+{
+  "selection_rule": "tf-idf top 15 after replacing ranks 1, 9, 14 and 15 (reasons in 'dropped') with ranks 16, 21, 26 and 29, plus five papers picked for the open tensions in product.md",
+  "dropped": {
+    "1": "a diet assistant for caregivers: voice-assistant term, off-topic for recognizing people",
+    "9": "generic survey of assistive-technology provision in the UK",
+    "14": "generic survey of installed assistive technology",
+    "15": "same project as rank 26 (conference abstract vs journal paper); the journal paper is kept"
+  },
+  "papers": [
+    {
+      "why": "tf-idf rank 2",
+      "rank": 2,
+      "score": 0.102,
+      "id": "MED:36274581",
+      "title": "Can Technology-Based Social Memory Aids Improve Social Engagement? Perceptions of a Novel Memory Aid for Persons With Memory Concerns.",
+      "year": 2023,
+      "journal": "Journal of applied gerontology : the official journal of the Southern Gerontological Society",
+      "doi": "10.1177/07334648221134869",
+      "pmcid": "PMC9957785",
+      "open_access": false,
+      "cited_by": 5,
+      "tags": [
+        "assistive"
+      ]
+    },
+    {
+      "why": "tf-idf rank 3",
+      "rank": 3,
+      "score": 0.0878,
+      "id": "MED:14511845",
+      "title": "Misidentification in patients with dementia.",
+      "year": 2003,
+      "journal": "Archives of gerontology and geriatrics",
+      "doi": "10.1016/s0167-4943(03)00045-1",
+      "pmcid": null,
+      "open_access": false,
+      "cited_by": 11,
+      "tags": [
+        "recognition"
+      ]
+    },
+    {
+      "why": "tf-idf rank 4",
+      "rank": 4,
+      "score": 0.0869,
+      "id": "MED:27916672",
+      "title": "Famous faces and voices: Differential profiles in early right and left semantic dementia and in Alzheimer's disease.",
+      "year": 2017,
+      "journal": "Neuropsychologia",
+      "doi": "10.1016/j.neuropsychologia.2016.11.020",
+      "pmcid": null,
+      "open_access": false,
+      "cited_by": 46,
+      "tags": [
+        "recognition"
+      ]
+    },
+    {
+      "why": "tf-idf rank 5",
+      "rank": 5,
+      "score": 0.0773,
+      "id": "MED:25913061",
+      "title": "Recognition of personally familiar faces and functional connectivity in Alzheimer's disease.",
+      "year": 2015,
+      "journal": "Cortex; a journal devoted to the study of the nervous system and behavior",
+      "doi": "10.1016/j.cortex.2015.03.013",
+      "pmcid": null,
+      "open_access": false,
+      "cited_by": 18,
+      "tags": [
+        "recognition"
+      ]
+    },
+    {
+      "why": "tf-idf rank 6",
+      "rank": 6,
+      "score": 0.0761,
+      "id": "MED:31196003",
+      "title": "Informal carers' experience of assistive technology use in dementia care at home: a systematic review.",
+      "year": 2019,
+      "journal": "BMC geriatrics",
+      "doi": "10.1186/s12877-019-1169-0",
+      "pmcid": "PMC6567448",
+      "open_access": true,
+      "cited_by": 77,
+      "tags": [
+        "assistive",
+        "ethics"
+      ]
+    },
+    {
+      "why": "tf-idf rank 7",
+      "rank": 7,
+      "score": 0.0756,
+      "id": "MED:42247407",
+      "title": "Uses of assistive technology incorporating smart camera features in the rehabilitation of people living with disabilities: a scoping review.",
+      "year": 2026,
+      "journal": "Disability and rehabilitation. Assistive technology",
+      "doi": "10.1080/17483107.2026.2678548",
+      "pmcid": null,
+      "open_access": false,
+      "cited_by": 0,
+      "tags": [
+        "assistive",
+        "recognition"
+      ]
+    },
+    {
+      "why": "tf-idf rank 8",
+      "rank": 8,
+      "score": 0.0726,
+      "id": "MED:29200563",
+      "title": "Problems of Face Recognition in Patients with Behavioral Variant Frontotemporal Dementia.",
+      "year": 2017,
+      "journal": "Indian journal of psychological medicine",
+      "doi": "10.4103/ijpsym.ijpsym_90_17",
+      "pmcid": "PMC5688894",
+      "open_access": true,
+      "cited_by": 6,
+      "tags": [
+        "recognition"
+      ]
+    },
+    {
+      "why": "tf-idf rank 10",
+      "rank": 10,
+      "score": 0.0704,
+      "id": "MED:12554311",
+      "title": "An electronic memory aid to support prospective memory in patients in the early stages of Alzheimer's disease: a pilot study.",
+      "year": 2003,
+      "journal": "Aging & mental health",
+      "doi": "10.1080/1360786021000045863",
+      "pmcid": null,
+      "open_access": false,
+      "cited_by": 47,
+      "tags": [
+        "assistive"
+      ]
+    },
+    {
+      "why": "tf-idf rank 11",
+      "rank": 11,
+      "score": 0.0653,
+      "id": "MED:24528204",
+      "title": "The use of a wearable camera improves autobiographical memory in patients with Alzheimer's disease.",
+      "year": 2015,
+      "journal": "Memory (Hove, England)",
+      "doi": "10.1080/09658211.2014.886703",
+      "pmcid": null,
+      "open_access": false,
+      "cited_by": 41,
+      "tags": [
+        "assistive"
+      ]
+    },
+    {
+      "why": "tf-idf rank 12",
+      "rank": 12,
+      "score": 0.0649,
+      "id": "MED:35032536",
+      "title": "Paranoid and misidentification subtypes of psychosis in dementia.",
+      "year": 2022,
+      "journal": "Neuroscience and biobehavioral reviews",
+      "doi": "10.1016/j.neubiorev.2022.104529",
+      "pmcid": null,
+      "open_access": false,
+      "cited_by": 8,
+      "tags": [
+        "recognition"
+      ]
+    },
+    {
+      "why": "tf-idf rank 13",
+      "rank": 13,
+      "score": 0.0631,
+      "id": "MED:26468655",
+      "title": "Wearable Technology to Garner the Perspective of Dementia Family Caregivers.",
+      "year": 2016,
+      "journal": "Journal of gerontological nursing",
+      "doi": "10.3928/00989134-20151008-65",
+      "pmcid": "PMC4814293",
+      "open_access": false,
+      "cited_by": 5,
+      "tags": [
+        "assistive"
+      ]
+    },
+    {
+      "why": "tf-idf rank 16",
+      "rank": 16,
+      "score": 0.0602,
+      "id": "MED:35976047",
+      "title": "Design, development, and use of conversational agents in rehabilitation for adults with brain-related neurological conditions: a scoping review.",
+      "year": 2023,
+      "journal": "JBI evidence synthesis",
+      "doi": "10.11124/jbies-22-00025",
+      "pmcid": null,
+      "open_access": false,
+      "cited_by": 6,
+      "tags": [
+        "assistive"
+      ]
+    },
+    {
+      "why": "tf-idf rank 21",
+      "rank": 21,
+      "score": 0.0565,
+      "id": "MED:26288888",
+      "title": "Usability of a Wearable Camera System for Dementia Family Caregivers.",
+      "year": 2015,
+      "journal": "Journal of healthcare engineering",
+      "doi": "10.1260/2040-2295.6.2.213",
+      "pmcid": "PMC4545579",
+      "open_access": false,
+      "cited_by": 17,
+      "tags": [
+        "assistive",
+        "ethics"
+      ]
+    },
+    {
+      "why": "tf-idf rank 26",
+      "rank": 26,
+      "score": 0.0509,
+      "id": "MED:31518270",
+      "title": "A Web-Based Mobile App With a Smartwatch to Support Social Engagement in Persons With Memory Loss: Pilot Randomized Controlled Trial.",
+      "year": 2019,
+      "journal": "JMIR aging",
+      "doi": "10.2196/13378",
+      "pmcid": "PMC6715400",
+      "open_access": true,
+      "cited_by": 30,
+      "tags": [
+        "assistive",
+        "ethics",
+        "recognition"
+      ]
+    },
+    {
+      "why": "tf-idf rank 29",
+      "rank": 29,
+      "score": 0.0494,
+      "id": "MED:25784202",
+      "title": "Recognition of familiar people with a mobile cloud architecture for Alzheimer patients.",
+      "year": 2017,
+      "journal": "Disability and rehabilitation",
+      "doi": "10.3109/09638288.2015.1025992",
+      "pmcid": null,
+      "open_access": false,
+      "cited_by": 12,
+      "tags": [
+        "assistive",
+        "recognition"
+      ]
+    },
+    {
+      "why": "targeted: truth-telling / Nova disclosure",
+      "rank": null,
+      "score": null,
+      "id": "MED:21867384",
+      "title": "Do people with dementia find lies and deception in dementia care acceptable?",
+      "year": 2011,
+      "journal": "Aging & mental health",
+      "doi": "10.1080/13607863.2011.569489",
+      "pmcid": null,
+      "open_access": false,
+      "cited_by": 36,
+      "tags": [
+        "truth"
+      ]
+    },
+    {
+      "why": "targeted: Nova / conversational AI",
+      "rank": null,
+      "score": null,
+      "id": "MED:34081019",
+      "title": "Chatbots to Support People With Dementia and Their Caregivers: Systematic Review of Functions and Quality.",
+      "year": 2021,
+      "journal": "Journal of medical Internet research",
+      "doi": "10.2196/25006",
+      "pmcid": "PMC8212632",
+      "open_access": true,
+      "cited_by": 42,
+      "tags": [
+        "assistive"
+      ]
+    },
+    {
+      "why": "targeted: Nova / conversational AI",
+      "rank": null,
+      "score": null,
+      "id": "MED:34170256",
+      "title": "Usability and Acceptance of the Embodied Conversational Agent Anne by People With Dementia and Their Caregivers: Exploratory Study in Home Environment Settings.",
+      "year": 2021,
+      "journal": "JMIR mHealth and uHealth",
+      "doi": "10.2196/25891",
+      "pmcid": "PMC8386369",
+      "open_access": true,
+      "cited_by": 21,
+      "tags": [
+        "assistive"
+      ]
+    },
+    {
+      "why": "targeted: ethics of assistive technology",
+      "rank": null,
+      "score": null,
+      "id": "MED:21500008",
+      "title": "Ethics of using assistive technology in the care for community-dwelling elderly people: an overview of the literature.",
+      "year": 2011,
+      "journal": "Aging & mental health",
+      "doi": "10.1080/13607863.2010.543662",
+      "pmcid": null,
+      "open_access": false,
+      "cited_by": 101,
+      "tags": [
+        "assistive",
+        "ethics"
+      ]
+    },
+    {
+      "why": "targeted: cameras and bystander privacy",
+      "rank": null,
+      "score": null,
+      "id": "MED:36681841",
+      "title": "Privacy-protecting behaviours of risk detection in people with dementia using videos.",
+      "year": 2023,
+      "journal": "Biomedical engineering online",
+      "doi": "10.1186/s12938-023-01065-3",
+      "pmcid": "PMC9863094",
+      "open_access": true,
+      "cited_by": 3,
+      "tags": [
+        "ethics"
+      ]
+    }
+  ]
+}

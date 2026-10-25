@@ -1,0 +1,140 @@
+[
+  {
+    "id": "MED:42247407",
+    "doi": "10.1080/17483107.2026.2678548",
+    "title": "Uses of assistive technology incorporating smart camera features in the rehabilitation of people living with disabilities: a scoping review.",
+    "authors": [
+      "Caute A",
+      "Mirza L",
+      "Mackintosh B",
+      "Scherer R",
+      "Joffe V"
+    ],
+    "year": 2026,
+    "venue": "Disability and rehabilitation. Assistive technology",
+    "text_source": "abstract",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:42247407%20AND%20SRC:MED&format=json&resultType=core",
+    "finding_for_nametags": "Of 25 studies of camera-based assistive technology (13 involved smart glasses, 23 served visual impairment), only one was about face recognition for people with Alzheimer's disease. Within this review's scope, published work on face-recognizing glasses like Nametags is very thin, and the review reports technical limitations, usability issues and high costs with various camera devices.",
+    "method_and_sample": "scoping review (Joanna Briggs Institute method) of 25 studies of camera-based assistive technology, any age and any disability",
+    "limitation": "Read from the abstract only, which does not name the one Alzheimer's face-recognition study or report its results, and the evidence is mostly about visual impairment, not dementia.",
+    "supporting_sentence": "One study focused on facial recognition for people with Alzheimer's disease and one on reading for children with dyslexia.",
+    "relevance": "medium",
+    "bears_on": [
+      "prior art",
+      "glasses/wearable camera",
+      "face recognition"
+    ],
+    "status": "read",
+    "note": "No open full text (Europe PMC lists subscription access only), so the abstract was read. The record gives first publication online as 2026-06-05. The abstract does not identify the single Alzheimer's face-recognition study; the full text would be needed to name it."
+  },
+  {
+    "id": "MED:29200563",
+    "doi": "10.4103/ijpsym.ijpsym_90_17",
+    "title": "Problems of Face Recognition in Patients with Behavioral Variant Frontotemporal Dementia.",
+    "authors": [
+      "Chandra SR",
+      "Patwardhan K",
+      "Pai AR"
+    ],
+    "year": 2017,
+    "venue": "Indian journal of psychological medicine",
+    "text_source": "full text",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC5688894/fullTextXML",
+    "finding_for_nametags": "Among 46 people with behavioral-variant frontotemporal dementia (FTD), 24 showed defective face recognition and 12 had a defect recognizing the face of a spouse or relative they had lived with for at least a year. The authors also state, without testing it or citing a source, that a person with Alzheimer's can still recognize someone when that person is named or speaks to them, but a person with FTD cannot by any route; if that holds, the spoken announcement (\"That's David, your grandson\") fits an Alzheimer's wearer better than an FTD wearer.",
+    "method_and_sample": "clinical study using non-validated picture tests and a mirror test, 46 patients with behavioral-variant FTD (15 women, 31 men, MMSE above 20), India",
+    "limitation": "The face tests were not validated (one famous face and some emotion pictures), there was no formal control group, and some percentages do not match the paper's own counts (10 of 15 women is reported as 70%).",
+    "supporting_sentence": "Prosopagnosia in Alzheimer's disease is of visuospatial nature and hence can recognize the individual when named or spoken to, but in FTD, it is multimodal and hence cannot be recognized by any mode.",
+    "relevance": "medium",
+    "bears_on": [
+      "face recognition",
+      "announcement",
+      "misidentification"
+    ],
+    "status": "read",
+    "note": "Mirrors matter too: 4 women could not recognize their own reflection, two patients took the reflection for a rival, and an anecdote in the introduction describes a patient who took his reflection for his nephew. Untested inference from product.md: the glasses enroll no face for the wearer and say \"I don't recognize this person\" to a face that stays unmatched, so a wearer standing at a mirror could be told their own reflection is a stranger. Bibliographic fields come from the Europe PMC record (same three authors as the full-text XML)."
+  },
+  {
+    "id": "MED:12554311",
+    "doi": "10.1080/1360786021000045863",
+    "title": "An electronic memory aid to support prospective memory in patients in the early stages of Alzheimer's disease: a pilot study.",
+    "authors": [
+      "Oriani M",
+      "Moniz-Cook E",
+      "Binetti G",
+      "Zanieri G",
+      "Frisoni GB",
+      "Frisoni GB",
+      "et al."
+    ],
+    "year": 2003,
+    "venue": "Aging & mental health",
+    "text_source": "abstract",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:12554311%20AND%20SRC:MED&format=json&resultType=core",
+    "finding_for_nametags": "In five people with mild-to-moderate Alzheimer's, an electronic memory aid improved remembering to do seven tasks at set times, while a written list and unaided recall did not help. This is weak, indirect prior art: it hints that an electronic aid can beat a written one in early Alzheimer's, but it tested timed task reminders, which Nametags does not do, not recognizing people.",
+    "method_and_sample": "pilot study comparing three recall conditions (no aid, written list, electronic aid), 5 outpatients aged 58-79 with mild-to-moderate probable Alzheimer's",
+    "limitation": "Five patients only; the authors themselves call for a larger study in patients' own homes, and the abstract does not describe how the aid worked.",
+    "supporting_sentence": "The use of an EMA significantly improved patients' prospective memory, while the written list and free recall were not useful.",
+    "relevance": "low",
+    "bears_on": [
+      "prior art"
+    ],
+    "status": "read",
+    "note": "No open full text (subscription access only), so the abstract was read. The Europe PMC record lists \"Frisoni GB\" twice (5th and 6th of 9 names); the author list here copies the record as fetched."
+  },
+  {
+    "id": "MED:24528204",
+    "doi": "10.1080/09658211.2014.886703",
+    "title": "The use of a wearable camera improves autobiographical memory in patients with Alzheimer's disease.",
+    "authors": [
+      "Woodberry E",
+      "Browne G",
+      "Hodges S",
+      "Watson P",
+      "Kapur N",
+      "Woodberry K"
+    ],
+    "year": 2015,
+    "venue": "Memory (Hove, England)",
+    "text_source": "abstract",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:24528204%20AND%20SRC:MED&format=json&resultType=core",
+    "finding_for_nametags": "In people with mild-to-moderate Alzheimer's, reviewing images from a small wearable camera brought back more details of personal events than a written diary did (5 of 6 patients over two weeks, 4 of 5 at three months). This is prior art for a worn camera in Alzheimer's, but for recalling events, not recognizing people: Nametags uses its glasses camera only for live recognition and turns a visit into text (a transcript, then facts and a card), not images to review.",
+    "method_and_sample": "within-patient comparison of camera-image review versus a written diary, 6 patients with mild-to-moderate Alzheimer's, 40 events, follow-up at one and three months",
+    "limitation": "Only six patients (one dropped out by three months), and the camera recorded significant events that were then reviewed in a structured way, so it says little about everyday continuous wear.",
+    "supporting_sentence": "Across 40 events the SenseCam review method resulted in significantly more details of an event being recalled over two weeks than the written diary method in five out of the six patients.",
+    "relevance": "medium",
+    "bears_on": [
+      "glasses/wearable camera",
+      "prior art"
+    ],
+    "status": "read",
+    "note": "No open full text (subscription access only), so the abstract was read. The record gives the issue year as 2015 and first publication online as 2014-02-17. The abstract does not say who ran the image reviews or whether other people were photographed, so it adds nothing on bystander privacy."
+  },
+  {
+    "id": "MED:35032536",
+    "doi": "10.1016/j.neubiorev.2022.104529",
+    "title": "Paranoid and misidentification subtypes of psychosis in dementia.",
+    "authors": [
+      "Pearce D",
+      "Gould RL",
+      "Roughley M",
+      "Reynolds G",
+      "Ward EV",
+      "Bhome R",
+      "et al."
+    ],
+    "year": 2022,
+    "venue": "Neuroscience and biobehavioral reviews",
+    "text_source": "abstract",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:35032536%20AND%20SRC:MED&format=json&resultType=core",
+    "finding_for_nametags": "In a review of nine studies, all of Alzheimer's disease, patients whose psychosis took the misidentification form (misidentification delusions or hallucinations) had worse global cognition, faster decline and more volume loss in regions for object recognition and for spatial and temporal context. That is background for tension 1 (truthful naming versus care practice), not evidence on it: the review covered only brain and cognitive correlates, so it cannot say whether a truthful announcement helps or upsets a wearer who misidentifies people.",
+    "method_and_sample": "review of 9 eligible studies, all of patients with Alzheimer's disease",
+    "limitation": "The authors say the small number of studies and their methodological heterogeneity limit interpretation, and all nine studies were of Alzheimer's disease.",
+    "supporting_sentence": "Greater global cognitive deficits and an accelerated global cognitive decline were observed in the misidentification subtype.",
+    "relevance": "low",
+    "bears_on": [
+      "misidentification"
+    ],
+    "status": "read",
+    "note": "No open full text (subscription access only), so the abstract was read. \"Misidentification\" here is a psychotic symptom (a delusion or hallucination), which may be narrower than the everyday misidentification in tension 1."
+  }
+]

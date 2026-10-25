@@ -1,0 +1,113 @@
+[
+  {
+    "id": "org-mhf-1",
+    "organization": "Mental Health Foundation",
+    "year": 2016,
+    "title": "What is Truth? An Inquiry about Truth and Lying in Dementia Care",
+    "url": "https://www.mentalhealth.org.uk/sites/default/files/2022-09/MHF-dementia-truth-inquiry-report.pdf",
+    "kind": "report",
+    "speaker": "organization guidance",
+    "quote": "Often most heart-breaking for close family members or friends are situations where they are no longer recognised or are even believed to be an imposter.",
+    "text_url": "https://www.mentalhealth.org.uk/sites/default/files/2022-09/MHF-dementia-truth-inquiry-report.pdf",
+    "themes": [
+      "non-recognition",
+      "misidentification",
+      "family distress"
+    ],
+    "nametags_relevance": "Names the hardest moments for families, not being recognised and being taken for an imposter; the arrival announcement speaks to the first, but nothing in product.md shows whether hearing a name helps someone who believes the visitor is an imposter.",
+    "status": "kept",
+    "note": "Confirmed on printed page 14, which is page 16 of the 50-page PDF, in the right-hand column, in the section headed 'Meaning and meaningfulness for others'. The year is printed on the back cover ('DEC 2016'), and the PDF's own creation date is 8 Dec 2016; the '2022-09' folder in the URL looks like the site's upload date, not the report's. The cover shows the full title and that the inquiry was commissioned and funded by the Joseph Rowntree Foundation. Printed page 8 lists the related experience of 'being convinced that a family member or friend is an imposter, someone different, or constantly deceiving them'."
+  },
+  {
+    "id": "org-dementiauk-1",
+    "organization": "Dementia UK",
+    "year": 2025,
+    "title": "When someone with dementia doesn’t recognise you",
+    "url": "https://www.dementiauk.org/information-and-support/looking-after-yourself-as-a-carer/when-someone-doesnt-recognise-you/",
+    "kind": "guidance",
+    "speaker": "organization guidance",
+    "quote": "If the person with dementia is struggling to recognise you, introduce yourself and explain the connection between you: for example, “Hello Mum, it’s Julie, your daughter, and I have little Danny, your grandson, with me.”",
+    "text_url": "https://www.dementiauk.org/information-and-support/looking-after-yourself-as-a-carer/when-someone-doesnt-recognise-you/",
+    "themes": [
+      "non-recognition",
+      "what helps"
+    ],
+    "nametags_relevance": "This is the announcement's own formula, a name plus the relationship as in \"That's David, your grandson.\", so it supports the core feature, with one untested difference: the glasses say it instead of the visitor.",
+    "status": "kept",
+    "note": "Under the heading 'How to respond when someone doesn’t recognise you'; the page shows 'Last updated: September 2025' and says the advice comes from the charity's Admiral Nurses (dementia specialist nurses). The names in the example are the page's own. The same page advises marking photos with people's names, the year and the event (close to the context card), and says that failing to recognise people for the first time may have another underlying cause, such as an infection, constipation or a reaction to medication changes, and advises a GP appointment to rule out treatable causes."
+  },
+  {
+    "id": "org-dementiauk-2",
+    "organization": "Dementia UK",
+    "year": 2025,
+    "title": "When someone with dementia doesn’t recognise you",
+    "url": "https://www.dementiauk.org/information-and-support/looking-after-yourself-as-a-carer/when-someone-doesnt-recognise-you/",
+    "kind": "guidance",
+    "speaker": "organization guidance",
+    "quote": "Try not to correct the person if they get your name wrong or say something that isn’t true – this can lead to distress and frustration on all sides.",
+    "text_url": "https://www.dementiauk.org/information-and-support/looking-after-yourself-as-a-carer/when-someone-doesnt-recognise-you/",
+    "themes": [
+      "going along/truth-telling",
+      "misidentification"
+    ],
+    "nametags_relevance": "The announcement and Nova state the enrolled name and relationship, so when the wearer already believes someone is a different person the glasses do the correcting this guidance advises against (open tension 1 in product.md).",
+    "status": "kept",
+    "note": "Same page and section as org-dementiauk-1. The dash in the quote is an en dash, as printed. This advice differs from the Alzheimer's Association entry (org-alz-1), which recommends offering corrections gently rather than not correcting."
+  },
+  {
+    "id": "org-alz-1",
+    "organization": "Alzheimer's Association",
+    "year": null,
+    "title": "Memory Loss and Confusion",
+    "url": "https://www.alz.org/help-support/caregiving/stages-behaviors/memory-loss-confusion",
+    "kind": "guidance",
+    "speaker": "organization guidance",
+    "quote": "Avoid explanations that sound like scolding. Try: \"I thought it was a fork\" or \"I think she is your granddaughter Julie.\"",
+    "text_url": "https://www.alz.org/help-support/caregiving/stages-behaviors/memory-loss-confusion",
+    "themes": [
+      "misidentification",
+      "what helps",
+      "going along/truth-telling"
+    ],
+    "nametags_relevance": "Supports giving the right name and relationship, but phrased as a suggestion (\"I think she is your granddaughter Julie\") rather than a flat statement, which points to softening \"That's David, your grandson.\" for a wearer who may believe otherwise.",
+    "status": "kept",
+    "note": "From the 'How to respond' list; this item's bold lead-in, just before the quote, is 'Offer corrections as suggestions.' The page shows no date of its own (only the site-wide ©2026 footer), so year is null. The quote marks are straight double quotes, as printed; the page's HTML writes them as &quot; entities, so a checker has to decode HTML entities to match. The same page says that in the later stages a person may not recognize family members, may forget relationships and may call family members by other names."
+  },
+  {
+    "id": "org-scie-1",
+    "organization": "Social Care Institute for Excellence (SCIE)",
+    "year": 2018,
+    "title": "Adult safeguarding practice questions",
+    "url": "https://www.scie.org.uk/safeguarding/adults/practice/adult-safeguarding-practice-questions/",
+    "kind": "guidance",
+    "speaker": "organization guidance",
+    "quote": "Mrs B no longer recognises her husband, and sometimes becomes very frightened because she thinks he is an intruder. She has hit him on numerous occasions and is very threatening towards him.",
+    "text_url": "https://www.scie.org.uk/safeguarding/adults/practice/adult-safeguarding-practice-questions/",
+    "themes": [
+      "non-recognition",
+      "misidentification",
+      "family distress"
+    ],
+    "nametags_relevance": "A spouse taken for an intruder, with fear and hitting, is the hardest case for the arrival announcement: whether hearing the husband's name calms or inflames someone in that state is untested, and the scenario's response is extra human support at the times she is most likely to hit out.",
+    "status": "kept",
+    "note": "An illustrative scenario ('Scenario: Responding to a carer’s admission of assault') in SCIE guidance for frontline practitioners and managers, not a first-hand account; 'Mrs B' and 'Mr B' are the guide's own labels. The page shows 'Published March 2015' and 'Updated July 2018'; year is the update, the version read. In the scenario the response is a multi-agency support plan with extra support for Mrs B at the times she is more likely to hit out, and support for Mr B. SCIE's dementia hub is now an abridged overview, and searching SCIE's page, post and evidence site maps for dementia, recognition and communication pages turned up no care-staff guidance on recognition or introductions."
+  },
+  {
+    "id": "org-nia-1",
+    "organization": "National Institute on Aging (NIA), US National Institutes of Health",
+    "year": 2024,
+    "title": "Helping Family and Friends Understand Alzheimer’s Disease",
+    "url": "https://www.nia.nih.gov/health/alzheimers-and-relationships/helping-family-and-friends-understand-alzheimers-disease",
+    "kind": "guidance",
+    "speaker": "organization guidance",
+    "quote": "If your loved one has difficulty remembering people, suggest that visitors start a conversation with the person by briefly introducing themselves.",
+    "text_url": "https://www.nia.nih.gov/health/alzheimers-and-relationships/helping-family-and-friends-understand-alzheimers-disease",
+    "themes": [
+      "non-recognition",
+      "what helps"
+    ],
+    "nametags_relevance": "The same practice the arrival announcement automates, a visitor briefly introducing themselves, from a US government body.",
+    "status": "dropped",
+    "note": "Read and confirmed on the page (content reviewed July 8, 2024); the page's example has the visitor give their name and how they know the person. Dropped only to stay within the 2-4 additions, because org-dementiauk-1 gives the same advice with the relationship spelled out."
+  }
+]

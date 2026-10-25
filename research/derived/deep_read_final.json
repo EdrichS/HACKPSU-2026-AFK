@@ -1,0 +1,765 @@
+[
+  {
+    "id": "MED:36274581",
+    "doi": "10.1177/07334648221134869",
+    "title": "Can Technology-Based Social Memory Aids Improve Social Engagement? Perceptions of a Novel Memory Aid for Persons With Memory Concerns.",
+    "authors": "Horn BL, Albers EA, Mitchell LL, Jutkowitz E, Finlay JM, Millenbah AN, et al.",
+    "year": 2023,
+    "venue": "Journal of applied gerontology : the official journal of the Southern Gerontological Society",
+    "text_source": "abstract",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:36274581%20AND%20SRC:MED&format=json&resultType=core",
+    "finding_for_nametags": "Twenty care dyads (persons with memory concerns and family caregivers) were presented a wearable technology-based social memory aid. Overall, participants anticipated that it could reduce socializing-related stress, now and in the future, for both members of the dyad. The abstract also reports that some features, such as visitors needing the app, could limit its utility, but it does not say whether participants or the authors raised this. Nametags identifies people by face and voice, so visitors need no app. It has the analogous limit that it can name only the people a family member has enrolled.",
+    "method_and_sample": "qualitative semi-structured interviews over Zoom (June–August 2020) after the aid was presented, 20 dyads of persons with memory concerns and family caregivers, thematic analysis; country not stated in the abstract",
+    "limitation": "Participants were shown the aid rather than using it, so the reduced stress is anticipated, not measured, and they are described as persons with memory concerns, not specifically people with dementia.",
+    "supporting_sentence": "However, certain features of the memory aid (e.g., visitors must have the app), could limit utility, and participants provided recommendations to enhance the tool.",
+    "relevance": "high",
+    "bears_on": [
+      "prior art",
+      "families"
+    ],
+    "status": "read",
+    "note": "Abstract only: the open-access full-text service returned HTTP 500 for PMC9957785 on two tries, and the record lists it as not open access. The abstract does not say how the aid identifies visitors or what it shows the wearer. Closest prior art in this batch: a wearable social memory aid aimed at the same problem (social engagement with memory loss).",
+    "verdict": "corrected",
+    "verdict_problems": [
+      "finding_for_nametags overstates the result. The abstract says 'Overall, participants anticipated the technology could reduce socializing-related stress now and in the future for both members of the care dyad.' That sums up the participants overall and says the aid could help. It does not say that all twenty dyads expected stress to fall.",
+      "finding_for_nametags says participants 'said' that visitors needing the app could limit usefulness. The abstract reports this as a result without saying who raised it: 'certain features of the memory aid (e.g., visitors must have the app), could limit utility'. It says separately that 'participants provided recommendations to enhance the tool'.",
+      "I could check only the abstract. The Europe PMC full-text service returned HTTP 500 for PMC9957785 on both of my tries (00:57 and 00:59 EDT, Oct 25), as it did for the original reader, so the paper body cannot show who raised the app limitation."
+    ],
+    "sentence_check": "pass",
+    "crossref": {
+      "title_similarity": 1.0,
+      "first_author_match": true,
+      "year_within_1": true,
+      "crossref_title": "Can Technology-Based Social Memory Aids Improve Social Engagement? Perceptions of a Novel Memory Aid for Persons With Memory Concerns",
+      "crossref_year": 2023,
+      "crossref_venue": "Journal of Applied Gerontology"
+    }
+  },
+  {
+    "id": "MED:14511845",
+    "doi": "10.1016/s0167-4943(03)00045-1",
+    "title": "Misidentification in patients with dementia.",
+    "authors": "Nagaratnam N, Irving J, Kalouche H",
+    "year": 2003,
+    "venue": "Archives of gerontology and geriatrics",
+    "text_source": "abstract",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:14511845%20AND%20SRC:MED&format=json&resultType=core",
+    "finding_for_nametags": "In a retrospective study of 116 dementia patients, 35% had misidentification, which the study characterized as misidentification of people, the 'phantom boarder', the 'mirror image' or the 'TV sign'. Misidentification was closely related to accusatory behavior, although age, sex, cognitive impairment, stage of illness and functional disability confounded that association. The authors conclude that misidentification is a frequent component of dementia, so truthful announcements and Nova answers may contradict what some wearers believe (tension 1; an inference, not tested). The abstract does not give the rate for misidentifying people alone, and its stated aims do not include correcting misidentification.",
+    "method_and_sample": "retrospective study, 116 dementia patients; setting and country not stated in the abstract",
+    "limitation": "The abstract reports one 35% figure pooled across four different misidentification types, not the rate for misidentifying people alone, and the link to accusatory behavior was confounded by age, sex, cognitive impairment, stage and functional disability.",
+    "supporting_sentence": "35% had misidentification and there was a close relationship between misidentification and accusatory behavior.",
+    "relevance": "medium",
+    "bears_on": [
+      "misidentification",
+      "truth-telling"
+    ],
+    "status": "read",
+    "note": "Abstract only (no PMC copy). Inference, not tested: product.md says the wearer's face is not enrolled because the glasses never see it, but a mirror would show it, so the wearer's own reflection could get 'I don't recognize this person' (or match a look-alike relative); mirror-image misidentification is one of the four types counted here.",
+    "verdict": "corrected",
+    "verdict_problems": [
+      "finding_for_nametags says 'it was closely related to accusatory behavior' but leaves out the abstract's next sentence: 'Age, sex, cognitive impairment, stage of illness and functional disability were seen to confound the association between misidentification and accusatory behavior.' The caveat appears only in the limitation field, so the finding overstates the link when read alone.",
+      "finding_for_nametags says 'the study does not look at correcting it', but only the abstract was read. The abstract supports a narrower claim: its stated aims (prevalence, and the relationship to individual characteristics, behavioral and psychiatric manifestations and dementia-related domains) do not include correcting misidentification.",
+      "The step from the pooled 35% to 'truthful announcements and Nova answers can be expected to contradict what some wearers believe' is the reader's inference, but the finding does not say so. The abstract does not give a rate for misidentifying people alone, which is the type a truthful name would contradict."
+    ],
+    "sentence_check": "pass",
+    "crossref": {
+      "title_similarity": 0.99,
+      "first_author_match": true,
+      "year_within_1": true,
+      "crossref_title": "Misidentification in patients with dementia",
+      "crossref_year": 2003,
+      "crossref_venue": "Archives of Gerontology and Geriatrics"
+    }
+  },
+  {
+    "id": "MED:27916672",
+    "doi": "10.1016/j.neuropsychologia.2016.11.020",
+    "title": "Famous faces and voices: Differential profiles in early right and left semantic dementia and in Alzheimer's disease.",
+    "authors": "Luzzi S, Baldinelli S, Ranaldi V, Fabi K, Cafazzo V, Fringuelli F, et al.",
+    "year": 2017,
+    "venue": "Neuropsychologia",
+    "text_source": "abstract",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:27916672%20AND%20SRC:MED&format=json&resultType=core",
+    "finding_for_nametags": "The study screened out perceptual problems: it kept only patients without visual or auditory perceptual impairment, from a pool the abstract describes as 'early SD and AD'. Alzheimer's disease patients were significantly impaired at naming famous faces and voices but showed preserved recognition, while semantic dementia patients were profoundly impaired at both naming and recognition. That fits the announcement's premise (give the name to someone who still knows the person) better for AD than for semantic dementia (inference). The stimuli were famous people, not family.",
+    "method_and_sample": "comparative neuropsychological study using an experimental battery of famous face and voice recognition and naming: 13 semantic dementia patients (8 with mainly right and 5 with mainly left temporal atrophy) and 25 patients the abstract labels 'CE' (apparently the AD group), selected from a pool described as 'early SD and AD' because they showed no visual or auditory perceptual impairment; FDG-PET correlation in 12 SD patients; country not stated in the abstract",
+    "limitation": "Small groups, drawn from a pool the abstract describes as 'early SD and AD', were tested on famous rather than personally familiar faces and voices, so the result may not carry over to recognizing family members or to later dementia.",
+    "supporting_sentence": "Results showed a differential performance profile in the two diseases, because AD patients were significantly impaired in the naming tests, but showed preserved recognition, whereas SD patients were profoundly impaired both in naming and in recognition of famous faces and voices.",
+    "relevance": "medium",
+    "bears_on": [
+      "announcement"
+    ],
+    "status": "read",
+    "note": "Abstract only (no PMC copy). It concerns patients' own recognition of people, not machine face or voice recognition. The abstract's sample line reads '25 CE patients'; from the rest of the abstract this appears to be the AD group. AD patients were significantly impaired in the naming tests, and the battery covered famous faces and voices, so a name given on a voice match (voice-first presence) would address the same gap; that is an inference, not tested here.",
+    "verdict": "corrected",
+    "verdict_problems": [
+      "method_and_sample says '25 AD patients', but the abstract reads 'Thirteen SD (8 with prevalence of right and 5 with prevalence of left temporal atrophy) and 25 CE patients'. Reading 'CE' as the AD group is plausible, because the results compare SD with AD, but it is an inference. The note says so; the field does not.",
+      "The finding says 'early Alzheimer's disease' and the limitation says 'early-stage groups'. The abstract's only description is 'a pool of patients suffering from early SD and AD', and the title attaches 'early' to semantic dementia only. That the AD group was early-stage is a likely reading, not a stated fact.",
+      "The note's 'Naming failed for voices as well as faces in AD' overstates the result. The abstract says 'AD patients were significantly impaired in the naming tests, but showed preserved recognition', which is impairment, not failure."
+    ],
+    "sentence_check": "pass",
+    "crossref": {
+      "title_similarity": 1.0,
+      "first_author_match": true,
+      "year_within_1": true,
+      "crossref_title": "Famous faces and voices: Differential profiles in early right and left semantic dementia and in Alzheimer's disease",
+      "crossref_year": 2017,
+      "crossref_venue": "Neuropsychologia"
+    }
+  },
+  {
+    "id": "MED:25913061",
+    "doi": "10.1016/j.cortex.2015.03.013",
+    "title": "Recognition of personally familiar faces and functional connectivity in Alzheimer's disease.",
+    "authors": "Kurth S, Moyse E, Bahri MA, Salmon E, Bastin C",
+    "year": 2015,
+    "venue": "Cortex; a journal devoted to the study of the nervous system and behavior",
+    "text_source": "abstract",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:25913061%20AND%20SRC:MED&format=json&resultType=core",
+    "finding_for_nametags": "Recognition of one's own and personally familiar faces from photographs was preserved in mild Alzheimer's disease but affected in moderate AD. So by the moderate stage a wearer may not recognize a familiar visitor at all, not just fail to recall the name (inference). The study measured recognition, not naming, and tested no aid, so it does not show whether the announcement and 'Who is this?' matter less in mild AD.",
+    "method_and_sample": "two behavioral experiments (mild AD, then moderate AD, each against healthy older adults) using photographs of self and familiar faces from different decades of life, with resting-state fMRI in the moderate group; sample sizes not given in the abstract",
+    "limitation": "The abstract gives no sample sizes, and recognition was tested on photographs in a lab task rather than on live visitors.",
+    "supporting_sentence": "However, in moderate AD, both self and familiar face recognition were affected.",
+    "relevance": "medium",
+    "bears_on": [
+      "announcement"
+    ],
+    "status": "read",
+    "note": "Abstract only (no PMC copy). It concerns patients' own face recognition, not the system's. In mild AD, recent photographs were recognized faster than remote ones; background case reports cited in the abstract describe the reverse for self-faces in late-stage AD. Not a test of appearance change or long separation.",
+    "verdict": "corrected",
+    "verdict_problems": [
+      "finding_for_nametags infers that the announcement and 'Who is this?' 'matter most for wearers past the mild stage'. The study measured recognition of self and familiar faces, not naming. Preserved recognition in mild AD does not show that mild-stage wearers need the name less, so the paper cannot rank the stages this way. MED:27916672, in this same batch, reports AD patients impaired at naming while their recognition was preserved."
+    ],
+    "sentence_check": "pass",
+    "crossref": {
+      "title_similarity": 0.99,
+      "first_author_match": true,
+      "year_within_1": true,
+      "crossref_title": "Recognition of personally familiar faces and functional connectivity in Alzheimer's disease",
+      "crossref_year": 2015,
+      "crossref_venue": "Cortex"
+    }
+  },
+  {
+    "id": "MED:31196003",
+    "doi": "10.1186/s12877-019-1169-0",
+    "title": "Informal carers' experience of assistive technology use in dementia care at home: a systematic review.",
+    "authors": "Sriram V, Jenkinson C, Peters M",
+    "year": 2019,
+    "venue": "BMC geriatrics",
+    "text_source": "full text",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC6567448/fullTextXML",
+    "finding_for_nametags": "In the review's thematic synthesis of carers' experiences, carers' continuous engagement and willingness to help the person with dementia use assistive technology was key to its use in most of the studies. The authors also conclude that installing AT at home was often wrongly seen as a one-off event rather than an ongoing process. Nametags relies on a family member enrolling every person (photos, voice sample, facts), so it is likely to need re-enrollment as faces, voices and visitors change (tension 4), not a single setup. That is an inference; the review did not test it.",
+    "method_and_sample": "systematic review with narrative synthesis (aggregative qualitative synthesis): 56 publications (30 qualitative, 17 quantitative, 9 mixed methods) reporting on 50 studies from 19 countries, published 2000–2018, with findings from 2016 carers; some included studies also had paid carers or people in long-term care, and the review reports results only for family carers and people with dementia living at home",
+    "limitation": "It covers carers at home only (care homes and paid carers were excluded) and English-language studies, and its outcome measures were too varied to pool, so its conclusions are descriptive.",
+    "supporting_sentence": "It is also clear from this review that installation of AT at home for use by someone who has dementia was often wrongly seen as a one-off event, rather than an ongoing process for getting the best out of AT.",
+    "relevance": "medium",
+    "bears_on": [
+      "families",
+      "prior art"
+    ],
+    "status": "read",
+    "note": "Full text read; metadata from the Europe PMC record. None of the device types in its Table 2 is described as recognizing or naming people; the nearest are picture-button and photo-memory telephones. Quantitative studies rated devices useful but found no significant change in carer burden or well-being, and the authors note a lack of adverse-event reporting, so it gives no evidence on harm from a wrong name. Carers agreed people with dementia should be involved as much as possible in choosing and using technology, which bears on enrollment being run by a family member. It names repetitive questions among the symptoms hardest on carers; one included study's talking watch cut carers' questions about the time, a possible parallel for Nova and 'Who is this?' (inference).",
+    "verdict": "corrected",
+    "verdict_problems": [
+      "finding_for_nametags says 'In most of the 56 publications reviewed, carers' continuing engagement was key'. The paper makes this point in its thematic synthesis of carers' experiences, which drew on the qualitative data: 'Carers continuous engagement and willingness to provide support with the use of AT for the person with dementia was key in the use of AT in most of the studies.' It gives no count and does not say most of the 56 publications.",
+      "method_and_sample puts the 30/17/9 split by design next to '50 studies'. The paper gives that split for the 56 publications: 'Of the 56 included publications, 30 were qualitative, 17 quantitative and 9 mixed-methods reporting on a total of 50 studies from 19 countries'.",
+      "method_and_sample says '2016 carers of people with dementia living at home'. The paper says 'reporting on findings from 2016 carers', and also 'Some studies included paid carers and participants who lived in long-term care facilities alongside carers of someone who has dementia living at home'. The review limits its results to family carers at home, but it does not say the 2016 count leaves the others out.",
+      "Minor, about the note: what it says about Table 2 is true, but Table 1 lists 'oral call identification' among the smart-home technologies in one included survey (reference 76). The review does not explain the term."
+    ],
+    "sentence_check": "pass",
+    "crossref": {
+      "title_similarity": 1.0,
+      "first_author_match": true,
+      "year_within_1": true,
+      "crossref_title": "Informal carers’ experience of assistive technology use in dementia care at home: a systematic review",
+      "crossref_year": 2019,
+      "crossref_venue": "BMC Geriatrics"
+    }
+  },
+  {
+    "id": "MED:42247407",
+    "doi": "10.1080/17483107.2026.2678548",
+    "title": "Uses of assistive technology incorporating smart camera features in the rehabilitation of people living with disabilities: a scoping review.",
+    "authors": [
+      "Caute A",
+      "Mirza L",
+      "Mackintosh B",
+      "Scherer R",
+      "Joffe V"
+    ],
+    "year": 2026,
+    "venue": "Disability and rehabilitation. Assistive technology",
+    "text_source": "abstract",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:42247407%20AND%20SRC:MED&format=json&resultType=core",
+    "finding_for_nametags": "Of 25 studies of assistive technology with smart camera features (13 involved smart glasses, 23 served visual impairment), one focused on facial recognition for people with Alzheimer's disease, and the abstract does not say what device that study used or what it found. So within this review's scope, the evidence on face recognition for people with Alzheimer's disease is thin: one focused study. The review also reports technical limitations, usability issues and high financial costs with various devices.",
+    "method_and_sample": "scoping review (Joanna Briggs Institute method) of 25 studies of assistive technology with at least one smart camera feature, used in rehabilitation in any setting; participants of any age with any disability were eligible, and 23 of the 25 studies were on visual impairment",
+    "limitation": "Read from the abstract only, which does not name the one Alzheimer's face-recognition study or report its results, and the evidence is mostly about visual impairment, not dementia.",
+    "supporting_sentence": "One study focused on facial recognition for people with Alzheimer's disease and one on reading for children with dyslexia.",
+    "relevance": "medium",
+    "bears_on": [
+      "prior art",
+      "glasses/wearable camera",
+      "face recognition"
+    ],
+    "status": "read",
+    "note": "No open full text (Europe PMC lists subscription access only), so the abstract was read. The record gives first publication online as 2026-06-05. The abstract does not identify the single Alzheimer's face-recognition study; the full text would be needed to name it.",
+    "verdict": "corrected",
+    "verdict_problems": [
+      "The second sentence of finding_for_nametags goes beyond the abstract. It says published work on \"face-recognizing glasses like Nametags\" is very thin, but the abstract does not say what device the one Alzheimer's facial-recognition study used, and it does not count how many of the 13 smart-glasses studies (mostly for visual impairment) had a face-recognition feature. The abstract supports only that one included study focused on facial recognition for people with Alzheimer's disease.",
+      "Minor: method_and_sample gives \"any age and any disability\" as if it described the sample. Those are the eligibility criteria; 23 of the 25 included studies were on visual impairment."
+    ],
+    "sentence_check": "pass",
+    "crossref": {
+      "title_similarity": 1.0,
+      "first_author_match": true,
+      "year_within_1": true,
+      "crossref_title": "Uses of assistive technology incorporating smart camera features in the rehabilitation of people living with disabilities: a scoping review",
+      "crossref_year": 2026,
+      "crossref_venue": "Disability and Rehabilitation: Assistive Technology"
+    }
+  },
+  {
+    "id": "MED:29200563",
+    "doi": "10.4103/ijpsym.ijpsym_90_17",
+    "title": "Problems of Face Recognition in Patients with Behavioral Variant Frontotemporal Dementia.",
+    "authors": [
+      "Chandra SR",
+      "Patwardhan K",
+      "Pai AR"
+    ],
+    "year": 2017,
+    "venue": "Indian journal of psychological medicine",
+    "text_source": "full text",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC5688894/fullTextXML",
+    "finding_for_nametags": "Among 46 people with behavioral-variant frontotemporal dementia (FTD), 24 showed defective face recognition and 12 had a defect recognizing the face of a spouse or relative they had lived with for at least a year. The authors also state, without testing it or citing a source, that a person with Alzheimer's can still recognize someone when that person is named or speaks to them, but a person with FTD cannot by any route; if that holds, the spoken announcement (\"That's David, your grandson\") fits an Alzheimer's wearer better than an FTD wearer.",
+    "method_and_sample": "clinical study using non-validated picture tests and a mirror test, 46 patients with behavioral-variant FTD (15 women, 31 men, MMSE above 20), India",
+    "limitation": "The face tests were not validated (one famous face and some emotion pictures), there was no formal control group, and some percentages do not match the paper's own counts (10 of 15 women is reported as 70%).",
+    "supporting_sentence": "Prosopagnosia in Alzheimer's disease is of visuospatial nature and hence can recognize the individual when named or spoken to, but in FTD, it is multimodal and hence cannot be recognized by any mode.",
+    "relevance": "medium",
+    "bears_on": [
+      "face recognition",
+      "announcement",
+      "misidentification"
+    ],
+    "status": "read",
+    "note": "Mirrors matter too: 4 women could not recognize their own reflection, two patients took the reflection for a rival, and an anecdote in the introduction describes a patient who took his reflection for his nephew. Untested inference from product.md: the glasses enroll no face for the wearer and say \"I don't recognize this person\" to a face that stays unmatched, so a wearer standing at a mirror could be told their own reflection is a stranger. Bibliographic fields come from the Europe PMC record (same three authors as the full-text XML).",
+    "verdict": "confirmed",
+    "verdict_problems": [],
+    "sentence_check": "pass",
+    "crossref": {
+      "title_similarity": 0.99,
+      "first_author_match": true,
+      "year_within_1": true,
+      "crossref_title": "Problems of Face Recognition in Patients with Behavioral Variant Frontotemporal Dementia",
+      "crossref_year": 2017,
+      "crossref_venue": "Indian Journal of Psychological Medicine"
+    }
+  },
+  {
+    "id": "MED:12554311",
+    "doi": "10.1080/1360786021000045863",
+    "title": "An electronic memory aid to support prospective memory in patients in the early stages of Alzheimer's disease: a pilot study.",
+    "authors": [
+      "Oriani M",
+      "Moniz-Cook E",
+      "Binetti G",
+      "Zanieri G",
+      "Frisoni GB",
+      "Frisoni GB",
+      "et al."
+    ],
+    "year": 2003,
+    "venue": "Aging & mental health",
+    "text_source": "abstract",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:12554311%20AND%20SRC:MED&format=json&resultType=core",
+    "finding_for_nametags": "In five people with mild-to-moderate Alzheimer's, an electronic memory aid improved remembering to do seven tasks at set times, while a written list and unaided recall did not help. This is weak, indirect prior art: it hints that an electronic aid can beat a written one in early Alzheimer's, but it tested remembering to carry out tasks at set times (prospective memory), which Nametags does not support, not recognizing people.",
+    "method_and_sample": "pilot study comparing three recall conditions (no aid, written list, electronic aid), 5 outpatients aged 58-79 with mild-to-moderate probable Alzheimer's",
+    "limitation": "Five patients only; the authors themselves call for a larger study in patients' own homes, and the abstract does not describe how the aid worked.",
+    "supporting_sentence": "The use of an EMA significantly improved patients' prospective memory, while the written list and free recall were not useful.",
+    "relevance": "low",
+    "bears_on": [
+      "prior art"
+    ],
+    "status": "read",
+    "note": "No open full text (subscription access only), so the abstract was read. The Europe PMC record lists \"Frisoni GB\" twice (5th and 6th of 9 names); the author list here copies the record as fetched.",
+    "verdict": "corrected",
+    "verdict_problems": [
+      "Minor: finding_for_nametags says the study \"tested timed task reminders\". The abstract says patients had to remember to carry out seven tasks at a particular time, with \"support available from an EMA\"; it does not say the aid gave reminders, and the entry's own limitation notes that the abstract does not describe how the aid worked."
+    ],
+    "sentence_check": "pass",
+    "crossref": {
+      "title_similarity": 1.0,
+      "first_author_match": true,
+      "year_within_1": true,
+      "crossref_title": "An electronic memory aid to support prospective memory in patients in the early stages of Alzheimer's disease: A pilot study",
+      "crossref_year": 2003,
+      "crossref_venue": "Aging &amp; Mental Health"
+    }
+  },
+  {
+    "id": "MED:24528204",
+    "doi": "10.1080/09658211.2014.886703",
+    "title": "The use of a wearable camera improves autobiographical memory in patients with Alzheimer's disease.",
+    "authors": [
+      "Woodberry E",
+      "Browne G",
+      "Hodges S",
+      "Watson P",
+      "Kapur N",
+      "Woodberry K"
+    ],
+    "year": 2015,
+    "venue": "Memory (Hove, England)",
+    "text_source": "abstract",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:24528204%20AND%20SRC:MED&format=json&resultType=core",
+    "finding_for_nametags": "In people with mild-to-moderate Alzheimer's, reviewing images from a small wearable camera brought back more details of personal events than a written diary did (5 of 6 patients over two weeks, 4 of 5 at three months). This is prior art for a worn camera in Alzheimer's, but for recalling events, not recognizing people: Nametags uses its glasses camera only for live recognition and turns a visit into text (a transcript, then facts and a card), not images to review.",
+    "method_and_sample": "within-patient comparison of camera-image review versus a written diary, 6 patients with mild-to-moderate Alzheimer's, 40 events, follow-up at one and three months",
+    "limitation": "Only six patients (one dropped out by three months), and the camera recorded significant events that were then reviewed in a structured way, so it says little about everyday continuous wear.",
+    "supporting_sentence": "Across 40 events the SenseCam review method resulted in significantly more details of an event being recalled over two weeks than the written diary method in five out of the six patients.",
+    "relevance": "medium",
+    "bears_on": [
+      "glasses/wearable camera",
+      "prior art"
+    ],
+    "status": "read",
+    "note": "No open full text (subscription access only), so the abstract was read. The record gives the issue year as 2015 and first publication online as 2014-02-17. The abstract does not say who ran the image reviews or whether other people were photographed, so it adds nothing on bystander privacy.",
+    "verdict": "confirmed",
+    "verdict_problems": [],
+    "sentence_check": "pass",
+    "crossref": {
+      "title_similarity": 0.99,
+      "first_author_match": true,
+      "year_within_1": true,
+      "crossref_title": "The use of a wearable camera improves autobiographical memory in patients with Alzheimer's disease",
+      "crossref_year": 2015,
+      "crossref_venue": "Memory"
+    }
+  },
+  {
+    "id": "MED:35032536",
+    "doi": "10.1016/j.neubiorev.2022.104529",
+    "title": "Paranoid and misidentification subtypes of psychosis in dementia.",
+    "authors": [
+      "Pearce D",
+      "Gould RL",
+      "Roughley M",
+      "Reynolds G",
+      "Ward EV",
+      "Bhome R",
+      "et al."
+    ],
+    "year": 2022,
+    "venue": "Neuroscience and biobehavioral reviews",
+    "text_source": "abstract",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:35032536%20AND%20SRC:MED&format=json&resultType=core",
+    "finding_for_nametags": "In a review of nine studies, all of which included patients with Alzheimer's disease, patients whose psychosis took the misidentification form (misidentification delusions or hallucinations) had worse global cognition, faster decline and more volume loss in regions for object recognition and for spatial and temporal context. That is background for tension 1 (truthful naming versus care practice), not evidence on it: the review covered only brain and cognitive correlates, so it cannot say whether a truthful announcement helps or upsets a wearer who misidentifies people.",
+    "method_and_sample": "review of the neurobiological and neuropsychological correlates of paranoid and misidentification subtypes of psychosis in dementia; 9 eligible studies, all of which included patients with Alzheimer's disease",
+    "limitation": "The authors say the small number of studies and their methodological heterogeneity limit interpretation; all nine studies included patients with Alzheimer's disease, and the authors call for extending the investigation to other forms of dementia.",
+    "supporting_sentence": "Greater global cognitive deficits and an accelerated global cognitive decline were observed in the misidentification subtype.",
+    "relevance": "low",
+    "bears_on": [
+      "misidentification"
+    ],
+    "status": "read",
+    "note": "No open full text (subscription access only), so the abstract was read. \"Misidentification\" here is a psychotic symptom (a delusion or hallucination), which may be narrower than the everyday misidentification in tension 1.",
+    "verdict": "corrected",
+    "verdict_problems": [
+      "The abstract says the nine eligible studies \"all included patients with Alzheimer's disease\". The entry turns this into \"all of Alzheimer's disease\" (finding_for_nametags), \"all of patients with Alzheimer's disease\" (method_and_sample) and \"all nine studies were of Alzheimer's disease\" (limitation). The abstract does not say the studies were limited to Alzheimer's disease."
+    ],
+    "sentence_check": "pass",
+    "crossref": {
+      "title_similarity": 0.99,
+      "first_author_match": true,
+      "year_within_1": true,
+      "crossref_title": "Paranoid and misidentification subtypes of psychosis in dementia",
+      "crossref_year": 2022,
+      "crossref_venue": "Neuroscience &amp; Biobehavioral Reviews"
+    }
+  },
+  {
+    "id": "MED:26468655",
+    "doi": "10.3928/00989134-20151008-65",
+    "title": "Wearable Technology to Garner the Perspective of Dementia Family Caregivers.",
+    "authors": "Matthews JT, Campbell GB, Hunsaker AE, Klinger J, Mecca LP, Hu L, et al.",
+    "year": 2016,
+    "venue": "Journal of gerontological nursing",
+    "text_source": "abstract",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:26468655%20AND%20SRC:MED&format=json&resultType=core",
+    "finding_for_nametags": "A prototype camera system worn by the family caregiver, not the person with dementia, captured image and voice data from the caregiver's perspective so nurses and other providers could see the behaviors and interactions the caregiver finds difficult, in a pilot with 18 caregiving dyads. It shows only that a worn camera and microphone have been used by family caregivers of people with dementia (the abstract does not say where the recording took place); the abstract reports no usability, privacy or reaction results and nothing about recognizing people, so it tests no Nametags feature or tension.",
+    "method_and_sample": "descriptive report of a prototype with case scenarios, from a pilot feasibility study of 18 caregiving dyads",
+    "limitation": "A descriptive article with illustrative scenarios and no outcome data in the abstract, and only the abstract could be read.",
+    "supporting_sentence": "The current article describes a prototype wearable camera system used to gather image and voice data from the caregiver's perspective in a pilot feasibility intervention study conducted with 18 caregiving dyads.",
+    "relevance": "low",
+    "bears_on": [
+      "glasses/wearable camera",
+      "families"
+    ],
+    "status": "read",
+    "note": "Full text not read: the Europe PMC fullTextXML endpoint for PMC4814293 returned HTTP 500 on three tries between 00:49 and 00:54 EDT; the record marks it free to read but not open access (isOpenAccess N), so the abstract in the Europe PMC record was used. Same group as paper 12 (MED:26288888): five shared authors and a caregiver-worn camera system in both (18 dyads here, 9 there); the abstracts do not say whether the samples overlap, so do not count the two as independent evidence.",
+    "verdict": "corrected",
+    "verdict_problems": [
+      "finding_for_nametags places the recording 'at home' and 'inside dementia households', but the fetched record never says where it took place: the words home, household, house and residence appear nowhere in it, including the abstract and its subject headings. The abstract says only that the system gathered image and voice data 'from the caregiver's perspective' in a pilot with 18 caregiving dyads. The full text could not be checked instead: fullTextXML for PMC4814293 still returned HTTP 500 at 00:58 EDT."
+    ],
+    "sentence_check": "pass",
+    "crossref": {
+      "title_similarity": 0.99,
+      "first_author_match": true,
+      "year_within_1": true,
+      "crossref_title": "Wearable Technology to Garner the Perspective of Dementia Family Caregivers",
+      "crossref_year": 2016,
+      "crossref_venue": "Journal of Gerontological Nursing"
+    }
+  },
+  {
+    "id": "MED:35976047",
+    "doi": "10.11124/jbies-22-00025",
+    "title": "Design, development, and use of conversational agents in rehabilitation for adults with brain-related neurological conditions: a scoping review.",
+    "authors": "Hocking J, Oster C, Maeder A, Lange B",
+    "year": 2023,
+    "venue": "JBI evidence synthesis",
+    "text_source": "abstract",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:35976047%20AND%20SRC:MED&format=json&resultType=core",
+    "finding_for_nametags": "A scoping review found 11 papers on conversational agents in rehabilitation for adults with brain conditions (7 aimed at people with dementia alone or in mixed groups), all at an early stage with samples of 1 to 33, no effectiveness testing and safety considered in only two, so this review offers no evidence that a voice assistant like Nova helps people with dementia; it cannot rule out evidence outside its scope (English-language rehabilitation studies, in a review published in February 2023). None of the purposes the papers reported was identifying people, which is Nova's job, and the authors ask future studies to clearly define safety issues and requirements for clinician oversight; product.md gives Nova behavior rules (never guess or invent a fact, never bring up illness or diagnoses) but says nothing about clinician oversight.",
+    "method_and_sample": "scoping review of 11 papers (7 prototypes); MEDLINE, Scopus, ProQuest, Web of Science and gray literature, no date limit, English only",
+    "limitation": "Only the abstract was read, and the review covers few, small, heterogeneous studies with no effectiveness or health outcomes, so it shows a gap rather than evidence for or against Nova.",
+    "supporting_sentence": "No studies undertook effectiveness testing.",
+    "relevance": "medium",
+    "bears_on": [
+      "Nova",
+      "prior art"
+    ],
+    "status": "read",
+    "note": "No pmcid; abstract from the Europe PMC record, whose only full-text link is a subscription DOI. The abstract says nothing about an agent disclosing that it is an AI, so it does not inform tension 2. Reported purposes: more daily conversation (4), reminiscence (2), and one each for anxiety management and education, Parkinson disease education, recording the user's voice, monitoring well-being, and building rapport before task prompts; one study reported clinician oversight.",
+    "verdict": "corrected",
+    "verdict_problems": [
+      "Overstated: 'so there is no published evidence yet that a voice assistant like Nova helps people with dementia' turns one review's result into a claim about all published work up to today. The review covered only conversational agents for rehabilitation in adults with brain-related neurological conditions, in English, and was published in February 2023. What its abstract supports is narrower: none of its 11 included papers tested effectiveness, and none measured health outcomes.",
+      "Imprecise: the finding says product.md does not describe 'safety issues' for Nova. It is right that product.md describes no clinician oversight, but it does give Nova safety-relevant rules: 'Never guess or invent a fact', the database as 'the only source of truth', and 'Never bring up illness or diagnoses'."
+    ],
+    "sentence_check": "pass",
+    "crossref": {
+      "title_similarity": 1.0,
+      "first_author_match": true,
+      "year_within_1": true,
+      "crossref_title": "Design, development, and use of conversational agents in rehabilitation for adults with brain-related neurological conditions: a scoping review",
+      "crossref_year": 2023,
+      "crossref_venue": "JBI Evidence Synthesis"
+    }
+  },
+  {
+    "id": "MED:26288888",
+    "doi": "10.1260/2040-2295.6.2.213",
+    "title": "Usability of a Wearable Camera System for Dementia Family Caregivers.",
+    "authors": "Matthews JT, Lingler JH, Campbell GB, Hunsaker AE, Hu L, Pires BR, et al.",
+    "year": 2015,
+    "venue": "Journal of healthcare engineering",
+    "text_source": "abstract",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:26288888%20AND%20SRC:MED&format=json&resultType=core",
+    "finding_for_nametags": "When family caregivers wore a camera system for 3 to 7 days to record difficult behaviors for health care providers (the abstract does not say where), they judged its benefits worth the invasion of privacy beforehand, their privacy concerns did not change significantly after wear, and they found it easy to learn but cumbersome and obtrusive. That is small, indirect support for a worn camera around a person with dementia: the privacy judgment was the wearers' own, and nothing here tests a person with dementia wearing the camera or other residents and staff as bystanders (tension 3).",
+    "method_and_sample": "usability study, 9 caregiving dyads (persons with dementia mean MMSE 17.33), 3 to 7 days of caregiver wear, 140 hours recorded",
+    "limitation": "Nine dyads, a caregiver-worn device and only the abstract read: the privacy result is the wearers' own rating, and the abstract gives no figures for the reactions of the persons with dementia.",
+    "supporting_sentence": "Prior to using the system, CGs assessed its benefits to be worth the invasion of privacy; post-wear privacy concerns did not differ significantly.",
+    "relevance": "medium",
+    "bears_on": [
+      "glasses/wearable camera",
+      "bystander privacy",
+      "families"
+    ],
+    "status": "read",
+    "note": "Full text not read: fullTextXML for PMC4545579 returned HTTP 500 on three tries between 00:49 and 00:54 EDT; the record marks it free in Europe PMC (isOpenAccess N) and lists an open-access PDF on the publisher site via Unpaywall, but the rules here allow only the Europe PMC endpoint or the abstract, so the abstract was used. Other abstract facts: 79 salient events in 140 hours, and 'Few negative reactions by PWDs were reported or evident in resulting video.' Same group as paper 10 (MED:26468655); do not count them as independent.",
+    "verdict": "corrected",
+    "verdict_problems": [
+      "finding_for_nametags says caregivers wore the camera 'at home', but the fetched record never says where: the words home, household, house and residence appear nowhere in it, including the abstract and its subject headings. The abstract gives only '3 to 7 days of wear per CG' and concludes that caregivers 'can and will wear a camera system to reveal their daily caregiving challenges to health care providers'. The full text could not be checked instead: fullTextXML for PMC4545579 still returned HTTP 500 at 00:58 EDT."
+    ],
+    "sentence_check": "pass",
+    "crossref": {
+      "title_similarity": 0.99,
+      "first_author_match": true,
+      "year_within_1": true,
+      "crossref_title": "Usability of a Wearable Camera System for Dementia Family Caregivers",
+      "crossref_year": 2015,
+      "crossref_venue": "Journal of Healthcare Engineering"
+    }
+  },
+  {
+    "id": "MED:31518270",
+    "doi": "10.2196/13378",
+    "title": "A Web-Based Mobile App With a Smartwatch to Support Social Engagement in Persons With Memory Loss: Pilot Randomized Controlled Trial.",
+    "authors": "McCarron HR, Zmora R, Gaugler JE",
+    "year": 2019,
+    "venue": "JMIR aging",
+    "text_source": "full text",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC6715400/fullTextXML",
+    "finding_for_nametags": "In a 6-month pilot trial with 48 people with memory loss, prior art very close to Nametags (a phone that recognized enrolled faces and showed the person's name and relationship on a smartwatch) showed no significant effect on quality of social interaction or quality of life, in a trial its authors say is small and could be considered underpowered, and most participants interviewed did not find it useful. Their reasons bear on Nametags' enrollment (by a family member, or since commit 0245eb3 by visitors themselves through /visitor) and look-alike-relative risk: enrolling was time-consuming, cumbersome and awkward, so many said they only felt comfortable asking people they knew well to enroll, often people the person with memory loss already remembered; several participants reported that it only worked in certain lighting; one caregiver said that by the time it recognized a face her husband had already asked her who the person was; and another said it could not tell her son from her son-in-law, who were both bald with beards but otherwise had little physical resemblance.",
+    "method_and_sample": "pilot randomized controlled trial, 48 people with memory loss (20 app, 28 usual care), 35 of them with a caregiver who completed the surveys and 13 with no caregiver available, 6 months, plus 13 phone interviews with intervention-group participants; Minnesota, USA",
+    "limitation": "Small and underpowered (not planned as a pilot in advance), outcomes mostly reported by caregivers, no record of how much the app was used, and a sample that included mild cognitive impairment and self-reported memory concerns.",
+    "supporting_sentence": "The absence of empirical intervention effects is supported by the qualitative analysis, which revealed that the majority of participants did not find the SSA useful.",
+    "relevance": "high",
+    "bears_on": [
+      "prior art",
+      "face recognition",
+      "misidentification",
+      "families",
+      "announcement",
+      "glasses/wearable camera"
+    ],
+    "status": "read",
+    "note": "Read in full. More verbatim support: 'Consequently, the individuals they enrolled were often people that the person with memory loss did not have trouble remembering.' | 'Marge (caregiver, age 67) mentioned that the software could not distinguish her son from her son-in-law, both of whom were bald and had beards but otherwise had little physical resemblance.' | 'She said that by the time the SSA recognized the face, her husband had already asked her who the person was.' Users asked for something like the Nametags design, untested here: 'Participants suggested replacing the watch with an earpiece.' and 'Instead of the phone, they recommended a lapel pin, brooch, pendant, or necklace with a camera.' Other points: mean feasibility and utility 3.11 at 3 months and 3.10 at 6 months on a 1 to 5 scale (neutral); some caregivers reported agitation, frustration and extra burden; a few found the phone worn around the neck conspicuous and stigmatizing; one caregiver said the only settings where it could help (an adult day service, a dementia chorus) already used name tags. People with memory loss needed a SLUMS score of 20 or higher (capacity to give verbal consent). Face only: nothing here tests voice recognition, so it cannot say whether voice-first presence avoids the lighting and delay failures. Funded by a National Institute on Aging grant to the developer; the authors report no financial interest in it.",
+    "verdict": "corrected",
+    "verdict_problems": [
+      "method_and_sample says the 48 people with memory loss took part 'with caregivers'. Not all did: 'Thirty-five participants were caregivers and 13 were persons with memory loss who had no caregiver available.' Those 13 filled in the surveys themselves; for the other 35, the caregiver did.",
+      "finding_for_nametags overstates the trial result a little. It says the app 'had no significant effect'. The paper reports that use 'was not significantly associated with changes' (P>.05), says the results 'should be interpreted with caution' because of the small sample, and says the trial 'could be considered an underpowered RCT'.",
+      "Minor: the finding lists slow recognition among the failures 'users reported'. In the text that is one caregiver's account ('Rebekah (caregiver, age 69) thought the SSA took too long to recognize a face.'). Of the three failures listed, only the lighting one was reported by more than one person ('Several participants reported that the SSA only worked in certain lighting.').",
+      "Minor: the finding offers the son and son-in-law as an example of the look-alike-relative risk, but the paper says of the two men: 'both of whom were bald and had beards but otherwise had little physical resemblance'. The software confused two relatives who shared only those features.",
+      "Minor: the finding gives awkwardness as the only reason families enrolled only people they knew well. The paper gives two: many found the process 'time-consuming and cumbersome', and some felt uncomfortable asking people ('For these reasons, many said they only felt comfortable asking individuals they knew well to enroll.').",
+      "Update, not an error when this entry was written: product.md was changed at 01:04 EDT, after this entry (00:57), to add visitor self-enrollment (/visitor, with a consent screen, from commit 0245eb3). The finding ties the enrollment problems only to family enrollment; the paper's point that asking people to enroll felt awkward bears on the visitor flow as well."
+    ],
+    "sentence_check": "pass",
+    "crossref": {
+      "title_similarity": 1.0,
+      "first_author_match": true,
+      "year_within_1": true,
+      "crossref_title": "A Web-Based Mobile App With a Smartwatch to Support Social Engagement in Persons With Memory Loss: Pilot Randomized Controlled Trial",
+      "crossref_year": 2019,
+      "crossref_venue": "JMIR Aging"
+    }
+  },
+  {
+    "id": "MED:25784202",
+    "doi": "10.3109/09638288.2015.1025992",
+    "title": "Recognition of familiar people with a mobile cloud architecture for Alzheimer patients.",
+    "authors": "Fardoun HM, Mashat AA, Ramirez Castillo J",
+    "year": 2017,
+    "venue": "Disability and rehabilitation",
+    "text_source": "abstract",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:25784202%20AND%20SRC:MED&format=json&resultType=core",
+    "finding_for_nametags": "Earlier prior art for Nametags: photos taken with a smartwatch went to face recognition in the cloud and details about the recognized person came back to the watch; the authors report correct results (no figures in the abstract) but usability problems for patients with dementia in reading the small screen and taking a proper photo. Nametags' spoken announcement and hands-free glasses camera skip both steps by design (not tested here), but Nametags still puts text in front of the wearer: the context card and, since commit 0245eb3, the glasses HUD with face tags and live captions of the conversation, so the paper's reading difficulty bears on those (not tested here). The cloud design is the same choice as the DEPLOY.md server, whose privacy this abstract does not discuss.",
+    "method_and_sample": "system architecture and prototype tested in a real-life scenario; sample size not given in the abstract",
+    "limitation": "Only the abstract was readable, and it gives no accuracy figures, sample size or test conditions, so the claim of correct results cannot be weighed.",
+    "supporting_sentence": "However, when being targeted to patients with dementia some usability problems appeared, such as difficulties to read information in a small screen or take a proper photo.",
+    "relevance": "high",
+    "bears_on": [
+      "prior art",
+      "face recognition",
+      "context card",
+      "glasses/wearable camera",
+      "deployment/privacy"
+    ],
+    "status": "read",
+    "note": "No pmcid; abstract from the Europe PMC record, whose only full-text link is a subscription DOI. Rated high as prior art for the same idea (recognizing familiar people for Alzheimer patients and sending their details to a wearable), not for strength of evidence. The abstract says it targets medium-advanced stages and claims benefits for daily life and self-esteem without reporting data.",
+    "verdict": "corrected",
+    "verdict_problems": [
+      "Update, not an error when this entry was written: product.md was changed at 01:04 EDT, after this entry (00:57), to add the glasses HUD at /live from commit 0245eb3, which shows face tags and live captions of the conversation. The finding names the context card as the text Nametags still asks the wearer to read; the HUD's captions are more text on a display, so the paper's reading difficulty bears on them too (not tested). Every paper-side claim checks out against the abstract, as do the supporting sentence (word for word), method_and_sample, and the title, authors, year and venue."
+    ],
+    "sentence_check": "pass",
+    "crossref": {
+      "title_similarity": 0.99,
+      "first_author_match": true,
+      "year_within_1": true,
+      "crossref_title": "Recognition of familiar people with a mobile cloud architecture for Alzheimer patients",
+      "crossref_year": 2017,
+      "crossref_venue": "Disability and Rehabilitation"
+    }
+  },
+  {
+    "id": "MED:21867384",
+    "doi": "10.1080/13607863.2011.569489",
+    "title": "Do people with dementia find lies and deception in dementia care acceptable?",
+    "authors": [
+      "Day AM",
+      "James IA",
+      "Meyer TD",
+      "Lee DR"
+    ],
+    "year": 2011,
+    "venue": "Aging & mental health",
+    "text_source": "abstract",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:21867384%20AND%20SRC:MED&format=json&resultType=core",
+    "finding_for_nametags": "Interviewed directly, people with dementia judged carers' lies acceptable if told in their best interest, a judgement shaped by whether they were aware of the lie and by why the carer lied. That bears on tension 1 (the announcement names people truthfully) and tension 2 (Nova does not say it is an AI unless asked), but the study concerns lies told by human carers, not by a device.",
+    "method_and_sample": "qualitative Grounded Theory study with a two-phased design: a series of one-to-one interviews with people with dementia, then re-interviews of the same participants to develop the emerging theory; sample size, dementia stage and country not given in the abstract",
+    "limitation": "Only the abstract was available, so the sample size, the participants' dementia stage and the kinds of lies discussed are unknown, and the abstract does not mention technology or AI.",
+    "supporting_sentence": "This best interest decision was complex, and influenced by factors such as the person with dementia's awareness of the lie, and the carer's motivation for lying.",
+    "relevance": "high",
+    "bears_on": [
+      "truth-telling",
+      "announcement",
+      "Nova"
+    ],
+    "status": "read",
+    "note": "Abstract only (not open access in Europe PMC). The abstract does not say which way awareness of the lie moves acceptability, so no direction is claimed here. The model of these factors that the paper describes is in the full text, which was not read.",
+    "verdict": "corrected",
+    "verdict_problems": [
+      "Minor: method_and_sample says 'two rounds of one-to-one interviews', but the abstract only says that phase one involved 'a series of one-to-one interviews with People with Dementia' and that in phase two 'the participants were re-interviewed'. It does not say the phase-two interviews were one-to-one."
+    ],
+    "sentence_check": "pass",
+    "crossref": {
+      "title_similarity": 1.0,
+      "first_author_match": true,
+      "year_within_1": true,
+      "crossref_title": "Do people with dementia find lies and deception in dementia care acceptable?",
+      "crossref_year": 2011,
+      "crossref_venue": "Aging &amp; Mental Health"
+    }
+  },
+  {
+    "id": "MED:34081019",
+    "doi": "10.2196/25006",
+    "title": "Chatbots to Support People With Dementia and Their Caregivers: Systematic Review of Functions and Quality.",
+    "authors": [
+      "Ruggiano N",
+      "Brown EL",
+      "Roberts L",
+      "Framil Suarez CV",
+      "Luo Y",
+      "Hao Z",
+      "et al."
+    ],
+    "year": 2021,
+    "venue": "Journal of medical Internet research",
+    "text_source": "full text",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC8212632/fullTextXML",
+    "finding_for_nametags": "In this review of commercial dementia chatbots, only 6 of the 505 found met the criteria (5 were Alexa voice skills), and no peer-reviewed research was identified for any of them (after the review, the CogniCare developers published a peer-reviewed article on developing their apps that reported no outcome findings for users). The researchers had trouble getting some voice skills started, because Alexa's voice recognition was not always flexible with their pronunciation or a skill needed a specific command to start, and most apps' limited programmed content created challenges whenever the evaluators did not use specific commands, although 5 of the 6 were easy to use once started; the authors warn this may create barriers for people with cognitive impairment. For Nova that is a caution about depending on a spoken wake word (\"Nova\", \"Hey Nova\"), not evidence about Nova itself: no person with dementia tested the apps in this review, and their dialog was pre-programmed and narrow, unlike Nova's language model.",
+    "method_and_sample": "systematic review of commercial chatbot apps (Google Play, Apple App Store, Alexa Skills, web), Dec 2019 to Apr 2020; 505 found, 6 included; rated by the research team, not by end users",
+    "limitation": "The apps were judged by the researchers against a chatbot-quality framework, with no people with dementia or caregivers testing them, and their pre-programmed 2020 dialog says little about a language-model assistant like Nova.",
+    "supporting_sentence": "For instance, most apps had limitations in their programmed content, which created challenges when evaluators did not use specific commands.",
+    "relevance": "medium",
+    "bears_on": [
+      "Nova",
+      "prior art"
+    ],
+    "status": "read",
+    "note": "Prior art: one Alexa skill (My Life Story) stored a person's life history and told it back on command, close to Nova reading out a person's stored facts. The paper lists passing the Turing test as a quality attribute and never discusses telling users they are talking to a machine, so it does not inform tension 2. Every privacy statement the reviewers found promised no sharing with third parties unless the user gave permission, a contrast with Nova sending questions and looked-up rows to Anthropic.",
+    "verdict": "corrected",
+    "verdict_problems": [
+      "finding_for_nametags overstates the usability problem. It says skills that needed exact commands or pronunciations 'were hard to use even for the researchers'. The paper says the evaluators had trouble getting the voice skills started, because some instances of Alexa voice recognition 'were not flexible with the user’s pronunciation of commands or required a specific command to get started', and that limited programmed content 'created challenges when evaluators did not use specific commands'. But it also says '5 of the 6 chatbots were found to be easy to use once the researchers were able to get the programs started', and the abstract says the chatbots 'were generally found to be easy to use'.",
+      "Minor: finding_for_nametags says none of the apps 'had peer-reviewed research behind it'. The paper says 'no peer-reviewed research was identified for any of the apps', and adds that after the review the CogniCare developers 'published a peer-reviewed article on the development of their apps', which 'did not report outcome findings for users'."
+    ],
+    "sentence_check": "pass",
+    "crossref": {
+      "title_similarity": 1.0,
+      "first_author_match": true,
+      "year_within_1": true,
+      "crossref_title": "Chatbots to Support People With Dementia and Their Caregivers: Systematic Review of Functions and Quality",
+      "crossref_year": 2021,
+      "crossref_venue": "Journal of Medical Internet Research"
+    }
+  },
+  {
+    "id": "MED:34170256",
+    "doi": "10.2196/25891",
+    "title": "Usability and Acceptance of the Embodied Conversational Agent Anne by People With Dementia and Their Caregivers: Exploratory Study in Home Environment Settings.",
+    "authors": [
+      "Stara V",
+      "Vera B",
+      "Bolliger D",
+      "Rossi L",
+      "Felici E",
+      "Di Rosa M",
+      "et al."
+    ],
+    "year": 2021,
+    "venue": "JMIR mHealth and uHealth",
+    "text_source": "full text",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC8386369/fullTextXML",
+    "finding_for_nametags": "In a 4-week home trial of the tablet agent Anne, some people with early dementia said speech-recognition errors (Anne sometimes answered a different question) hurt their intention to use it, its usefulness and their trust, and their ratings of usefulness and trust fell over the 4 weeks. Nova takes spoken questions, so a misheard name in a question like \"Nova, who is David?\" is the failure this study points to; the study itself did not test questions about people.",
+    "method_and_sample": "mixed-methods 4-week home field trial (acceptance and usability questionnaires, telemetry, short open questions), 20 people with early dementia (MMSE 24-27) and 14 family caregivers, Ancona, Italy",
+    "limitation": "A single small 4-week trial in one Italian city, limited to early-stage people living independently who had training, a manual and a support line, so it says little about later-stage or care-home users.",
+    "supporting_sentence": "Some of them clearly discussed how technical problems related to speech recognition had a negative impact on intention to use, adaptiveness, usefulness, and trust.",
+    "relevance": "high",
+    "bears_on": [
+      "Nova",
+      "families",
+      "prior art"
+    ],
+    "status": "read",
+    "note": "Anne also had a touch screen, and touch use far outnumbered successful voice use (55,442 vs 853 interactions), mostly because of games, the authors say. Family caregivers' ratings of usefulness and trust also fell over the 4 weeks. People with advanced dementia were excluded because their reaction to an unknown virtual assistant was judged unpredictable. Some role and closeness percentages in the paper do not match their own fractions (6/14 given as 40%), so they are not used here.",
+    "verdict": "confirmed",
+    "verdict_problems": [],
+    "sentence_check": "pass",
+    "crossref": {
+      "title_similarity": 0.95,
+      "first_author_match": true,
+      "year_within_1": true,
+      "crossref_title": "Usability and Acceptance of the Embodied Conversational Agent Anne by People with Dementia and their Caregivers: an exploratory study in home environment settings (Preprint)",
+      "crossref_year": 2020,
+      "crossref_venue": "JMIR mHealth and uHealth"
+    }
+  },
+  {
+    "id": "MED:21500008",
+    "doi": "10.1080/13607863.2010.543662",
+    "title": "Ethics of using assistive technology in the care for community-dwelling elderly people: an overview of the literature.",
+    "authors": [
+      "Zwijsen SA",
+      "Niemeijer AR",
+      "Hertogh CM"
+    ],
+    "year": 2011,
+    "venue": "Aging & mental health",
+    "text_source": "abstract",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:21500008%20AND%20SRC:MED&format=json&resultType=core",
+    "finding_for_nametags": "A review of 46 papers on assistive technology for older people living at home, focused on dementia, found three ethical themes: privacy, autonomy and obtrusiveness in the home; stigma and human contact; and device design (individual approach, affordability, safety). These frame the worn camera-and-microphone glasses in general, but the abstract gives no evidence specific to cameras, face or voice recognition, or voice assistants.",
+    "method_and_sample": "systematic literature review, 46 papers, international literature on assistive technology for community-dwelling older people, focused on dementia",
+    "limitation": "Read from the abstract only; it reviews ethical arguments in the literature rather than measured outcomes, and it covers people living at home, not care homes.",
+    "supporting_sentence": "The first theme, personal living environment, involves the subthemes privacy, autonomy and obtrusiveness.",
+    "relevance": "medium",
+    "bears_on": [
+      "deployment/privacy",
+      "glasses/wearable camera"
+    ],
+    "status": "read",
+    "note": "Abstract only (not open access in Europe PMC); it does not say which technologies the 46 papers covered or the search dates. The authors' point that ethics framed around independence may fit frail elderly people less well than a social, reciprocal view could support a family-run enrollment model, but that is an interpretation, not a finding.",
+    "verdict": "confirmed",
+    "verdict_problems": [],
+    "sentence_check": "pass",
+    "crossref": {
+      "title_similarity": 1.0,
+      "first_author_match": true,
+      "year_within_1": true,
+      "crossref_title": "Ethics of using assistive technology in the care for community-dwelling elderly people: An overview of the literature",
+      "crossref_year": 2011,
+      "crossref_venue": "Aging &amp; Mental Health"
+    }
+  },
+  {
+    "id": "MED:36681841",
+    "doi": "10.1186/s12938-023-01065-3",
+    "title": "Privacy-protecting behaviours of risk detection in people with dementia using videos.",
+    "authors": [
+      "Mishra PK",
+      "Iaboni A",
+      "Ye B",
+      "Newman K",
+      "Mihailidis A",
+      "Khan SS"
+    ],
+    "year": 2023,
+    "venue": "Biomedical engineering online",
+    "text_source": "full text",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC9863094/fullTextXML",
+    "finding_for_nametags": "In a Toronto dementia unit whose common-area camera feed also caught other residents, staff and visitors, the study turned audio off, kept cameras out of bedrooms and washrooms, and had staff and participants' substitute decision-makers give written consent. Replacing people with skeletons or segmentation masks while keeping the background kept risk detection about as good as raw video (best AUC(ROC) 0.812 for skeletons and 0.823 for masks, vs 0.822 for raw video); removing the background as well lowered it to 0.640 to 0.765. That is a concrete precedent for tension 3, set against glasses that go wherever the wearer goes, transcribe what everyone says and exist to identify people, the very information this study removed.",
+    "method_and_sample": "technical study of privacy-protecting video anomaly detection (skeletons or segmentation masks fed to convolutional autoencoders); about 21 h training and 9 h test video from one participant and one camera, out of a 2-year, 17-participant study in a specialized dementia unit, Toronto, Canada",
+    "limitation": "It measures detection accuracy for one participant on one fixed camera, not how residents, staff or visitors felt about being filmed, and it uses fixed surveillance cameras, not a worn one.",
+    "supporting_sentence": "Due to privacy concerns, the cameras were not installed in the bedrooms and washrooms of participating residents, and the audio was turned off.",
+    "relevance": "medium",
+    "bears_on": [
+      "bystander privacy",
+      "care homes",
+      "deployment/privacy"
+    ],
+    "status": "read",
+    "note": "The paper does not say whether non-participating residents or visitors consented. It also cites cameras that turn people into skeletons on the device so raw video need not be stored, a parallel to keeping photos and audio local (tension 5), but face embeddings, unlike skeletons, are made to identify people.",
+    "verdict": "corrected",
+    "verdict_problems": [
+      "finding_for_nametags attaches '(AUC 0.823 vs 0.822)' to 'skeletons or masks', but 0.823 is the segmentation-mask result alone; the best skeleton result was 0.812 (Table 2 and the Conclusions; the abstract gives 0.807 for the skeleton approach). Both hold only with the background kept: when the background was removed as well, the privacy-protecting inputs scored 0.640 to 0.765, below raw video (0.791 to 0.822). The paper's own Background section uses the same 0.823 vs 0.822 shorthand, so this is a precision fix, not a reversal."
+    ],
+    "sentence_check": "pass",
+    "crossref": {
+      "title_similarity": 0.99,
+      "first_author_match": true,
+      "year_within_1": true,
+      "crossref_title": "Privacy-protecting behaviours of risk detection in people with dementia using videos",
+      "crossref_year": 2023,
+      "crossref_venue": "BioMedical Engineering OnLine"
+    }
+  }
+]
