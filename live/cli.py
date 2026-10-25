@@ -54,7 +54,7 @@ def build_parser() -> argparse.ArgumentParser:
     out = p.add_argument_group("voice output")
     out.add_argument("--no-tts", action="store_true", help="print what would be spoken instead of saying it")
     out.add_argument("--tts-voice", metavar="DIR", help="Supertonic model folder (default: the first under hackpsu_voice_rec/models)")
-    brain = p.add_argument_group("Claude")
+    brain = p.add_argument_group("Nova (Claude) and visit summaries (Gemini)")
     brain.add_argument("--model", default=MODEL, help="(default: %(default)s)")
     brain.add_argument("--nova-name", default="Nova", help="the wake word (default: %(default)s)")
     brain.add_argument("--no-nova", action="store_true", help="don't answer questions")

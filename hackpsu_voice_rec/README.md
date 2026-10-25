@@ -8,11 +8,31 @@ confidence score; voices nobody enrolled come back as **Unknown**. Add
 `--transcribe` and each line also says *what* they said, so you get a live
 "who said what" transcript, even for two people talking at once.
 
-Everything runs locally: no cloud, no API keys. Speaker embeddings come from
+The local commands (`enroll`, `listen`, `identify`) run entirely on the laptop,
+with no API keys. Speaker embeddings come from
 NVIDIA's TitaNet-small via [sherpa-onnx](https://github.com/k2-fsa/sherpa-onnx),
 with Silero VAD chopping the mic stream into utterances. For **people talking at
 the same time**, an optional speech-separation front end (SpeechBrain SepFormer,
 PyTorch, runs on the Apple GPU) splits the mixture first so every voice is named.
+
+`live`, `cloud-enroll` and `assistant` are different: they stream the microphone
+to Speechmatics, and `assistant` also sends the transcript to Anthropic, so each
+needs keys and packages of its own (see their sections).
+
+## In Nametags
+
+The Nametags app at the repo root installs this package from its `pyproject.toml`
+(`uv sync` at the root, Python 3.12), so the Quick start below is only for using
+`voicerec` on its own.
+
+* `embedders/voice.py` wraps the speaker model as the app's voice embedder: 192
+  numbers, cosine distance, cutoff 1 − 0.45 = 0.55.
+* The backend and `python -m live` also use its voice detector
+  (`voice_rec/vad.py`), transcriber (`voice_rec/transcriber.py`) and wake word
+  (`voice_rec/assistant.py`); `python -m live` runs the assistant with a Nova brain
+  from `live/nova.py`.
+* `scripts/download_models.sh --no-tts` fetches what the API needs; `python -m
+  live` also wants the Supertonic voice, so run it without the flag there.
 
 ## Quick start
 
@@ -63,14 +83,14 @@ With `--transcribe` (or `-t`) every final line is followed by the words:
 ```
 
 `--log notes.txt` appends the same as timestamped `Name: text` lines, a running
-transcript of the session.
+transcript of the session. It needs `--transcribe`; without it nothing is written.
 
 ## Commands
 
 | command | what it does |
 | --- | --- |
 | `voicerec enroll NAME [--seconds 20] [--text FILE] [--replace] [--from a.wav b.wav] [--multi]` | record (or load files) and save a voiceprint; re-running adds samples; `--multi` also builds the separation-domain voiceprint |
-| `voicerec listen [--threshold 0.45] [--device 0] [--jsonl] [--multi] [--transcribe] [--log FILE]` | live identification from the mic; `--multi` names simultaneous talkers; `--transcribe` adds what they said |
+| `voicerec listen [--threshold 0.45] [--device 0] [--jsonl] [--multi] [--transcribe] [--log FILE]` | live identification from the mic; `--multi` names simultaneous talkers; `--transcribe` adds what they said; `--log` writes only with `--transcribe` |
 | `voicerec identify FILE... [--segments] [--jsonl] [--multi] [--transcribe]` | identify (and transcribe) the speaker(s) in audio files |
 | `voicerec list` | enrolled speakers, sample counts, self-consistency |
 | `voicerec matrix` | pairwise similarity between enrolled speakers (spots confusable pairs) |
@@ -84,7 +104,8 @@ Common flags: `--model`, `--db`, `--threads`, `--threshold`, `--debug`. Multi-ta
 flags: `--multi`, `--sep-model`, `--sep-device mps|cpu`, `--stream-threshold`.
 Transcription: `--transcribe`, `--asr-model`. Environment equivalents:
 `VOICEREC_MODEL`, `VOICEREC_DB`, `VOICEREC_THRESHOLD`, `VOICEREC_SEP_MODEL`,
-`VOICEREC_ASR_MODEL`.
+`VOICEREC_ASR_MODEL`, plus `VOICEREC_VAD_MODEL` (the Silero file) and
+`VOICEREC_TTS_MODEL` (the Supertonic folder).
 
 ### Integrating with something else (web UI, game, bot)
 
@@ -156,7 +177,7 @@ and prints words as they are recognised, with a speaker on every word. It is the
 mode to use when accuracy and latency matter more than running offline.
 
 ```bash
-pip install speechmatics-rt                # already in .venv
+pip install speechmatics-rt                # not installed by `pip install -e .`
 echo 'SPEECHMATICS=your-key' > .env         # or export SPEECHMATICS_API_KEY=...; free tier at portal.speechmatics.com
 voicerec cloud-enroll "Nikita"             # 25 s alone at the mic: the service learns the voice
 voicerec cloud-enroll "Teammate"
@@ -223,7 +244,9 @@ addressed, can speak up on its own when it has something specific to add, and
 talks back in a natural voice.
 
 ```bash
+pip install anthropic speechmatics-rt        # not installed by `pip install -e .`
 echo 'ANTHROPIC_API_KEY=...' >> .env         # the brain is Claude; key from console.anthropic.com
+# it listens through the same Speechmatics stream as `live`, so it needs that key too
 voicerec assistant --name Nova --unmute 60 --ack   # add --interject to let it speak up unprompted
 ```
 
@@ -253,7 +276,8 @@ otherwise. `--output-device` picks another output (see `voicerec devices`).
   or macOS `say` as a last resort. Unmute the laptop.
 * **Brain.** `claude-opus-5-5` by default with low effort for snappy replies,
   streamed, with the server-side refusal fallback enabled; `--brain` picks another
-  model, `--brain mock` is an offline stand-in used by the tests. The system prompt
+  model, `--brain mock` is an offline stand-in for trying it without an Anthropic
+  key. The system prompt
   is cached across calls. Its lines appear in the transcript, the log and the
   JSONL stream (`type: "assistant"`), so later questions can refer to them.
 
@@ -273,8 +297,8 @@ real model, Supertonic voice), the chain is:
 | synthesis of that chunk | ~0.3 s | Supertonic runs ten times faster than real time; the voice is warmed up at start |
 
 Total: the first answer word plays **2 to 2.5 s** after you stop talking. With
-`--ack` the assistant says a pre-synthesized "Sure." or "Okay." at **1.3 s**
-whenever the model has not started within half a second, so there is never dead
+`--ack` the assistant says a pre-synthesized filler ("Sure.", "Okay.", "Mm-hm." or
+"Right.") at **1.3 s** whenever the model has not started within 0.45 s, so there is never dead
 air; the answer itself is not delayed by it beyond the half second the filler
 takes to say. Every
 complete sentence is spoken as soon as it ends, and the last sentence is flushed
@@ -303,7 +327,9 @@ whole mixture ──► TitaNet ──► vs clean voiceprints ─────�
   scores back to 0.7 to 0.9. The price is that look-alike voices score higher too
   (two teammates sat at 0.74 in this domain), which is why ranking is done in the
   centered space described above, and streams use their own bar,
-  `--stream-threshold` (default `threshold + 0.07`).
+  `--stream-threshold`: by default `threshold + 0.07` when everyone enrolled with
+  `--multi`, otherwise `threshold - 0.07` (at least 0.30), since separated streams
+  score lower against clean voiceprints.
 * **Deciding who is real.** Streams with under 10% of the energy are dead
   outputs. Two streams naming the same person collapse into one. A stream that
   misses the bar but whose closest match was already found is residue of that
@@ -374,6 +400,8 @@ Two things keep names showing up anyway:
 
 * **Clear-winner rule.** A best match up to 0.10 under the threshold is still
   accepted when it leads the runner-up by at least 0.20 in the centered space.
+  With only two people enrolled there is no centered space and the plain lead is
+  used; with one, any best match within 0.10 of the threshold is accepted.
   With a handful of enrolled people that is almost always right; the cost is that
   a stranger who resembles one enrolled person gets that person's name more
   often. Turn it off with `--no-rescue` when strangers matter more than misses.
@@ -422,6 +450,7 @@ say -v Karen "Hey Nova, what time is it right now?"              # answered out 
 
 ```
 voice_rec/
+  config.py       model paths, the threshold, and their VOICEREC_* overrides
   audio.py        mic capture (sounddevice), file loading, resampling
   vad.py          Silero VAD wrapper -> speech segments
   embedder.py     sherpa-onnx speaker embedding extractor
