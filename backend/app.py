@@ -13,6 +13,7 @@ backend/context_routes.py and is mounted here with app.include_router.
 import io
 import logging
 import os
+import threading
 import uuid
 from contextlib import asynccontextmanager
 from pathlib import Path
@@ -24,6 +25,7 @@ from PIL import Image, ImageOps, UnidentifiedImageError
 from psycopg import errors
 
 from contract.audio import check_wav
+from contract.embedders import FaceDetection
 from contract.setup_api import (
     LOCAL_ORIGIN_REGEX,
     PHOTO_FORMATS,
@@ -45,16 +47,37 @@ log = logging.getLogger("backend")
 EXIF_ORIENTATION = 0x0112
 
 
+class TakeTurns:
+    """A face embedder that detects for one caller at a time.
+
+    dlib's face detector keeps the image it is scanning inside one shared object and releases the
+    GIL while it runs, and requests arrive on several threads (the route thread pool, /live's
+    worker threads), so two detections at once could corrupt each other.
+    """
+
+    def __init__(self, embedder):
+        self.embedder = embedder
+        self._lock = threading.Lock()
+
+    @property
+    def spec(self):
+        return self.embedder.spec
+
+    def detect_faces(self, image: bytes) -> list[FaceDetection]:
+        with self._lock:
+            return self.embedder.detect_faces(image)
+
+
 def make_embedders():
     """The real face and voice embedders, or the contract's fakes with NAMETAGS_EMBEDDERS=fake."""
     if os.environ.get("NAMETAGS_EMBEDDERS", "real").lower() == "fake":
         from contract.fakes import FakeFaceEmbedder, FakeVoiceEmbedder
 
-        return FakeFaceEmbedder(), FakeVoiceEmbedder()
+        return TakeTurns(FakeFaceEmbedder()), FakeVoiceEmbedder()
     from embedders.face import FaceRecEmbedder
     from embedders.voice import VoiceRecEmbedder
 
-    return FaceRecEmbedder(), VoiceRecEmbedder()
+    return TakeTurns(FaceRecEmbedder()), VoiceRecEmbedder()
 
 
 def load_transcriber():

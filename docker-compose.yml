@@ -1,7 +1,7 @@
 # Everything on one Docker host: the API (faces, voices, enrollment, /live, Nova) and Postgres.
-#   cp .env.example .env   # then put the Anthropic key in
+#   cp .env.example .env   # then put the Anthropic and Gemini keys in
 #   docker compose up -d --build
-# State lives in the two named volumes; see DEPLOY.md to move or back them up.
+# State lives in the pgdata volume and the repo's data/ folder; see DEPLOY.md to move or back them up.
 services:
   db:
     image: pgvector/pgvector:pg17
@@ -25,14 +25,14 @@ services:
     image: nametags-api
     environment:
       DATABASE_URL: postgresql://nametags:nametags@db:5432/nametags
-      NAMETAGS_DATA: /data
-      NAMETAGS_CORS_ORIGINS: ${NAMETAGS_CORS_ORIGINS:-*}
+      NAMETAGS_DATA: data   # /app/data, the repo's data/ mounted below
+      NAMETAGS_CORS_ORIGINS: ${NAMETAGS_CORS_ORIGINS:-}   # empty: pages on localhost only
       GEMINI_API_KEY: ${GEMINI_API_KEY:-}        # notes and visit summaries (facts + cards)
       ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}  # Nova
     ports:
-      - "${NAMETAGS_PORT:-8000}:8000"
+      - "${NAMETAGS_BIND:-127.0.0.1}:${NAMETAGS_PORT:-8000}:8000"   # this host only: the API has no login
     volumes:
-      - nametags_data:/data   # photos and recordings
+      - ./data:/app/data   # photos and recordings, the same files the laptop programs use
     depends_on:
       db:
         condition: service_healthy
@@ -40,4 +40,3 @@ services:
 
 volumes:
   pgdata:
-  nametags_data:
