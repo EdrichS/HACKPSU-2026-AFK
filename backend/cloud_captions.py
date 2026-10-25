@@ -28,7 +28,8 @@ log = logging.getLogger("backend.cloud")
 MIN_AUDIO = 1.5  # seconds of a label's speech per matching attempt
 VOTES_NEEDED = 2  # attempts that must agree before a borderline match names a label
 CONFIDENT_DISTANCE = 0.40  # a match this close (cosine; the cutoff is 0.55) names the label on the first attempt
-NOBODY_WEIGHT = 0.3  # an attempt that matched no one counts this much, so a later real match wins over it
+NOBODY_WEIGHT = 0.25  # an attempt that matched no one counts this much, so a later real match wins over it
+RECENT_ATTEMPTS = 4  # only the last few attempts per label count: a long "nobody" run must not outvote a person enrolled since
 MAX_AUDIO = 8.0  # the speaker model needs no more than this per attempt
 MAX_SPEAKERS = 4
 STOP_GRACE = 5.0  # seconds to let the last turn through when the connection closes
@@ -56,7 +57,7 @@ class DbLabelNamer:
         self.min_audio = min_audio
         self.votes_needed = votes_needed
         self._pending: dict[str, list[np.ndarray]] = {}
-        self._votes: dict[str, dict[int | None, list[float]]] = {}
+        self._attempts: dict[str, list[tuple[int | None, float]]] = {}  # label -> recent (person id or None, weight)
         self._candidates: dict[str, dict[int, PresentPerson]] = {}
         self._decided: dict[str, int | None] = {}  # label -> person id, or None for nobody known
 
@@ -78,8 +79,13 @@ class DbLabelNamer:
             if distance is not None and distance <= CONFIDENT_DISTANCE:
                 return self._decide(label, key)  # clear enough: don't wait for a second attempt
         weight = (1.0 - distance) if (person is not None and distance is not None) else NOBODY_WEIGHT
-        votes = self._votes.setdefault(label, {})
-        votes.setdefault(key, []).append(weight)
+        log.info("voice label %s: %s (distance %s, %.1fs of speech)", label, person.name if person else "nobody", f"{distance:.2f}" if distance is not None else "-", len(samples) / SAMPLE_RATE)
+        attempts = self._attempts.setdefault(label, [])
+        attempts.append((key, weight))
+        del attempts[:-RECENT_ATTEMPTS]
+        votes: dict[int | None, list[float]] = {}
+        for k, w in attempts:
+            votes.setdefault(k, []).append(w)
         totals = {k: sum(v) for k, v in votes.items()}
         best = max(totals, key=totals.get)
         if len(votes[best]) < self.votes_needed:
