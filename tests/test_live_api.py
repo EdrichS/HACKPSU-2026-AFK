@@ -321,3 +321,27 @@ def test_a_named_face_keeps_its_name_through_an_unsure_frame(backend_client, mon
             present = receive_until(ws, "present")[-1]
             assert present["faces"] == [{"box": {"x": 0, "y": 0, "width": 1, "height": 1}, "state": "named", "person_id": maya["id"]}]
     assert len(calls) == 3
+
+
+def test_a_voice_label_is_judged_on_everything_it_said_recently():
+    """Each attempt hears the label's whole recent speech, not just the newest 1.5 s."""
+    import numpy as np
+
+    from backend.cloud_captions import DbLabelNamer
+
+    heard = []
+
+    class Identifier:
+        def identify(self, samples):
+            heard.append(len(samples) / 16000)
+            return None, "no_match", 0.9
+
+    namer = DbLabelNamer(Identifier(), min_audio=1.5)
+    second = np.zeros(16000, dtype=np.float32)
+    namer.offer("S1", second)  # 1 s: not yet
+    namer.offer("S1", second)  # 2 s: an attempt on all 2 s
+    namer.offer("S1", second)  # 3 s: 1 s new, not yet
+    namer.offer("S1", second)  # 4 s: an attempt on all 4 s
+    for _ in range(8):
+        namer.offer("S1", second)
+    assert heard[:2] == [2.0, 4.0] and max(heard) <= 8.0  # never more than MAX_AUDIO

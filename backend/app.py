@@ -49,6 +49,9 @@ if not logging.getLogger().handlers:  # uvicorn configures only its own loggers;
 EXIF_ORIENTATION = 0x0112
 
 
+DEFAULT_VOICE_CUTOFF = 0.62  # cosine distance; a match must be this close to be named outright
+
+
 class TakeTurns:
     """A face embedder that detects for one caller at a time.
 
@@ -79,7 +82,11 @@ def make_embedders():
     from embedders.face import FaceRecEmbedder
     from embedders.voice import VoiceRecEmbedder
 
-    return TakeTurns(FaceRecEmbedder()), VoiceRecEmbedder()
+    # Live room audio sits farther from the sign-up recording than a clean clip does; a wider
+    # cutoff than the model's own (0.55) names people sooner. The margin and rescue rules in
+    # live/voices.py still refuse a voice two people could be. NAMETAGS_VOICE_CUTOFF tunes it.
+    cutoff = float(os.environ.get("NAMETAGS_VOICE_CUTOFF") or DEFAULT_VOICE_CUTOFF)
+    return TakeTurns(FaceRecEmbedder()), VoiceRecEmbedder(threshold=round(1.0 - cutoff, 4))
 
 
 def load_transcriber():

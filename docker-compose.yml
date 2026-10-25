@@ -31,6 +31,7 @@ services:
       CONTEXT_MODEL: ${CONTEXT_MODEL:-}          # empty: backend/context_ai.py's default model for facts and cards
       SPEECHMATICS_API_KEY: ${SPEECHMATICS_API_KEY:-${SPEECHMATICS:-}}  # live word-by-word captions; empty: local captions
       NAMETAGS_CAPTIONS: ${NAMETAGS_CAPTIONS:-}  # "local" keeps captions on this machine even with a key
+      NAMETAGS_VOICE_CUTOFF: ${NAMETAGS_VOICE_CUTOFF:-}  # empty: 0.62; lower is stricter
     ports:
       - "${NAMETAGS_BIND:-127.0.0.1}:${NAMETAGS_PORT:-8000}:8000"   # this host only: the API has no login
     volumes:

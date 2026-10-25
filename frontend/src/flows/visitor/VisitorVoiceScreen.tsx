@@ -5,6 +5,7 @@ import { VoicePrompt } from "../../components/Cards";
 import { ActionBar, FormMain, PageShell, TitleBlock } from "../../components/PageShell";
 import { Recorder } from "../../components/Recorder";
 import { possessive } from "../../config";
+import { VOICE_PASSAGE } from "../../lib/passage";
 import { useRecorder } from "../../lib/useRecorder";
 import { useVisitorFlow } from "./state";
 
@@ -40,10 +41,10 @@ export function VisitorVoiceScreen() {
         {/* The design copy says "her glasses"; the name is used instead, since pronouns aren't collected. */}
         <TitleBlock
           title="Read this out loud"
-          lead={`Read the whole thing at your normal pace, like you're talking to ${rose}. It takes about half a minute, and it teaches ${possessive(rose)} glasses what your voice sounds like.`}
+          lead={`Read the whole passage at your normal pace, as if you were telling it to ${rose}. It takes about half a minute and covers every sound in English, which is how ${possessive(rose)} glasses learn what your voice sounds like.`}
         />
         <VoicePrompt
-          text={`Hi ${rose}, it's me. I'm reading this out loud so your glasses can learn the sound of my voice. Yesterday I walked down to the harbour, bought three ripe peaches and a loaf of rye bread, and watched the fishing boats come in. Do you remember the blue kitchen in the old house, and the radio that never quite tuned in? On Thursday I'll bring the photos from June, and we can look through them together. Whenever you hear this voice, you'll know it's me.`}
+          text={VOICE_PASSAGE}
         />
         <Recorder recorder={recorder} />
       </FormMain>

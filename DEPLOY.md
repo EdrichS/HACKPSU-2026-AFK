@@ -107,6 +107,7 @@ deletes every person, photo and recording.
 | `NAMETAGS_CORS_ORIGINS` | empty | origins of a UI on another site, comma-separated; empty allows pages on localhost only, `*` lets any site read everything. It never covers `/live` or form uploads |
 | `NAMETAGS_PORT` | `8000` | host port |
 | `NAMETAGS_EMBEDDERS` | `real` | `fake` uses the contract's stand-ins (tests only); laptop runs only, since `docker-compose.yml` doesn't pass it |
+| `NAMETAGS_VOICE_CUTOFF` | `0.62` | how close (cosine distance) a voice must be to an enrolled sample to be named; the model's own figure is 0.55, and live room audio needs a little more room. Lower is stricter |
 | `NAMETAGS_TRANSCRIBE` | `1` | `0` turns local captions off, and with them visit summaries and spoken Nova questions; laptop runs only, since `docker-compose.yml` doesn't pass it |
 | `NAMETAGS_FRONTEND_DIST` | `frontend/dist` | the built frontend the API serves at `/` (the image builds it there) |
 | `DATABASE_URL` | `postgresql://nametags:nametags@localhost:5433/nametags` | the database; `docker-compose.yml` points the container at the `db` service |

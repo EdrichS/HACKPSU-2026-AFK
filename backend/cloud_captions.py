@@ -46,7 +46,8 @@ def configured_key() -> str | None:
 class DbLabelNamer:
     """Turns Speechmatics' S1/S2/... labels into people from voice_samples.
 
-    The audio behind a label is gathered until MIN_AUDIO seconds are in, then matched. A confident
+    An attempt runs each time MIN_AUDIO more seconds of a label's speech have arrived, on everything
+    the label said in the last MAX_AUDIO seconds (longer audio, surer match). A confident
     match (closer than CONFIDENT_DISTANCE) names the label at once; a borderline one is a vote, and
     the label is decided once a candidate has VOTES_NEEDED votes and more weight than any other
     (an attempt that matched nobody counts NOBODY_WEIGHT). Fits voice_rec.cloud.LiveSession's `namer`.
@@ -56,7 +57,8 @@ class DbLabelNamer:
         self.identifier = identifier
         self.min_audio = min_audio
         self.votes_needed = votes_needed
-        self._pending: dict[str, list[np.ndarray]] = {}
+        self._pending: dict[str, list[np.ndarray]] = {}  # label -> its speech so far (rolling)
+        self._unheard: dict[str, int] = {}  # label -> samples added since the last attempt
         self._attempts: dict[str, list[tuple[int | None, float]]] = {}  # label -> recent (person id or None, weight)
         self._candidates: dict[str, dict[int, PresentPerson]] = {}
         self._decided: dict[str, int | None] = {}  # label -> person id, or None for nobody known
@@ -65,10 +67,12 @@ class DbLabelNamer:
         """Feed audio for a label; returns the name when this call decided or changed it."""
         buf = self._pending.setdefault(label, [])
         buf.append(np.asarray(audio, dtype=np.float32))
-        if sum(len(b) for b in buf) / SAMPLE_RATE < self.min_audio:
+        self._unheard[label] = self._unheard.get(label, 0) + len(audio)
+        if self._unheard[label] / SAMPLE_RATE < self.min_audio:
             return None
         samples = np.concatenate(buf)[-int(MAX_AUDIO * SAMPLE_RATE) :]
-        buf.clear()
+        self._pending[label] = [samples]
+        self._unheard[label] = 0
         try:
             person, _, distance = self.identifier.identify(samples)
         except ValueError:  # too short for the speaker model after all

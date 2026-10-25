@@ -12,7 +12,7 @@ export interface Recording {
  * Shorter than this is "too short". The prompts take about 15 to 20 seconds to read; the
  * contract's own floor is 1 second, which is too little for a reliable voiceprint.
  */
-export const MIN_RECORDING_SECONDS = 12; // the passages take about 30 s; under this, the whole text wasn't read
+export const MIN_RECORDING_SECONDS = 15; // the passage takes about 35 s; under this, it wasn't all read
 /** Recording stops by itself here, so a forgotten tab doesn't record forever. */
 export const MAX_RECORDING_SECONDS = 60;
 
