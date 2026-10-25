@@ -252,7 +252,7 @@ class LiveSession:
         return [WhoAnswer(text=self.presence.who_answer())]
 
     def end_visit(self) -> list:
-        """The transcript goes to the context owner's Gemini flow, once per visitor, and to a file."""
+        """The transcript goes to the context owner's Claude flow, once per visitor, and to a file."""
         visit, self.visit = self.visit, Visit()
         if not visit.lines:
             return []

@@ -28,7 +28,7 @@ from contract.setup_api import (
     VoiceSample,
 )
 
-PLACEHOLDER_CARD = "Placeholder card from the mock server. The real card comes from Gemini."
+PLACEHOLDER_CARD = "Placeholder card from the mock server. The real card comes from Claude."
 
 app = FastAPI(title="Nametags mock")
 app.add_middleware(CORSMiddleware, allow_origin_regex=LOCAL_ORIGIN_REGEX, allow_methods=["*"], allow_headers=["*"])

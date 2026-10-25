@@ -11,7 +11,7 @@ On a server with Docker Engine and the compose plugin:
 
 ```
 git clone https://github.com/EdrichS/HACKPSU-2026-AFK.git && cd HACKPSU-2026-AFK
-cp .env.example .env            # put the Anthropic and Gemini keys in, set the UI's origin
+cp .env.example .env            # put the Anthropic key in, set the UI's origin
 docker compose up -d --build    # the first build compiles dlib and downloads models: 10-15 minutes
 docker compose ps               # both services "healthy"
 curl -s localhost:8000/health   # {"status":"ok",...}
@@ -99,9 +99,8 @@ deletes every person, photo and recording.
 
 | Variable | Default | Meaning |
 |---|---|---|
-| `GEMINI_API_KEY` | empty | notes and visit summaries into facts and cards; without it the wizard and `python -m enroll` store notes as typed, `POST /people/{id}/notes` and `/conversation` store nothing, and visits aren't summarized |
-| `GEMINI_MODEL` | the default in `backend/gemini.py` | the Gemini model for notes and visits; set an older Flash (`gemini-3.6-flash`) when the default answers 503 "high demand" |
-| `ANTHROPIC_API_KEY` | empty | Nova; without it the API still recognizes, captions and summarizes |
+| `ANTHROPIC_API_KEY` | empty | Nova, and notes and visit summaries into facts and cards; without it Nova is off, the wizard and `python -m enroll` store notes as typed, `POST /people/{id}/notes` and `/conversation` store nothing, and visits aren't summarized |
+| `CONTEXT_MODEL` | `claude-opus-5-5` | the Claude model for facts and cards |
 | `SPEECHMATICS_API_KEY` | empty | live captions word by word from Speechmatics real-time (`SPEECHMATICS` works too); the `/live` audio is streamed to the service while set. Empty: the local model captions each finished sentence |
 | `NAMETAGS_CAPTIONS` | empty | `local` keeps captions on this machine even with a key |
 | `NAMETAGS_BIND` | `127.0.0.1` | address the API listens on; `0.0.0.0` opens it to the network, and it has no login |
@@ -119,6 +118,6 @@ The same API runs on a laptop with `uv run uvicorn backend.app:app --port 8000` 
 `docker compose up -d --wait db`. It loads the real face and voice models at startup, so download
 the voice models once first: `hackpsu_voice_rec/scripts/download_models.sh --no-tts`. It keeps its
 files in the same `data/` folder as the container. On a laptop, `.env` supplies only the API keys
-and `GEMINI_MODEL`: the API reads the `NAMETAGS_*` settings and `DATABASE_URL` before it loads
+and `CONTEXT_MODEL`: the API reads the `NAMETAGS_*` settings and `DATABASE_URL` before it loads
 `.env`, so set those in the shell. The laptop-only programs, `python -m enroll` (webcam and mic
 windows) and `python -m live` (speaks through the laptop), stay as they are.

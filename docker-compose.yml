@@ -1,5 +1,5 @@
 # Everything on one Docker host: the API (faces, voices, enrollment, /live, Nova) and Postgres.
-#   cp .env.example .env   # then put the Anthropic and Gemini keys in
+#   cp .env.example .env   # then put the Anthropic key in
 #   docker compose up -d --build
 # State lives in the pgdata volume and the repo's data/ folder; see DEPLOY.md to move or back them up.
 services:
@@ -27,9 +27,8 @@ services:
       DATABASE_URL: postgresql://nametags:nametags@db:5432/nametags
       NAMETAGS_DATA: data   # /app/data, the repo's data/ mounted below
       NAMETAGS_CORS_ORIGINS: ${NAMETAGS_CORS_ORIGINS:-}   # empty: pages on localhost only
-      GEMINI_API_KEY: ${GEMINI_API_KEY:-}        # notes and visit summaries (facts + cards)
-      GEMINI_MODEL: ${GEMINI_MODEL:-}            # empty: backend/gemini.py's default; set when that model is overloaded
-      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}  # Nova
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}  # Nova, and notes and visit summaries (facts + cards)
+      CONTEXT_MODEL: ${CONTEXT_MODEL:-}          # empty: backend/context_ai.py's default model for facts and cards
       SPEECHMATICS_API_KEY: ${SPEECHMATICS_API_KEY:-${SPEECHMATICS:-}}  # live word-by-word captions; empty: local captions
       NAMETAGS_CAPTIONS: ${NAMETAGS_CAPTIONS:-}  # "local" keeps captions on this machine even with a key
     ports:

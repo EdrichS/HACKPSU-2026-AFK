@@ -1,7 +1,7 @@
 """The visit: a speaker-labelled transcript, and what happens to it when the visit ends.
 
-The summary itself belongs to the context owner: backend.gemini.update_context turns the
-transcript into new facts (source 'conversation') and a fresh card with two Gemini calls, holding
+The summary itself belongs to the context owner: backend.context_ai.update_context turns the
+transcript into new facts (source 'conversation') and a fresh card with two Claude calls, holding
 no database connection meanwhile, and leaves everything as it was when a call fails. This module
 keeps the transcript and reports what that call changed.
 """
@@ -59,15 +59,15 @@ def render_transcript(lines: list[Line]) -> str:
 class VisitResult:
     person: PresentPerson
     new_facts: list[str]
-    updated: Person | None  # the row afterwards, or None when nothing changed (Gemini off, failed, or nothing new)
+    updated: Person | None  # the row afterwards, or None when nothing changed (Claude off, failed, or nothing new)
 
 
 def save_visit(pool, visit: Visit, user_id: int | None = None, client=None, today=None) -> list[VisitResult]:
-    """Hand the whole transcript to backend.gemini.update_context once per visitor who was there.
+    """Hand the whole transcript to backend.context_ai.update_context once per visitor who was there.
 
     The user (the wearer) is never a visitor. `client` and `today` are for tests.
     """
-    from backend import gemini
+    from backend import context_ai
 
     results = []
     for pid, present in visit.people.items():
@@ -79,7 +79,7 @@ def save_visit(pool, visit: Visit, user_id: int | None = None, client=None, toda
         if row is None:
             continue
         try:
-            person = gemini.update_context(pool, pid, visit.transcript(), "conversation", client=client, today=today)
+            person = context_ai.update_context(pool, pid, visit.transcript(), "conversation", client=client, today=today)
         except NotFound:
             continue
         with pool.connection() as conn:

@@ -104,15 +104,15 @@ def test_speech_becomes_captions_attributed_to_the_user(backend_client, backend_
     assert all(c["end"] > c["start"] >= 0 for c in captions)
 
 
-def test_end_visit_sends_the_transcript_to_gemini_and_reports_what_was_saved(backend_client, backend_module, monkeypatch, maya):
-    """The socket's end_visit, driven directly: the transcript goes to backend.gemini, and the
+def test_end_visit_sends_the_transcript_to_claude_and_reports_what_was_saved(backend_client, backend_module, monkeypatch, maya):
+    """The socket's end_visit, driven directly: the transcript goes to backend.context_ai, and the
     frontend gets one visit_saved per visitor with the new facts and card."""
     from backend.live_api import LiveSession
     from contract.live import PresentPerson, VisitSaved
-    from tests.gemini_fakes import FakeGemini
+    from tests.claude_fakes import FakeClaude
 
-    fake = FakeGemini(facts={"new_facts": ["Maya brought photos from a beach trip."]}, card={"small_context": "Last spoke about: the beach trip | Ask about: the photos"})
-    monkeypatch.setattr("backend.gemini.get_client", lambda: fake)
+    fake = FakeClaude(facts={"new_facts": ["Maya brought photos from a beach trip."]}, card={"small_context": "Last spoke about: the beach trip | Ask about: the photos"})
+    monkeypatch.setattr("backend.context_ai.get_client", lambda: fake)
     session = LiveSession(backend_module.app.state)
     session.visit.note(PresentPerson(person_id=maya["id"], name="Maya", relationship="granddaughter", small_context=""))
     session.visit.add("Maya", maya["id"], "Hi Grandma! I brought the photos from our beach trip.")
@@ -133,10 +133,10 @@ def test_a_quiet_visit_ends_by_itself(backend_client, backend_module, monkeypatc
 
     from backend.live_api import LiveSession
     from contract.live import PresentPerson, Who
-    from tests.gemini_fakes import FakeGemini
+    from tests.claude_fakes import FakeClaude
 
-    fake = FakeGemini(facts={"new_facts": ["Maya visits on Sundays."]}, card={"small_context": "Visits on Sundays"})
-    monkeypatch.setattr("backend.gemini.get_client", lambda: fake)
+    fake = FakeClaude(facts={"new_facts": ["Maya visits on Sundays."]}, card={"small_context": "Visits on Sundays"})
+    monkeypatch.setattr("backend.context_ai.get_client", lambda: fake)
     session = LiveSession(backend_module.app.state, visit_idle=60.0)
     session.visit.note(PresentPerson(person_id=maya["id"], name="Maya", relationship="granddaughter", small_context=""))
     session.visit.add("Maya", maya["id"], "See you next Sunday, Grandma.")

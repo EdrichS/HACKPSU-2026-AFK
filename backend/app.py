@@ -118,13 +118,12 @@ def speechmatics_key() -> str | None:
     return key
 
 
-def gemini_ready() -> bool:
-    """Whether notes and visits can become facts and cards (backend.gemini needs GEMINI_API_KEY)."""
-    from backend import gemini
+def context_ready() -> bool:
+    """Whether notes and visits can become facts and cards: backend.context_ai needs the Anthropic key Nova uses."""
+    from backend import context_ai
 
-    gemini.load_env()
-    if not os.environ.get("GEMINI_API_KEY"):
-        log.warning("no GEMINI_API_KEY: notes are stored as typed and visits are not summarized")
+    if not context_ai.configured():
+        log.warning("no ANTHROPIC_API_KEY: notes are stored as typed and visits are not summarized")
         return False
     return True
 
@@ -144,7 +143,7 @@ async def lifespan(app: FastAPI):
         app.state.voice_embedder = voice_embedder
         app.state.transcriber = load_transcriber()
         app.state.claude = load_claude()
-        app.state.gemini = gemini_ready()
+        app.state.context_ready = context_ready()
         app.state.speechmatics_key = speechmatics_key()
         app.state.presence = None  # the latest /live connection's, for /nova/ask
         yield
@@ -213,7 +212,7 @@ def health(request: Request) -> dict:
         "voice_model": voice_embedder.spec.model,
         "transcription": state.transcriber is not None,
         "captions": "speechmatics" if state.speechmatics_key else ("local" if state.transcriber is not None else "off"),
-        "gemini": state.gemini,  # notes and visit summaries
+        "context": state.context_ready,  # notes and visit summaries (facts + cards)
         "claude": state.claude is not None,  # Nova
     }
 

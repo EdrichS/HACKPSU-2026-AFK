@@ -274,37 +274,36 @@ def enroll_context(conn, args, person, interactive: bool) -> None:
         text = read_lines()
     if not text or not text.strip():
         return
-    if notes_via_gemini(args.database_url, person.id, text):
+    if notes_via_claude(args.database_url, person.id, text):
         return
     updated = store.save_context_of(conn, person.id, text)
     say(green(f"  {len(store.split_facts(text))} fact(s) stored as typed") + dim(f"  card: {updated.small_context}"))
 
 
-def notes_via_gemini(database_url: str, person_id: int, text: str) -> bool:
-    """Facts and a card the context owner's way (backend.gemini), when GEMINI_API_KEY is set.
+def notes_via_claude(database_url: str, person_id: int, text: str) -> bool:
+    """Facts and a card the context owner's way (backend.context_ai), when ANTHROPIC_API_KEY is set.
 
-    Returns False when Gemini is off or added nothing, so the caller stores the notes as typed."""
-    from backend import gemini
+    Returns False when Claude is off or added nothing, so the caller stores the notes as typed."""
+    from backend import context_ai
 
-    gemini.load_env()
-    if not os.environ.get("GEMINI_API_KEY"):
+    if not context_ai.configured():
         return False
     import psycopg_pool
 
     from db import context
 
-    say(dim("  asking Gemini to turn the notes into facts and a card..."))
+    say(dim("  asking Claude to turn the notes into facts and a card..."))
     pool = psycopg_pool.ConnectionPool(database_url, min_size=1, max_size=2, open=True)
     try:
         with pool.connection() as c:
             before = {f.id for f in context.list_facts(c, person_id)}
-        updated = gemini.update_context(pool, person_id, text, "notes")
+        updated = context_ai.update_context(pool, person_id, text, "notes")
         with pool.connection() as c:
             added = [f.text for f in context.list_facts(c, person_id) if f.id not in before]
     finally:
         pool.close()
     if not added:
-        warn("  Gemini added nothing; storing the notes as typed")
+        warn("  Claude added nothing; storing the notes as typed")
         return False
     say(green(f"  {len(added)} fact(s) stored"))
     for fact in added:

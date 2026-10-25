@@ -200,19 +200,19 @@ def enroll(
 
 
 def store_notes(state, person_id: int, notes: str) -> tuple[Person, int]:
-    """The wizard's notes become facts and a card the context owner's way (backend.gemini, the
-    same call as POST /people/{id}/notes). Without Gemini, or if it adds nothing, the notes are
+    """The wizard's notes become facts and a card the context owner's way (backend.context_ai, the
+    same call as POST /people/{id}/notes). Without Claude, or if it adds nothing, the notes are
     stored as typed so nothing the family wrote is lost."""
-    if getattr(state, "gemini", False):
-        from backend import gemini
+    if getattr(state, "context_ready", False):
+        from backend import context_ai
 
         with state.pool.connection() as conn:
             before = {f.id for f in context_db.list_facts(conn, person_id)}
-        person = gemini.update_context(state.pool, person_id, notes, "notes")
+        person = context_ai.update_context(state.pool, person_id, notes, "notes")
         with state.pool.connection() as conn:
             added = len([f for f in context_db.list_facts(conn, person_id) if f.id not in before])
         if added:
             return person, added
-        log.warning("Gemini added no facts from the notes for person %s; storing them as typed", person_id)
+        log.warning("Claude added no facts from the notes for person %s; storing them as typed", person_id)
     with state.pool.connection() as conn:
         return store.save_context_of(conn, person_id, notes), len(store.split_facts(notes))

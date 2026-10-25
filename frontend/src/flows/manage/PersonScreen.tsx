@@ -113,7 +113,7 @@ export function PersonScreen() {
         {record && (
           <>
             {/* Keyed on the stored values: a draft restarts from what the server has whenever that changes
-                (Gemini rewrote the card, a visit added to it), so a stale draft can't be saved over it. */}
+                (Claude rewrote the card, a visit added to it), so a stale draft can't be saved over it. */}
             <DetailsSection key={`${record.person.name}|${record.person.relationship}`} person={record.person} onSaved={setPerson} />
             <CardSection key={record.person.small_context} person={record.person} factCount={record.facts.length} onSaved={setPerson} reload={loaded.reload} />
             <FactsSection person={record.person} facts={record.facts} setFacts={setFacts} onPerson={setPerson} />

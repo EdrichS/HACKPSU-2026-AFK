@@ -1,6 +1,6 @@
 """The person context: facts (the large context) and the card (people.small_context).
 
-The context owner's routes call these. Their Gemini call happens before save_context, with no
+The context owner's routes call these. Their Claude call happens before save_context, with no
 connection held; save_context then writes the card and the new facts in one transaction.
 """
 
@@ -18,7 +18,7 @@ LIMIT = 300  # characters, for the card and for each fact
 
 
 def list_facts(conn: psycopg.Connection, person_id: int) -> list[Fact]:
-    """Oldest first, so Gemini can let a newer fact win."""
+    """Oldest first, so Claude can let a newer fact win."""
     rows = conn.execute(
         "SELECT id, text, source, created_at FROM facts WHERE person_id = %(person_id)s ORDER BY created_at, id",
         {"person_id": person_id},
@@ -35,7 +35,7 @@ def save_context(
 ) -> Person:
     """Replace the card and add the new facts. A reply that breaks the limits changes nothing."""
     if not small_context.strip():
-        raise ValueError("The card is blank.")  # the family clears a card with PATCH, not Gemini
+        raise ValueError("The card is blank.")  # the family clears a card with PATCH, not Claude
     if len(small_context) > LIMIT:
         raise ValueError(f"The card is {len(small_context)} characters; the limit is {LIMIT}.")
     _check_facts(new_facts)

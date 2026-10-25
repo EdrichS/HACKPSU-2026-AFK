@@ -79,7 +79,7 @@ def update_person(
     if row is None:
         return None
     if small_context is not None and small_context.strip():
-        # A card the family fixed by hand is also kept as a note, so the next Gemini rewrite
+        # A card the family fixed by hand is also kept as a note, so the next Claude rewrite
         # starts from their correction.
         conn.execute(
             "INSERT INTO facts (person_id, text, source) VALUES (%(id)s, %(small_context)s, 'notes')"

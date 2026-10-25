@@ -10,7 +10,7 @@ exactly what `db/schema.sql` describes:
 | name + relationship | `people` | `db.people.create_person` (or reuses the existing row) |
 | each photo | `photos`, `face_samples` | `db.photos.save_photo`, then `assign_face` labels the one clear face |
 | the recording | `voice_samples` | `db.voice.add_voice`, one row per clip |
-| the facts | `facts` (source `notes`), `people.small_context` | `backend.gemini.update_context` when `GEMINI_API_KEY` is set; without it, or if Gemini adds nothing, stored as typed with `db.context.save_context` |
+| the facts | `facts` (source `notes`), `people.small_context` | `backend.context_ai.update_context` when `ANTHROPIC_API_KEY` is set; without it, or if Claude adds nothing, stored as typed with `db.context.save_context` |
 
 Photos and recordings land under `data/photos/` and `data/voice/` with random names, where the
 backend keeps its own, so `GET /photos/{id}/image` serves them.
@@ -73,7 +73,7 @@ uv run python -m enroll --list
   whole recording is one sample; each 4-second slice of it is another (`--window 0` turns that
   off). Matching uses a person's best sample, so more samples help.
 - Typed facts and the card stay within 300 characters each, and a long text is split by
-  sentence. Through Gemini, facts stay within 300 characters and the card within 200.
+  sentence. Through Claude, facts stay within 300 characters and the card within 200.
 
 ## The embedders
 
