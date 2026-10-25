@@ -1,0 +1,330 @@
+"""The live program's pieces, without a camera, a microphone or a network: presence, visits,
+the summary parsing and storage, Nova's database tools, and the database matchers."""
+
+import json
+from pathlib import Path
+from types import SimpleNamespace
+
+import numpy as np
+import psycopg_pool
+import pytest
+
+from contract.live import EMPTY_ROOM_TEXT, UNKNOWN_TEXT, PresentPerson
+from db.context import list_facts
+from db.people import create_person, get_person, update_person
+from live import visit as visit_mod
+from live.presence import Presence
+from live.visit import Visit, fit_card, save_visit, summarize
+
+ROOT = Path(__file__).resolve().parents[1]
+DAVID = PresentPerson(person_id=1, name="David", relationship="grandson", small_context="")
+MARIA = PresentPerson(person_id=2, name="Maria", relationship="daughter", small_context="")
+
+
+class Clock:
+    def __init__(self):
+        self.t = 1000.0
+
+    def __call__(self):
+        return self.t
+
+
+# -- presence --------------------------------------------------------------------------------
+
+def test_a_face_needs_two_sightings_and_is_announced_once():
+    clock = Clock()
+    p = Presence(clock=clock)
+    assert p.saw(DAVID, "face") is None and p.present() == []
+    clock.t += 0.5
+    assert p.saw(DAVID, "face") == "That's David, your grandson."
+    assert p.present() == [DAVID]
+    for _ in range(50):  # staying in view never repeats the announcement
+        clock.t += 1
+        assert p.saw(DAVID, "face") is None
+
+
+def test_the_wearer_is_never_announced_or_listed():
+    p = Presence(clock=Clock(), user_id=MARIA.person_id)
+    assert p.saw(MARIA, "voice") is None
+    assert p.present() == []
+    assert p.saw(DAVID, "voice") == "That's David, your grandson."
+
+
+def test_a_voice_counts_at_once():
+    p = Presence(clock=Clock())
+    assert p.saw(MARIA, "voice") == "That's Maria, your daughter."
+
+
+def test_leaving_and_coming_back_much_later_is_announced_again():
+    clock = Clock()
+    p = Presence(gone_after=20, reannounce=300, clock=clock)
+    p.saw(DAVID, "voice")
+    clock.t += 30
+    assert p.present() == []  # gone
+    assert p.saw(DAVID, "voice") is None  # back soon: no repeat
+    clock.t += 300
+    assert p.saw(DAVID, "voice") == "That's David, your grandson."
+
+
+def test_who_answer_names_everyone_in_arrival_order():
+    clock = Clock()
+    p = Presence(clock=clock)
+    p.saw(MARIA, "voice")
+    clock.t += 1
+    p.saw(DAVID, "voice")
+    assert p.who_answer() == "That's Maria, your daughter, and David, your grandson."
+    clock.t += 100
+    assert p.who_answer() == EMPTY_ROOM_TEXT
+
+
+def test_an_unknown_face_is_called_out_only_after_a_while():
+    clock = Clock()
+    p = Presence(unknown_after=4, unknown_cooldown=60, clock=clock)
+    assert p.unknown_face(True) is None
+    clock.t += 2
+    assert p.unknown_face(False) is None  # it left: the clock restarts
+    assert p.unknown_face(True) is None
+    clock.t += 5
+    assert p.unknown_face(True) == UNKNOWN_TEXT
+    clock.t += 5
+    assert p.unknown_face(True) is None  # within the cooldown
+
+
+# -- the visit and its summary ---------------------------------------------------------------
+
+class FakeClaude:
+    """A client whose beta.messages.create returns canned content."""
+
+    def __init__(self, text: str, stop_reason: str = "end_turn"):
+        self.calls = []
+        response = SimpleNamespace(stop_reason=stop_reason, stop_details=None, content=[SimpleNamespace(type="text", text=text)])
+        self.beta = SimpleNamespace(messages=SimpleNamespace(create=lambda **kw: self.calls.append(kw) or response))
+
+
+def test_visit_keeps_lines_and_known_people():
+    v = Visit()
+    v.add("Patient", None, "Did you move?")
+    v.add("David", 1, "Yeah, last month.")
+    v.add("David", 1, "   ")
+    v.note(DAVID)
+    assert [(l.speaker, l.text) for l in v.transcript()] == [("Patient", "Did you move?"), ("David", "Yeah, last month.")]
+    assert list(v.people) == [1]
+
+
+def test_summarize_sends_facts_and_transcript_and_parses_json():
+    client = FakeClaude(json.dumps({"new_facts": ["Moved to Pittsburgh last month"], "small_context": "David is your grandson. He just moved to Pittsburgh."}))
+    person = SimpleNamespace(name="David", relationship="grandson", small_context="")
+    v = Visit()
+    v.add("Rose", None, "Did you move?")
+    v.add("David", 1, "Yeah, to Pittsburgh last month.")
+    out = summarize(client, person, ["Works as a nurse"], v.lines, "Rose")
+    assert out.new_facts == ["Moved to Pittsburgh last month"]
+    [call] = client.calls
+    prompt = call["messages"][0]["content"]
+    assert "Works as a nurse" in prompt and "David: Yeah, to Pittsburgh last month." in prompt and "wearing the glasses, is Rose" in prompt
+    assert call["output_config"]["format"]["type"] == "json_schema"
+    assert call["fallbacks"] == "default"
+
+
+@pytest.mark.parametrize("bad", [FakeClaude("not json"), FakeClaude("{}", stop_reason="refusal")])
+def test_summarize_returns_none_on_bad_answers(bad):
+    person = SimpleNamespace(name="David", relationship="grandson", small_context="")
+    assert summarize(bad, person, [], Visit().lines, "Rose") is None
+
+
+def test_fit_card_cuts_at_a_sentence_end():
+    long = "David is your grandson. " * 20
+    card = fit_card(long)
+    assert len(card) <= 300 and card.endswith("grandson.")
+    assert fit_card("short") == "short"
+
+
+@pytest.fixture
+def pool(test_db):
+    p = psycopg_pool.ConnectionPool(test_db, min_size=1, max_size=3, open=True)
+    yield p
+    p.close()
+
+
+def test_save_visit_adds_conversation_facts_and_rewrites_the_card(conn, pool):
+    david = create_person(conn, "David", "grandson")
+    rose = create_person(conn, "Rose", "patient")
+    update_person(conn, david.id, small_context="David is your grandson.")
+    conn.commit()
+    client = FakeClaude(json.dumps({"new_facts": ["Moved to Pittsburgh last month", "Works as a nurse"], "small_context": "David is your grandson. He just moved to Pittsburgh and works as a nurse."}))
+    v = Visit()
+    v.add("Rose", rose.id, "Did you move?")
+    v.add("David", david.id, "Yeah, last month. I'm a nurse now.")
+    v.note(PresentPerson(person_id=david.id, name="David", relationship="grandson", small_context=""))
+    v.note(PresentPerson(person_id=rose.id, name="Rose", relationship="patient", small_context=""))
+    results = save_visit(pool, client, v, "Rose", user_id=rose.id)
+    assert [r.person.name for r in results] == ["David"]  # the user is never summarized
+    assert results[0].updated.small_context == "David is your grandson. He just moved to Pittsburgh and works as a nurse."
+    conn.rollback()  # see the pool's committed rows, not this connection's snapshot
+    facts = list_facts(conn, david.id)
+    assert [(f.text, f.source) for f in facts] == [
+        ("David is your grandson.", "notes"),
+        ("Moved to Pittsburgh last month", "conversation"),
+        ("Works as a nurse", "conversation"),
+    ]
+    assert len(client.calls) == 1
+
+
+def test_save_visit_keeps_everything_when_claude_fails(conn, pool):
+    david = create_person(conn, "David", "grandson")
+    update_person(conn, david.id, small_context="David is your grandson.")
+    conn.commit()
+    v = Visit()
+    v.add("David", david.id, "Hello there.")
+    v.note(PresentPerson(person_id=david.id, name="David", relationship="grandson", small_context=""))
+    [result] = save_visit(pool, FakeClaude("garbage"), v, "Rose")
+    assert result.summary is None and result.updated is None
+    conn.rollback()
+    assert get_person(conn, david.id).small_context == "David is your grandson."
+    assert [f.source for f in list_facts(conn, david.id)] == ["notes"]
+
+
+# -- Nova's tools -----------------------------------------------------------------------------
+
+def test_nova_tools_read_the_database(conn, pool):
+    from live.nova import NovaBrain
+
+    david = create_person(conn, "David", "grandson")
+    update_person(conn, david.id, small_context="David is your grandson. He is a nurse.")
+    conn.commit()
+    presence = Presence(clock=Clock())
+    nova = NovaBrain(client=None, pool=pool, presence=presence, user_name="Rose")
+    assert "David, Rose's grandson: David is your grandson. He is a nurse." in nova.tool_list_people()
+    about = nova.tool_person_context("david")
+    assert "David, Rose's grandson (not seen right now)" in about
+    assert "- David is your grandson. He is a nurse." in about  # the hand-written card is also a fact
+    assert "No one called 'Zed'" in nova.tool_person_context("Zed")
+    assert nova.tool_who_is_here() == EMPTY_ROOM_TEXT
+    presence.saw(PresentPerson(person_id=david.id, name="David", relationship="grandson", small_context=""), "voice")
+    assert nova.tool_who_is_here() == "That's David, your grandson."
+    assert "(here right now)" in nova.tool_person_context("David")
+    assert [t.name for t in nova.tools] == ["list_people", "person_context", "who_is_here"]
+    conn.rollback()
+
+
+# -- the matchers against real samples ---------------------------------------------------------
+
+ASTRONAUT = ROOT / "facial-recognition-foundation-46999b" / "tests" / "fixtures" / "astronaut.jpg"
+SPEECH = ROOT / "hackpsu_voice_rec" / "models" / "sherpa-onnx-moonshine-base-en-int8" / "test_wavs" / "1.wav"
+
+
+def test_a_known_face_is_named_from_the_database(conn, pool):
+    try:
+        from embedders.face import FaceRecEmbedder
+    except ImportError as e:
+        pytest.skip(str(e))
+    from db.photos import assign_face, save_photo
+    from live.faces import FaceIdentifier
+
+    face = FaceRecEmbedder()
+    data = ASTRONAUT.read_bytes()
+    found = face.detect_faces(data)
+    eileen = create_person(conn, "Eileen", "friend")
+    photo = save_photo(conn, "data/photos/astronaut.jpg", 512, 512, found, face.spec.model)
+    assign_face(conn, photo.faces[0].face_id, eileen.id)  # label the first face only
+    conn.commit()
+    try:
+        person, verdict, distance = FaceIdentifier(face, pool).identify(found[0])
+        assert verdict == "named" and person.name == "Eileen" and distance < 1e-6
+        if len(found) > 1:  # the other face in the photo is unlabelled: never named
+            other = FaceIdentifier(face, pool).identify(found[1])
+            assert other[0] is None
+    finally:
+        conn.execute("DELETE FROM photos")
+        conn.commit()
+
+
+def test_a_known_voice_is_named_from_the_database(conn, pool):
+    if not SPEECH.exists():
+        pytest.skip(f"{SPEECH} not downloaded")
+    from embedders.voice import VoiceRecEmbedder, decode_wav
+    from db.voice import add_voice
+    from live.voices import VoiceIdentifier
+
+    try:
+        voice = VoiceRecEmbedder()
+    except FileNotFoundError as e:
+        pytest.skip(str(e))
+    samples = decode_wav(SPEECH.read_bytes())
+    half = len(samples) // 2
+    reader = create_person(conn, "Reader", "friend")
+    add_voice(conn, reader.id, "data/voice/reader.wav", voice.embed_samples(samples[:half]), voice.spec.model)
+    conn.commit()
+    try:
+        person, verdict, distance = VoiceIdentifier(voice, pool).identify(samples[half:])
+        assert verdict == "named" and person.name == "Reader" and distance < voice.spec.cutoff
+        unknown = VoiceIdentifier(voice, pool).identify(np.random.default_rng(0).normal(0, 0.05, 16000 * 3).astype(np.float32))
+        assert unknown[0] is None  # noise is nobody
+    finally:
+        conn.execute("DELETE FROM people")
+        conn.commit()
+
+
+# -- voice resolution and the recording source ----------------------------------------------------
+
+def _cand(pid, name, distance):
+    from db.match import Candidate
+
+    return Candidate(pid, name, "friend", "", distance)
+
+
+def test_resolve_voice_rescues_a_clear_winner_just_past_the_cutoff():
+    from live.voices import resolve_voice
+
+    best, verdict = resolve_voice([_cand(1, "A", 0.60), _cand(2, "B", 0.95)], cutoff=0.55, margin=0.10)
+    assert verdict == "named" and best.name == "A"
+    best, verdict = resolve_voice([_cand(1, "A", 0.60), _cand(2, "B", 0.70)], cutoff=0.55, margin=0.10)
+    assert best is None and verdict == "no_match"  # too close to the runner-up to rescue
+    best, verdict = resolve_voice([_cand(1, "A", 0.70)], cutoff=0.55, margin=0.10)
+    assert best is None  # past the rescue floor
+
+
+def test_resolve_voice_breaks_a_tie_with_who_is_on_camera():
+    from live.voices import resolve_voice
+
+    close = [_cand(1, "A", 0.30), _cand(2, "B", 0.35)]
+    assert resolve_voice(close, 0.55, 0.10)[1] == "not_sure"
+    best, verdict = resolve_voice(close, 0.55, 0.10, present_ids={2})
+    assert verdict == "named" and best.name == "B"
+    assert resolve_voice(close, 0.55, 0.10, present_ids={1, 2})[0] is None  # both here: still unsure
+    assert resolve_voice([], 0.55, 0.10)[1] == "no_match"
+
+
+def test_a_recording_runs_through_the_listener_without_a_camera(conn, pool):
+    if not SPEECH.exists():
+        pytest.skip(f"{SPEECH} not downloaded")
+    from embedders.voice import VoiceRecEmbedder, decode_wav, encode_wav
+    from db.voice import add_voice
+    from live.voices import VoiceIdentifier, VoiceListener
+
+    try:
+        voice = VoiceRecEmbedder()
+    except FileNotFoundError as e:
+        pytest.skip(str(e))
+    samples = decode_wav(SPEECH.read_bytes())
+    half = len(samples) // 2
+    reader = create_person(conn, "Reader", "friend")
+    add_voice(conn, reader.id, "data/voice/reader.wav", voice.embed_samples(samples[:half]), voice.spec.model)
+    conn.commit()
+    clip = ROOT / "data" / "test_reader_tail.wav"
+    clip.parent.mkdir(exist_ok=True)
+    clip.write_bytes(encode_wav(samples[half:]))
+    heard = []
+    ended = []
+    try:
+        listener = VoiceListener(VoiceIdentifier(voice, pool), None, heard.append, source=clip, speed=50.0, on_end=lambda: ended.append(True))
+        listener.start()
+        listener.join(timeout=60)
+        assert listener.error is None and ended == [True]
+        assert heard, "no utterance came out of the recording"
+        assert all(u.person is not None and u.person.name == "Reader" for u in heard)
+        assert all(u.verdict == "named" for u in heard)
+    finally:
+        clip.unlink(missing_ok=True)
+        conn.execute("DELETE FROM people")
+        conn.commit()
