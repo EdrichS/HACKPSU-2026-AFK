@@ -95,3 +95,25 @@ def test_speech_becomes_captions_attributed_to_the_user(backend_client, backend_
     assert all(c["speaker"] == "User" and c["person_id"] is None for c in captions)  # nobody is registered
     assert any(len(c["text"].split()) >= 3 for c in captions)
     assert all(c["end"] > c["start"] >= 0 for c in captions)
+
+
+def test_end_visit_sends_the_transcript_to_gemini_and_reports_what_was_saved(backend_client, backend_module, monkeypatch, maya):
+    """The socket's end_visit, driven directly: the transcript goes to backend.gemini, and the
+    frontend gets one visit_saved per visitor with the new facts and card."""
+    from backend.live_api import LiveSession
+    from contract.live import PresentPerson, VisitSaved
+    from tests.gemini_fakes import FakeGemini
+
+    fake = FakeGemini(facts={"new_facts": ["Maya brought photos from a beach trip."]}, card={"small_context": "Last spoke about: the beach trip | Ask about: the photos"})
+    monkeypatch.setattr("backend.gemini.get_client", lambda: fake)
+    session = LiveSession(backend_module.app.state)
+    session.visit.note(PresentPerson(person_id=maya["id"], name="Maya", relationship="granddaughter", small_context=""))
+    session.visit.add("Maya", maya["id"], "Hi Grandma! I brought the photos from our beach trip.")
+    session.visit.add("User", None, "Oh, how lovely.")
+    [saved] = session.end_visit()
+    assert isinstance(saved, VisitSaved)
+    assert (saved.name, saved.new_facts, saved.small_context) == ("Maya", ["Maya brought photos from a beach trip."], "Last spoke about: the beach trip | Ask about: the photos")
+    assert "Maya: Hi Grandma! I brought the photos from our beach trip." in fake.contents("facts")
+    assert session.visit.lines == []  # a fresh visit starts
+    assert backend_client.get("/people").json()[0]["small_context"] == "Last spoke about: the beach trip | Ask about: the photos"
+    assert [f["text"] for f in backend_client.get(f"/people/{maya['id']}/facts").json()][-1] == "Maya brought photos from a beach trip."

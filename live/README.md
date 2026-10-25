@@ -53,24 +53,20 @@ To prove the voice-only path, or to demo without talking, play a recording throu
 uv run python -m live --no-camera --audio-file data/voice/<some-enrollment>.wav --audio-speed 4
 ```
 
-## The visit and Claude
+## The visit and Gemini
 
 Every utterance is transcribed locally (Moonshine via sherpa-onnx) and logged as a speaker-labelled
 line. The visit ends on `e` in the window, after `--visit-timeout` seconds of silence (120 by
-default), or when the program exits. Then, for each known visitor who was there, one Claude call
-(`claude-opus-5-5`, structured JSON output, server-side refusal fallback enabled) reads the
-visitor's existing facts and the transcript and returns:
-
-```json
-{"new_facts": ["Moved to Pittsburgh last month"], "small_context": "David is your grandson. He just moved to Pittsburgh and works as a nurse."}
-```
-
-`db.context.save_context` adds the facts with source `conversation` and overwrites
-`people.small_context`. A failed call, a refusal or bad JSON changes nothing. The prompt follows
-the design's rules: only facts about the visitor, skip repeats, newer facts win, nothing about
-illness or bad news on the card, two short sentences.
+default), or when the program exits. Then the transcript goes, once per known visitor, to the
+context owner's `backend.gemini.update_context`: a facts call adds new facts (source
+`conversation`) and a card call rewrites `people.small_context`, with no database connection held
+meanwhile. A failed facts call changes nothing; a failed card call still keeps the facts. It needs
+`GEMINI_API_KEY` in the repo's `.env`. The same call serves `POST /people/{id}/conversation` and
+the wizard's notes, so there is one path for context.
 
 ## Nova
+
+Nova is the one thing on Anthropic; `ANTHROPIC_API_KEY` is for her alone.
 
 Say "Nova, who is David?" (or "Hey Nova, who's here?"). The wake word, question window, barge-in
 and echo suppression come from `voice_rec.assistant`. The brain is `live/nova.py`: Claude with

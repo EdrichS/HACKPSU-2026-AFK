@@ -27,7 +27,8 @@ services:
       DATABASE_URL: postgresql://nametags:nametags@db:5432/nametags
       NAMETAGS_DATA: /data
       NAMETAGS_CORS_ORIGINS: ${NAMETAGS_CORS_ORIGINS:-*}
-      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+      GEMINI_API_KEY: ${GEMINI_API_KEY:-}        # notes and visit summaries (facts + cards)
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}  # Nova
     ports:
       - "${NAMETAGS_PORT:-8000}:8000"
     volumes:

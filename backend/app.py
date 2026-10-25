@@ -71,16 +71,27 @@ def load_transcriber():
 
 
 def load_claude():
-    """The Anthropic client for visit summaries and Nova, when a key is in the environment or .env."""
+    """The Anthropic client for Nova, when a key is in the environment or .env."""
     from live.cli import load_env
 
     load_env()
     if not (os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("ANTHROPIC_AUTH_TOKEN")):
-        log.warning("no ANTHROPIC_API_KEY: no visit summaries, no Nova")
+        log.warning("no ANTHROPIC_API_KEY: no Nova")
         return None
     import anthropic
 
     return anthropic.Anthropic()
+
+
+def gemini_ready() -> bool:
+    """Whether notes and visits can become facts and cards (backend.gemini needs GEMINI_API_KEY)."""
+    from backend import gemini
+
+    gemini.load_env()
+    if not os.environ.get("GEMINI_API_KEY"):
+        log.warning("no GEMINI_API_KEY: notes are stored as typed and visits are not summarized")
+        return False
+    return True
 
 
 face_embedder, voice_embedder = make_embedders()
@@ -98,6 +109,7 @@ async def lifespan(app: FastAPI):
         app.state.voice_embedder = voice_embedder
         app.state.transcriber = load_transcriber()
         app.state.claude = load_claude()
+        app.state.gemini = gemini_ready()
         app.state.presence = None  # the latest /live connection's, for /nova/ask
         yield
     finally:
@@ -164,7 +176,8 @@ def health(request: Request) -> dict:
         "face_model": face_embedder.spec.model,
         "voice_model": voice_embedder.spec.model,
         "transcription": state.transcriber is not None,
-        "claude": state.claude is not None,
+        "gemini": state.gemini,  # notes and visit summaries
+        "claude": state.claude is not None,  # Nova
     }
 
 
