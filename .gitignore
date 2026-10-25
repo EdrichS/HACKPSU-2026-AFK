@@ -1,1 +1,5 @@
 *.zip
+data/
+.env
+__pycache__/
+*.py[cod]
