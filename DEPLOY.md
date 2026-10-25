@@ -1,8 +1,9 @@
 # Deploying Nametags
 
-One Docker host runs everything: the API container (faces, voices, the enrollment wizard, the
-`/live` socket, Nova) and Postgres with pgvector. The UI is a separate static site that calls the
-API; it is not in this repo.
+One Docker host runs the API container (faces, voices, the enrollment wizard, the `/live` socket,
+Nova) and Postgres with pgvector. The product UI is the React app in `frontend/`:
+`frontend/README.md` runs it on a laptop with Vite, which forwards `/api` to the API. Serving its
+build from a server isn't set up yet.
 
 ## First time
 
@@ -17,11 +18,14 @@ curl -s localhost:8000/health   # {"status":"ok",...}
 ```
 
 The API listens on port 8000 (`NAMETAGS_PORT` in `.env`), with interactive docs at `/docs` and a
-rough test UI at `/ui/` (the enrollment wizard) and `/ui/live.html` (the glasses view) that
-exercises every route from a browser. Open it on `http://localhost:8000/ui/` on the machine
-itself, since browsers allow the camera and microphone only on localhost or https.
-The API has no login, so it listens on 127.0.0.1 only and answers pages from localhost only;
-`NAMETAGS_BIND` and `NAMETAGS_CORS_ORIGINS` open it up (see Environment).
+rough test UI at `/ui/` (the enrollment wizard) and `/ui/live.html` (the glasses view). The test UI
+covers the wizard, the live view and Nova, not the setup or person-context routes. Open it on
+`http://localhost:8000/ui/` on the machine itself, since browsers allow the camera and microphone
+only on localhost or https.
+The API has no login, so it listens on 127.0.0.1 only, and browsers let only pages on localhost
+read its replies; `NAMETAGS_BIND` and `NAMETAGS_CORS_ORIGINS` open it up (see Environment). That
+browser rule (CORS) doesn't cover the `/live` WebSocket or form uploads: any page in a browser on
+this machine can open `/live` and send uploads.
 Postgres is reachable only from the host itself, on 5433, for the CLIs and `psql`.
 
 Put a reverse proxy with TLS in front (Caddy, nginx) for a public URL; it reaches the API on
@@ -36,7 +40,9 @@ and microphone on https or localhost. If the UI is served from another site, put
 git pull && docker compose up -d --build
 ```
 
-The schema is applied at every API start and is idempotent.
+The schema is applied at every API start and is idempotent, but `CREATE TABLE IF NOT EXISTS` never
+changes a table that already exists. If an update changed `db/schema.sql`, reset (below), which
+deletes everything.
 
 ## What is state, and moving it
 
@@ -45,10 +51,11 @@ The schema is applied at every API start and is idempotent.
 | the `pgdata` volume | every person, face and voice embedding, fact and card |
 | the repo's `data/` folder | the photo and recording files (`data/photos`, `data/voice`), shared with the laptop programs |
 
-Nothing else matters; the image is rebuilt from the repo. To move to another server:
+Nothing else matters; the image is rebuilt from the repo. To move to another server, stop the whole
+stack first, since a copy of a running database's files can come out broken:
 
 ```
-docker compose stop api
+docker compose stop
 docker run --rm -v hackpsu-2026-afk_pgdata:/v -v "$PWD":/b alpine tar czf /b/pgdata.tgz -C /v .
 tar czf data.tgz data
 ```
@@ -91,17 +98,22 @@ deletes every person, photo and recording.
 | Variable | Default | Meaning |
 |---|---|---|
 | `GEMINI_API_KEY` | empty | notes and visit summaries into facts and cards; without it the wizard and `python -m enroll` store notes as typed, `POST /people/{id}/notes` and `/conversation` store nothing, and visits aren't summarized |
+| `GEMINI_MODEL` | `gemini-3.8-flash` | the model for facts and cards; laptop runs only, since `docker-compose.yml` doesn't pass it |
 | `ANTHROPIC_API_KEY` | empty | Nova; without it the API still recognizes, captions and summarizes |
 | `NAMETAGS_BIND` | `127.0.0.1` | address the API listens on; `0.0.0.0` opens it to the network, and it has no login |
-| `NAMETAGS_CORS_ORIGINS` | empty | origins of a UI on another site, comma-separated; empty allows pages on localhost only, `*` lets any site read everything |
+| `NAMETAGS_CORS_ORIGINS` | empty | origins of a UI on another site, comma-separated; empty allows pages on localhost only, `*` lets any site read everything. It never covers `/live` or form uploads |
 | `NAMETAGS_PORT` | `8000` | host port |
-| `NAMETAGS_EMBEDDERS` | `real` | `fake` uses the contract's stand-ins (tests only) |
-| `NAMETAGS_TRANSCRIBE` | `1` | `0` turns captions off |
+| `NAMETAGS_EMBEDDERS` | `real` | `fake` uses the contract's stand-ins (tests only); laptop runs only, since `docker-compose.yml` doesn't pass it |
+| `NAMETAGS_TRANSCRIBE` | `1` | `0` turns captions off, and with them visit summaries and spoken Nova questions; laptop runs only, since `docker-compose.yml` doesn't pass it |
+| `DATABASE_URL` | `postgresql://nametags:nametags@localhost:5433/nametags` | the database; `docker-compose.yml` points the container at the `db` service |
+| `NAMETAGS_DATA` | `data` | the folder for photos and recordings, relative to where the API runs; `docker-compose.yml` sets it to the mounted `data/` |
 
 ## Running without Docker
 
 The same API runs on a laptop with `uv run uvicorn backend.app:app --port 8000` against
 `docker compose up -d --wait db`. It loads the real face and voice models at startup, so download
 the voice models once first: `hackpsu_voice_rec/scripts/download_models.sh --no-tts`. It keeps its
-files in the same `data/` folder as the container. The laptop-only programs, `python -m enroll`
-(webcam and mic windows) and `python -m live` (speaks through the laptop), stay as they are.
+files in the same `data/` folder as the container. On a laptop, `.env` supplies only the API keys
+and `GEMINI_MODEL`: the API reads the `NAMETAGS_*` settings and `DATABASE_URL` before it loads
+`.env`, so set those in the shell. The laptop-only programs, `python -m enroll` (webcam and mic
+windows) and `python -m live` (speaks through the laptop), stay as they are.
