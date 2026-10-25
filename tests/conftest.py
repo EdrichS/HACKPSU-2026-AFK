@@ -1,6 +1,11 @@
+import os
+
 import psycopg
 import pytest
 from fastapi.testclient import TestClient
+
+# The backend loads the real face and voice models unless told otherwise; tests use the fakes.
+os.environ.setdefault("NAMETAGS_EMBEDDERS", "fake")
 
 from db.connect import DEFAULT_URL, apply_schema
 

@@ -1,14 +1,17 @@
-"""The setup routes on Postgres + pgvector.
+"""The Nametags API: the setup routes on Postgres + pgvector, the enrollment wizard, the /live
+socket, and Nova.
 
 Every route does its slow work (decoding, embedding) before taking a connection, runs its
 database calls in one `with pool.connection()` block (one transaction), deletes any file it just
 wrote if that block fails, and deletes files it no longer needs only after the commit.
 
-The context owner's router (notes, conversation, facts) calls db.context and gets mounted here
-with app.include_router once it exists. The live connection is not built yet.
+The face and voice embedders are the real ones (embedders/) unless NAMETAGS_EMBEDDERS=fake, which
+the tests and the mock use. The context owner's router (notes, conversation, facts) calls
+db.context and gets mounted here with app.include_router once it exists.
 """
 
 import io
+import logging
 import os
 import uuid
 from contextlib import asynccontextmanager
@@ -21,7 +24,6 @@ from PIL import Image, ImageOps, UnidentifiedImageError
 from psycopg import errors
 
 from contract.audio import check_wav
-from contract.fakes import FakeFaceEmbedder, FakeVoiceEmbedder
 from contract.setup_api import (
     LOCAL_ORIGIN_REGEX,
     PHOTO_FORMATS,
@@ -36,12 +38,52 @@ from contract.setup_api import (
 from db import people, photos, voice
 from db.connect import DEFAULT_URL, check_embedders, open_pool
 from db.errors import Conflict, NotFound
+from enroll import store
 
-# Stand-ins until the face and voice owners' adapters exist; swapping each is one line.
-face_embedder = FakeFaceEmbedder()
-voice_embedder = FakeVoiceEmbedder()
+log = logging.getLogger("backend")
 
 EXIF_ORIENTATION = 0x0112
+
+
+def make_embedders():
+    """The real face and voice embedders, or the contract's fakes with NAMETAGS_EMBEDDERS=fake."""
+    if os.environ.get("NAMETAGS_EMBEDDERS", "real").lower() == "fake":
+        from contract.fakes import FakeFaceEmbedder, FakeVoiceEmbedder
+
+        return FakeFaceEmbedder(), FakeVoiceEmbedder()
+    from embedders.face import FaceRecEmbedder
+    from embedders.voice import VoiceRecEmbedder
+
+    return FaceRecEmbedder(), VoiceRecEmbedder()
+
+
+def load_transcriber():
+    """Local speech-to-text for captions, if its model is there (NAMETAGS_TRANSCRIBE=0 turns it off)."""
+    if os.environ.get("NAMETAGS_TRANSCRIBE", "1") == "0":
+        return None
+    try:
+        from voice_rec.transcriber import Transcriber
+
+        return Transcriber()
+    except (FileNotFoundError, ImportError) as e:
+        log.warning("no transcription: %s", e)
+        return None
+
+
+def load_claude():
+    """The Anthropic client for visit summaries and Nova, when a key is in the environment or .env."""
+    from live.cli import load_env
+
+    load_env()
+    if not (os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("ANTHROPIC_AUTH_TOKEN")):
+        log.warning("no ANTHROPIC_API_KEY: no visit summaries, no Nova")
+        return None
+    import anthropic
+
+    return anthropic.Anthropic()
+
+
+face_embedder, voice_embedder = make_embedders()
 
 
 @asynccontextmanager
@@ -52,13 +94,23 @@ async def lifespan(app: FastAPI):
             check_embedders(conn, face_embedder.spec, voice_embedder.spec)
         app.state.pool = pool
         app.state.data_dir = Path(os.environ.get("NAMETAGS_DATA", "data"))
+        app.state.face_embedder = face_embedder
+        app.state.voice_embedder = voice_embedder
+        app.state.transcriber = load_transcriber()
+        app.state.claude = load_claude()
+        app.state.presence = None  # the latest /live connection's, for /nova/ask
         yield
     finally:
         pool.close()
 
 
 app = FastAPI(title="Nametags backend", lifespan=lifespan)
-app.add_middleware(CORSMiddleware, allow_origin_regex=LOCAL_ORIGIN_REGEX, allow_methods=["*"], allow_headers=["*"])
+
+_origins = [o.strip() for o in os.environ.get("NAMETAGS_CORS_ORIGINS", "").split(",") if o.strip()]
+if _origins:  # deployed: the UI's origins, or * for any
+    app.add_middleware(CORSMiddleware, allow_origins=_origins, allow_methods=["*"], allow_headers=["*"])
+else:  # this laptop only
+    app.add_middleware(CORSMiddleware, allow_origin_regex=LOCAL_ORIGIN_REGEX, allow_methods=["*"], allow_headers=["*"])
 
 
 @app.exception_handler(NotFound)
@@ -100,6 +152,30 @@ def _upright(data: bytes) -> tuple[bytes, str, int, int]:
         upright.save(buf, "PNG" if extension == "png" else "JPEG", quality=95)  # an MPO becomes a plain JPEG
         return buf.getvalue(), extension, upright.width, upright.height
     return data, extension, image.width, image.height
+
+
+@app.get("/health")
+def health(request: Request) -> dict:
+    state = request.app.state
+    with state.pool.connection() as conn:
+        conn.execute("SELECT 1")
+    return {
+        "status": "ok",
+        "face_model": face_embedder.spec.model,
+        "voice_model": voice_embedder.spec.model,
+        "transcription": state.transcriber is not None,
+        "claude": state.claude is not None,
+    }
+
+
+@app.get("/user")
+def get_user(request: Request) -> Person:
+    """The app's user, the person wearing the glasses (registered with relationship 'user')."""
+    with request.app.state.pool.connection() as conn:
+        user = store.find_user(conn)
+    if user is None:
+        raise NotFound("user")
+    return user
 
 
 @app.get("/people")
@@ -205,3 +281,25 @@ def delete_voice(request: Request, person_id: int, voice_sample_id: int) -> Resp
         raise NotFound("voice")
     Path(path).unlink(missing_ok=True)  # only after the commit
     return Response(status_code=204)
+
+
+from backend.enroll_api import router as enroll_router  # noqa: E402  (they import nothing from here)
+from backend.live_api import router as live_router  # noqa: E402
+from backend.nova_api import router as nova_router  # noqa: E402
+
+app.include_router(enroll_router)
+app.include_router(live_router)
+app.include_router(nova_router)
+
+# The rough test UI (ui/): the enrollment wizard at /ui/ and the live view at /ui/live.html.
+# It exercises every route above from a browser; the product UI replaces it.
+UI_DIR = Path(__file__).resolve().parents[1] / "ui"
+if UI_DIR.is_dir():
+    from fastapi.responses import RedirectResponse
+    from fastapi.staticfiles import StaticFiles
+
+    app.mount("/ui", StaticFiles(directory=UI_DIR, html=True), name="ui")
+
+    @app.get("/", include_in_schema=False)
+    def root() -> RedirectResponse:
+        return RedirectResponse("/ui/")

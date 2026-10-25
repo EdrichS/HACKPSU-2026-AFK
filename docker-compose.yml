@@ -1,3 +1,7 @@
+# Everything on one Docker host: the API (faces, voices, enrollment, /live, Nova) and Postgres.
+#   cp .env.example .env   # then put the Anthropic key in
+#   docker compose up -d --build
+# State lives in the two named volumes; see DEPLOY.md to move or back them up.
 services:
   db:
     image: pgvector/pgvector:pg17
@@ -6,7 +10,7 @@ services:
       POSTGRES_PASSWORD: nametags
       POSTGRES_DB: nametags
     ports:
-      - "127.0.0.1:5433:5432"   # this laptop only
+      - "127.0.0.1:5433:5432"   # this host only, for local tools and the CLIs
     volumes:
       - pgdata:/var/lib/postgresql/data
     healthcheck:
@@ -14,6 +18,25 @@ services:
       interval: 2s
       timeout: 3s
       retries: 15
+    restart: unless-stopped
+
+  api:
+    build: .
+    image: nametags-api
+    environment:
+      DATABASE_URL: postgresql://nametags:nametags@db:5432/nametags
+      NAMETAGS_DATA: /data
+      NAMETAGS_CORS_ORIGINS: ${NAMETAGS_CORS_ORIGINS:-*}
+      ANTHROPIC_API_KEY: ${ANTHROPIC_API_KEY:-}
+    ports:
+      - "${NAMETAGS_PORT:-8000}:8000"
+    volumes:
+      - nametags_data:/data   # photos and recordings
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
 
 volumes:
   pgdata:
+  nametags_data:

@@ -65,6 +65,27 @@ It makes no network calls.
 
 "The same name and relationship" ignores case and surrounding spaces.
 
+## The enrollment wizard and the rest (real backend only)
+
+The self-enrollment wizard (consent, three photos, a recording, name and relationship) talks to
+these. The checks are stateless, so the wizard can give feedback before it knows the name; the
+upload at the end carries everything. Run with Docker (`DEPLOY.md`); interactive docs at `/docs`.
+
+| Method and path | Body | Returns |
+|---|---|---|
+| `GET /health` | — | `{status, face_model, voice_model, transcription, claude}` |
+| `GET /user` | — | `Person` for the app's user (relationship `user`); 404 if none yet |
+| `POST /enroll/check/photo` | multipart `file` (JPEG or PNG) | `{ok, faces, box, width, height, reason}`: `ok` when exactly one clear face; 422 for a non-image |
+| `POST /enroll/check/voice` | multipart `file` (WAV, 16 kHz mono 16-bit) | `{ok, seconds, speech_seconds, reason}`: `ok` with 3+ seconds of speech |
+| `POST /enroll` | multipart: `name`, `relationship` (or `user` for the wearer), optional `notes` (a sentence per fact), optional `merge=true`, `photos` (0..n files), `voice` (0..1 file) | `201 {person, photo_ids, face_ids, voice_sample_ids, facts, skipped_photos}`; 409 if that name and relationship exist (unless `merge`); 422 for no clear face in any photo, too little speech, or a bad name |
+| `POST /nova/ask` | `{question, asker?}` | `{text}` to speak; 503 without an Anthropic key |
+
+`photo_ids[0]` is the first photo sent (the front shot): `GET /photos/{id}/image` shows it on the
+thank-you page. Each photo stores one labelled face; the recording stores the whole speech and
+each 4-second slice as separate voice samples; notes become `facts` (source `notes`) and the
+card. Relationship is free text (son, daughter, grandson, granddaughter, friend, caregiver, or
+whatever "Other" says), 1-40 characters.
+
 ## `/live` messages
 
 **The backend composes every spoken sentence.** The frontend speaks `text` exactly as it arrives.
@@ -89,6 +110,23 @@ From the server. `present` is sent after every frame, for the on-screen labels:
 ```
 
 When nobody known is present, `who_answer` says "I don't see anyone I know right now."
+
+The real backend (`backend/`) adds, in both directions:
+
+```json
+{"type":"end_visit"}
+```
+
+```json
+{"type":"caption","person_id":1,"speaker":"David","text":"Hi Grandma, I brought the photos.","start":12.4,"end":15.1}
+{"type":"answer","question":"who is David?","text":"David's your grandson. He just moved to Pittsburgh."}
+{"type":"visit_saved","person_id":1,"name":"David","new_facts":["Moved to Pittsburgh last month"],"small_context":"David is your grandson. He just moved to Pittsburgh."}
+```
+
+`caption` is one finished utterance with who said it (the user's own voice has `person_id` null);
+`answer` is Nova's reply when a caption started with the wake word; `visit_saved` follows
+`end_visit`, once per visitor whose facts and card were updated. `present.people[].facts` carries
+the newest few facts for the bullets beside a name. The mock sends none of these.
 
 These examples were generated with `model_dump_json()` from the models in `live.py`. After
 changing the models, regenerate them.

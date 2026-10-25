@@ -77,7 +77,12 @@ class VoiceIdentifier:
         self.presence = presence
 
     def identify(self, samples: np.ndarray) -> tuple[PresentPerson | None, str, float | None]:
-        embedding = self.embedder.embed_samples(samples)
+        if hasattr(self.embedder, "embed_samples"):
+            embedding = self.embedder.embed_samples(samples)
+        else:  # any VoiceEmbedder from the contract takes WAV bytes
+            from embedders.voice import encode_wav
+
+            embedding = self.embedder.embed_voice(encode_wav(samples))
         with self.pool.connection() as conn:
             candidates = nearest_people(conn, "voice", self.embedder.spec.metric, embedding)
         present = {p.person_id for p in self.presence.present()} if self.presence is not None else ()
