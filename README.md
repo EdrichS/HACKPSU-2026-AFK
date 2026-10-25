@@ -187,15 +187,18 @@ The code that reproduces the analysis is in [research/](research/).
 
 From the [suggested changes](docs/research/suggested-changes.md), most urgent first:
 
-- [ ] Introduce rather than correct: *Here's David, your grandson.* instead of *That's David, your grandson.*
-- [ ] Make Nova graceful: when a name isn't registered, she says so and says who is here. She introduces herself once
+- [x] Introduce rather than correct: arrivals say *Here's David, your grandson.* instead of *That's David, your
+  grandson.* Asked "Who is this?", it still answers *That's …*.
+- [x] Make Nova graceful: when a name isn't registered, she says so and says who is here. She introduces herself once
   per visit and never claims to be a person.
-- [ ] Privacy by design: send Gemini only the lines of consented, enrolled voices; add a pause mode for bedrooms and
-  bathrooms; make local-only the default in care homes.
+- [x] Privacy by design: Gemini gets only the lines of enrolled voices it recognized, never a bystander's.
+- [ ] Privacy by design, still to do: a pause mode for bedrooms and bathrooms, and local-only as the default in care
+  homes.
 - [ ] Cue first, then the name: give the wearer a moment to recall who it is before the glasses show or say it. Opt-in,
   in the live view first.
-- [ ] Smaller follow-ups: per-person announcement settings, enrolling care staff through `/visitor`, a nudge to refresh
-  photos and voice, and measuring how long it takes to name someone.
+- [x] Measure how long it takes to name someone: each arrival is logged with the seconds it took.
+- [ ] Smaller follow-ups: per-person announcement settings, enrolling care staff through `/visitor`, and a nudge to
+  refresh photos and voice.
 
 ## License
 
