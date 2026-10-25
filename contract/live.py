@@ -57,7 +57,7 @@ class TrackedFace(BaseModel):
 
 
 class Present(BaseModel):
-    """Sent after every frame, for the on-screen labels."""
+    """Sent after every frame that decodes, for the on-screen labels."""
 
     type: Literal["present"] = "present"
     people: list[PresentPerson]
@@ -85,7 +85,7 @@ class Caption(BaseModel):
     """One finished utterance, transcribed, with who said it. Live captions on screen."""
 
     type: Literal["caption"] = "caption"
-    person_id: int | None  # None when the voice is the user's (or nobody known)
+    person_id: int | None  # a voice the database can't name is the user's; None when no user is registered
     speaker: str
     text: str
     start: float  # seconds of audio since the connection opened
