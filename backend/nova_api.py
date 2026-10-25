@@ -27,5 +27,6 @@ def ask(request: Request, body: AskIn) -> AskOut:
     with state.pool.connection() as conn:
         user = store.find_user(conn)
     presence = state.presence if state.presence is not None else Presence()
-    brain = NovaBrain(state.claude, state.pool, presence, "Nova", user.name if user else "the user")
+    # Each request stands alone, so an introduction would open every answer.
+    brain = NovaBrain(state.claude, state.pool, presence, "Nova", user.name if user else "the user", introduce=False)
     return AskOut(text=brain.answer(body.question, body.asker))

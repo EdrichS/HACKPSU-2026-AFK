@@ -155,7 +155,8 @@ The real backend (`backend/`) adds, in both directions:
   included, has both null. With cloud captions on (`SPEECHMATICS_API_KEY`) a sentence first
   arrives while it is being said, with `final: false`, each such caption replacing the previous
   one, and then once more finished with `final: true`; local captions send finished sentences only.
-- `answer` is Nova's reply when a caption started with the wake word.
+- `answer` is Nova's reply when a caption started with the wake word. Her first in a visit starts
+  with "I'm Nova, the helper in your glasses."; `POST /nova/ask` never adds it.
 - `visit_saved` follows `end_visit`, once per visitor whose facts or card changed. Closing the
   socket also ends the visit and saves it, without these messages.
 - `present.people[].facts` carries each person's three newest facts, oldest first, for the bullets

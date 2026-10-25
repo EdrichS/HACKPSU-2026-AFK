@@ -85,6 +85,7 @@ class Session:
         self.nova_state = ""
         self.speaker = None
         self.assistant = None
+        self.nova = None  # the NovaBrain the assistant asks, when Nova is on
         self.client = None  # Anthropic, for Nova only
         self.gemini = False  # whether visits can become facts and cards
         self.logfile = open(args.log, "a", encoding="utf-8") if args.log else None
@@ -141,6 +142,8 @@ class Session:
     def end_visit(self, reason: str) -> None:
         with self.visit_lock:
             visit, self.visit = self.visit, Visit()
+        if self.nova is not None:
+            self.nova.new_visit()
         if not visit.lines:
             return
         known = [p for pid, p in visit.people.items() if pid != self.user_id]
@@ -235,7 +238,7 @@ def run(args) -> int:
         if session.client is not None and not args.no_nova:
             from voice_rec.assistant import Assistant, WakeWord
 
-            brain = NovaBrain(session.client, pool, session.presence, args.nova_name, user_name, args.model)
+            brain = session.nova = NovaBrain(session.client, pool, session.presence, args.nova_name, user_name, args.model)
             session.assistant = Assistant(
                 args.nova_name,
                 brain,

@@ -78,7 +78,9 @@ Say "Nova, who is David?" (or "Hey Nova, who's here?"). The wake word, question 
 and echo suppression come from `voice_rec.assistant`. The brain is `live/nova.py`: Claude with
 three tools. `list_people` and `person_context(name)` read Postgres, and `who_is_here` reads who
 the program sees and hears right now. The system prompt tells it the database is the only source
-of truth, so it looks a person up before answering and says so when someone isn't registered.
+of truth, so it looks a person up before answering. When nobody has the name she heard (often a
+misheard one), she says so and then who is here, rather than stopping there. Her first answer in a
+visit starts with "I'm Nova, the helper in your glasses."
 The answer is spoken with the local Supertonic voice (macOS `say` if the model folder is missing).
 
 ## Echo, and what leaves the laptop

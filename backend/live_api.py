@@ -254,6 +254,8 @@ class LiveSession:
     def end_visit(self) -> list:
         """The transcript goes to the context owner's Gemini flow, once per visitor, and to a file."""
         visit, self.visit = self.visit, Visit()
+        if self.nova is not None:
+            self.nova.new_visit()
         if not visit.lines:
             return []
         self.save_transcript(visit)

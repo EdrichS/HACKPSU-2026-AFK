@@ -3,6 +3,7 @@ the summary parsing and storage, Nova's database tools, and the database matcher
 
 from datetime import date
 from pathlib import Path
+from types import SimpleNamespace
 
 import numpy as np
 import psycopg_pool
@@ -190,6 +191,39 @@ def test_nova_tools_read_the_database(conn, pool):
     assert "(here right now)" in nova.tool_person_context("David")
     assert [t.name for t in nova.tools] == ["list_people", "person_context", "who_is_here"]
     conn.rollback()
+
+
+def test_nova_says_who_is_here_when_nobody_has_that_name(pool):
+    from live.nova import NovaBrain
+
+    presence = Presence(clock=Clock())
+    nova = NovaBrain(client=None, pool=pool, presence=presence, user_name="Rose")
+    assert nova.tool_person_context("Zed") == f"No one called 'Zed' is in the database. Here right now: {EMPTY_ROOM_TEXT}"
+    presence.saw(DAVID, "voice")
+    assert nova.tool_person_context("Zed").endswith("Here right now: That's David, your grandson.")
+
+
+def test_nova_introduces_herself_once_per_visit(pool):
+    from live.nova import NovaBrain
+    from tests.helpers import FakeClaude
+
+    nova = NovaBrain(client=FakeClaude("David is your grandson."), pool=pool, presence=Presence(clock=Clock()), user_name="Rose")
+    assert nova.answer("who is David?") == "I'm Nova, the helper in your glasses. David is your grandson."
+    assert nova.answer("who is David?") == "David is your grandson."
+    nova.new_visit()
+    assert nova.answer("who is David?") == "I'm Nova, the helper in your glasses. David is your grandson."
+
+
+def test_python_m_live_lets_nova_introduce_herself_again_after_a_visit(pool):
+    from live.cli import Session
+    from live.nova import NovaBrain
+    from tests.helpers import FakeClaude
+
+    session = Session(SimpleNamespace(log=None), pool, "Rose", None)
+    session.nova = NovaBrain(FakeClaude("Hello."), pool, session.presence, user_name="Rose")
+    assert session.nova.answer("hi there") == "I'm Nova, the helper in your glasses. Hello."
+    session.end_visit("you asked")
+    assert session.nova.answer("hi there") == "I'm Nova, the helper in your glasses. Hello."
 
 
 # -- the matchers against real samples ---------------------------------------------------------

@@ -258,3 +258,17 @@ def test_local_captions_when_the_cloud_session_fails(backend_client, backend_mod
             assert [m["type"] for m in receive_until(ws, "who_answer")] == ["who_answer"]
     finally:
         backend_module.app.state.speechmatics_key = None
+
+
+def test_nova_introduces_herself_again_after_a_visit_ends(backend_client, backend_module, monkeypatch):
+    from backend.live_api import LiveSession
+    from tests.helpers import FakeClaude
+
+    monkeypatch.setattr(backend_module.app.state, "claude", FakeClaude("David is your grandson."))
+    session = LiveSession(backend_module.app.state)
+    intro = "I'm Nova, the helper in your glasses. David is your grandson."
+    assert [m.text for m in session.ask_nova("Nova, who is David?", "Rose")] == [intro]
+    assert [m.text for m in session.ask_nova("Nova, who is David?", "Rose")] == ["David is your grandson."]
+    session.visit.add("Rose", None, "Nova, who is David?")
+    session.end_visit()
+    assert [m.text for m in session.ask_nova("Nova, who is David?", "Rose")] == [intro]

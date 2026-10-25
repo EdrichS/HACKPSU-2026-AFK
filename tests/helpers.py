@@ -5,6 +5,7 @@ import io
 import struct
 import uuid
 import zlib
+from types import SimpleNamespace
 
 from PIL import Image
 
@@ -86,3 +87,15 @@ def _png(width: int, height: int) -> bytes:
 
 
 PNG_1x1 = _png(1, 1)
+
+
+class FakeClaude:
+    """Stands in for anthropic.Anthropic in Nova's tests: every tool_runner call ends on one
+    message that says `reply`, without looking anything up."""
+
+    def __init__(self, reply: str):
+        self.reply = reply
+        self.beta = self.messages = self  # so client.beta.messages.tool_runner(...) lands below
+
+    def tool_runner(self, **kwargs):
+        return [SimpleNamespace(stop_reason="end_turn", content=[SimpleNamespace(type="text", text=self.reply)])]

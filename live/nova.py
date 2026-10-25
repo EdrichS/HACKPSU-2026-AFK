@@ -19,13 +19,17 @@ MODEL = "claude-opus-5-5"
 
 
 class NovaBrain:
-    def __init__(self, client, pool, presence, code_name: str = "Nova", user_name: str = "the user", model: str = MODEL):
+    def __init__(
+        self, client, pool, presence, code_name: str = "Nova", user_name: str = "the user", model: str = MODEL, introduce: bool = True
+    ):
         self.client = client
         self.pool = pool
         self.presence = presence
         self.code_name = code_name
         self.user_name = user_name
         self.model = model
+        self.introduce = introduce  # her first answer in a visit says who she is (new_visit starts the next)
+        self.introduced = False
         self.participants: set[str] = set()  # voice_rec.assistant.Assistant fills this in
         self.system = (
             f"You are {code_name}, the voice assistant of a memory-care app. {user_name} is its user: they wear the "
@@ -33,7 +37,8 @@ class NovaBrain:
             f"family member or friend. The family registered the people in {user_name}'s life in a database, "
             f"{user_name} included. Your tools read it: look a "
             f"person up before you say anything about them, and treat the database as the only source of truth. "
-            f"Never guess or invent a fact; if someone isn't in the database, say you don't have them. If asked who "
+            f"Never guess or invent a fact; if someone isn't in the database, say kindly that you don't have them, "
+            f"then say who is here, so a misheard name never ends in silence. If asked who "
             f"is here, use who_is_here. You are spoken aloud by text-to-speech, so answer the way a warm, patient "
             f"person talks: plain words, short sentences, contractions, no lists, no markdown, no emoji. Two or three "
             f"sentences at most. Never bring up illness or diagnoses. Never mention being an AI unless asked."
@@ -58,8 +63,8 @@ class NovaBrain:
         with self.pool.connection() as conn:
             rows = [p for p in people.list_people(conn) if needle and needle in p.name.lower()]
             facts = {p.id: [f.text for f in context.list_facts(conn, p.id)] for p in rows}
-        if not rows:
-            return f"No one called {name.strip()!r} is in the database."
+        if not rows:  # often a misheard name: who is here gives her something kind to say instead
+            return f"No one called {name.strip()!r} is in the database. Here right now: {self.presence.who_answer()}"
         out = []
         for p in rows:
             here = "here right now" if self.presence.is_present(p.id) else "not seen right now"
@@ -125,7 +130,15 @@ class NovaBrain:
             return ""
         if final.stop_reason == "refusal":
             return "Sorry, I can't help with that one."
-        return " ".join(b.text for b in final.content if b.type == "text").strip()
+        text = " ".join(b.text for b in final.content if b.type == "text").strip()
+        if text and self.introduce and not self.introduced:
+            self.introduced = True
+            text = f"I'm {self.code_name}, the helper in your glasses. {text}"
+        return text
+
+    def new_visit(self) -> None:
+        """A visit ended: her next answer says who she is again."""
+        self.introduced = False
 
     def answer_stream(self, transcript: str, asker: str, question: str) -> Iterator[str]:
         """What voice_rec.assistant.Assistant calls; it speaks whatever this yields."""
