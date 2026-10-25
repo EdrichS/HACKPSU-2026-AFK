@@ -6,8 +6,8 @@ database calls in one `with pool.connection()` block (one transaction), deletes 
 wrote if that block fails, and deletes files it no longer needs only after the commit.
 
 The face and voice embedders are the real ones (embedders/) unless NAMETAGS_EMBEDDERS=fake, which
-the tests and the mock use. The context owner's router (notes, conversation, facts) lives in
-backend/context_routes.py and is mounted here with app.include_router.
+the tests set (the mock builds its fakes itself). The context owner's router (notes, conversation,
+facts) lives in backend/context_routes.py and is mounted here with app.include_router.
 """
 
 import io

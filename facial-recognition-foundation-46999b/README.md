@@ -4,7 +4,19 @@ Face detection and recognition built on
 [face_recognition 1.3](https://github.com/ageitgey/face_recognition) (dlib's
 ResNet face encoder). The `facerec` package wraps it with enrollment from a
 photo folder, a saved encodings database, live webcam recognition, and a CLI.
-Voice recognition will sit next to it later.
+Voice recognition now sits next to it (`hackpsu_voice_rec/` at the repo root).
+
+## In Nametags
+
+The Nametags app at the repo root installs this folder as the `facerec` package
+from its `pyproject.toml` (`uv sync` at the root, which builds dlib from source,
+so the compiler from Setup is still needed). The venv steps below are only for
+using `facerec` on its own.
+
+`embedders/face.py` at the repo root wraps it as the app's face embedder: 128
+numbers, L2 distance, cutoff 0.6 (the `tolerance`), model name
+`face_recognition-1.3-small`. It uses only `locate` and `encode`; the app keeps
+its own matching in Postgres instead of `data/face_db.npz`.
 
 ## Setup
 
@@ -122,8 +134,8 @@ run_live(recognizer, source=0, on_faces=on_faces)
 
 1. **Detect**: HOG (default, CPU) or CNN detector returns face boxes. Live
    video detects on a half-size frame for speed; photos are searched at full
-   resolution (with `--model cnn`, on a copy at most 1600px wide to bound
-   memory).
+   resolution (with `--model cnn`, on a copy whose longer side is at most 1600px,
+   to bound memory).
 2. **Encode**: each face is aligned with facial landmarks and turned into a
    128-number vector by dlib's ResNet. `identify` and `live` encode from the
    full-resolution image, so downscaling for detection doesn't hurt accuracy;

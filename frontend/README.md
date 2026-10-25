@@ -33,8 +33,12 @@ npm run dev
 Open http://localhost:5173. Vite forwards `/api/*` (and the `/api/live` WebSocket) to
 `NAMETAGS_API`, default `http://127.0.0.1:8000`, so the pages and the API share one origin.
 Copy `.env.example` to `.env.local` to change it, the glasses user's name or the contact email.
+For pages served apart from the API, `VITE_API_BASE` (default `/api`) sets where the HTTP calls
+go, and `VITE_LIVE_URL` sets the `/live` socket's full address (without it, the socket follows
+`VITE_API_BASE`).
 
-`npm run build` type-checks and writes `dist/`; `npm run preview` serves it with the same proxy.
+`npm run build` type-checks and writes `dist/`; `npm run preview` serves it on port 4173 with the
+same proxy. `npm run typecheck` only type-checks.
 
 ## Without a camera or microphone
 
@@ -58,7 +62,9 @@ in `server.https` in `vite.config.ts`) or through an HTTPS tunnel.
 - `src/components/`: the handoff's components (LogoTag, StepIndicator, Button, TextField,
   TextArea, ChipGroup, ConsentList, ConsentCheckbox, CameraViewfinder, PhotoStrip, VoicePrompt,
   Recorder, NameTag) and the page shell.
-- `src/api/contract.ts`: the TypeScript copy of `contract/*.py`. Change both together.
+- `src/api/contract.ts`: the TypeScript copy of `contract/*.py`; change both together. It is
+  behind today: it has no `end_visit`, `answer` or `visit_saved` messages and no `facts` on
+  people, and its `caption` has a `final` field the backend never sends.
 - `src/api/visitor.ts`: what Upload on About you sends, in order.
 - `src/api/glassesUser.ts`: the glasses user is the Person with relationship `user` on the API
   (`GET /user`); setup creates or updates them, uploads their voice and sends their notes. A copy

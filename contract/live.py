@@ -58,7 +58,7 @@ class TrackedFace(BaseModel):
 
 
 class Present(BaseModel):
-    """Sent after every frame, for the on-screen labels."""
+    """Sent after every frame that decodes, for the on-screen labels."""
 
     type: Literal["present"] = "present"
     people: list[PresentPerson]
