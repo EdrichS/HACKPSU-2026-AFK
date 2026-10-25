@@ -2,7 +2,7 @@
 
 A memory aid that tells a person living with dementia who they're talking to.
 
-[Evidence summary](docs/research/README.md) · [Study pipeline](docs/research/pipeline.md)
+Read the [evidence summary](docs/research/README.md) and [how the study was done](docs/research/pipeline.md).
 
 ## About
 
@@ -11,10 +11,10 @@ recognize family members or friends". Nametags recognizes the people a family ha
 tells the wearer who they are. When it isn't sure, it says nothing rather than risk a wrong name. It is designed for
 glasses; today it runs as a web app and as a desktop program on a laptop.
 
-It fits mild Alzheimer's best, where people still know their family but can't find the name. It's a non-drug support
-alongside medical care, not a treatment, and it hasn't yet been tested with people living with dementia. The need is
-large: an estimated [7.4 million](docs/research/problem-size.md) Americans 65 and older live with Alzheimer's dementia
-in 2026, and [between 39% and 49%](docs/research/problem-size.md) of US nursing-home residents have a dementia
+It fits mild Alzheimer's best, where people still know their family but can't find the name. It helps alongside
+medical care and isn't a treatment, and it hasn't yet been tested with people living with dementia. The need is large:
+an estimated [7.4 million](docs/research/problem-size.md) Americans 65 and older live with Alzheimer's dementia in
+2026, and [between 39% and 49%](docs/research/problem-size.md) of residents in US nursing homes have a dementia
 diagnosis.
 
 ## What it does
@@ -26,8 +26,9 @@ diagnosis.
 - **Remembers each visit.** Notes and visit conversations become facts and a short card for each person. A stranger's
   words are left out.
 - **Visitors sign themselves up**, with consent: a few photos, a voice reading and some notes.
-- **Private by default.** Faces and voices are recognized on the machine. Only text leaves it, for Nova and the cards,
-  and live-view audio goes to Speechmatics only if you add its key. The API answers this machine only; it has no login.
+- **Recognition stays on the machine.** Faces and voices are recognized locally. Only text leaves it, for Nova and the
+  cards, and the live view's audio goes to Speechmatics only if you add its key. The API answers this machine only; it
+  has no login.
 
 | Page | What it's for |
 |---|---|
@@ -38,7 +39,7 @@ diagnosis.
 
 **Built with** Python 3.12 (FastAPI, uv), PostgreSQL 17 with pgvector, React 19 with Vite, and Docker Compose. Faces:
 face_recognition (dlib). Voices: TitaNet-small, Silero and Moonshine through sherpa-onnx, all local. Claude
-(`claude-opus-5-5`) runs Nova and writes the cards; Speechmatics is optional, for word-by-word captions.
+(`claude-opus-5-5`) runs Nova and writes the cards; Speechmatics is optional, for captions that appear word by word.
 
 ## Getting started
 
@@ -55,8 +56,8 @@ The first build compiles dlib, builds the web app and downloads the speech model
 
 - `ANTHROPIC_API_KEY` runs Nova and writes the facts and cards. Without it, notes are stored as typed and visits
   aren't summarized.
-- `SPEECHMATICS_API_KEY` gives word-by-word captions by streaming the live view's audio to Speechmatics. Without it,
-  captions stay on the machine.
+- `SPEECHMATICS_API_KEY` makes captions appear word by word, by streaming the live view's audio to Speechmatics.
+  Without it, captions stay on the machine.
 
 Before real visitors sign up, give the Consent screen a contact email: copy `frontend/.env.example` to
 `frontend/.env.local` and use the dev server (below). The Docker image doesn't read that file, so its Consent screen
@@ -94,9 +95,9 @@ Docker. The tests run with `uv run pytest` while the database container is up.
 
 ## Research
 
-Nametags rests on a small data study: published figures, care workers' accounts, a Spark analysis of 5,804 Europe PMC
-abstracts and 133,920 rows of CMS nursing-home data, 20 papers read in depth, and points a care-home worker made, as a
-team member recalls them. Start with the [evidence summary](docs/research/README.md); the
+Nametags is based on a study of the evidence: published figures, care workers' accounts, a Spark analysis of 5,804
+Europe PMC abstracts and 133,920 rows of CMS data on nursing homes, 20 papers read in depth, and points made by a care
+home worker, as a team member recalls them. Start with the [evidence summary](docs/research/README.md); the
 [suggested changes](docs/research/suggested-changes.md) rank what to build next, and [research/](research/) reproduces
 the analysis.
 
@@ -105,9 +106,10 @@ the analysis.
 - [x] Arrivals introduced, not corrected: *Here's David, your grandson.*
 - [x] Nova says who is here when she can't find a name, and introduces herself once per visit
 - [x] Visit summaries leave out bystanders' words, and each arrival logs how long naming took
-- [ ] A pause mode for bedrooms and bathrooms, and local-only by default in care homes
+- [ ] A pause mode for bedrooms and bathrooms, and keeping everything on the machine by default in care homes
 - [ ] Cue first, then the name: a moment to recall who it is before the glasses say it
-- [ ] Per-person announcement settings, care staff enrolling through `/visitor`, and a nudge to refresh photos and voice
+- [ ] Settings for how each person is announced, care staff enrolling through `/visitor`, and a nudge to refresh
+  photos and voice
 
 ## License and data
 
