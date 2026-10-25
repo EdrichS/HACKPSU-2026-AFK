@@ -6,8 +6,8 @@ database calls in one `with pool.connection()` block (one transaction), deletes 
 wrote if that block fails, and deletes files it no longer needs only after the commit.
 
 The face and voice embedders are the real ones (embedders/) unless NAMETAGS_EMBEDDERS=fake, which
-the tests and the mock use. The context owner's router (notes, conversation, facts) lives in
-backend/context_routes.py and is mounted here with app.include_router.
+the tests set (the mock builds its fakes itself). The context owner's router (notes, conversation,
+facts) lives in backend/context_routes.py and is mounted here with app.include_router.
 """
 
 import io
@@ -330,7 +330,7 @@ app.include_router(live_router)
 app.include_router(nova_router)
 
 # The rough test UI (ui/): the enrollment wizard at /ui/ and the live view at /ui/live.html.
-# It exercises every route above from a browser; the product UI replaces it.
+# It covers the wizard, /live and Nova from a browser; the product UI (frontend/) replaces it.
 UI_DIR = Path(__file__).resolve().parents[1] / "ui"
 if UI_DIR.is_dir():
     from fastapi.responses import RedirectResponse

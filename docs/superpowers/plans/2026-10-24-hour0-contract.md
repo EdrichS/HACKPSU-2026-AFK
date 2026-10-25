@@ -1,5 +1,10 @@
 # Hour-0 Contract Implementation Plan
 
+> **Status (2026-10-25):** built and merged in PR #6. `contract/`, `mock/` and
+> `contract/README.md` are the reference now; this plan is the record of how it was planned. Tests
+> marked `# Review Focus N` in `tests/test_embedders.py`, `tests/test_setup_api.py` and
+> `tests/test_live.py` refer to this plan's Review Focus list.
+
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Pin down, as code all four teammates import, what passes between the face, voice, backend
