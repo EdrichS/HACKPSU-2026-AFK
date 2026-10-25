@@ -1,10 +1,13 @@
 """Who is in the room. Sightings by face and by voice merge on the person's id."""
 
+import logging
 import threading
 import time
 from dataclasses import dataclass
 
 from contract.live import UNKNOWN_TEXT, PresentPerson, who_text
+
+log = logging.getLogger("live.presence")
 
 
 @dataclass
@@ -17,6 +20,7 @@ class Sighting:
     announced: float = 0.0
     away: bool = False  # left since the last announcement
     via: str = ""
+    since: float = 0.0  # the first sighting of this stay: since they arrived, or came back after leaving
 
 
 class Presence:
@@ -25,7 +29,8 @@ class Presence:
     Each person is announced once on arrival, and again only if they left and come back at least
     `reannounce` seconds after the last announcement (the app must never repeat itself at someone).
     An unmatched face that stays in view for `unknown_after` seconds gets the unknown sentence,
-    at most once per `unknown_cooldown`; voices never trigger it.
+    at most once per `unknown_cooldown`; voices never trigger it. Each announcement is logged with
+    how long naming took, from the first sighting of that stay, so the rules are tuned on measurements.
     """
 
     def __init__(
@@ -60,9 +65,9 @@ class Presence:
         with self._lock:
             s = self._people.get(person.person_id)
             if s is None:
-                s = self._people[person.person_id] = Sighting(person, now, now)
+                s = self._people[person.person_id] = Sighting(person, now, now, since=now)
             elif now - s.last > self.gone_after:
-                s.hits, s.confirmed, s.away = 0, False, True
+                s.hits, s.confirmed, s.away, s.since = 0, False, True, now
             s.person = person  # the card may have changed since
             s.hits = s.hits + 1 if now - s.last <= self.confirm_window else 1
             s.last, s.via = now, via
@@ -72,6 +77,7 @@ class Presence:
                 return None
             if s.announced == 0.0 or (s.away and now - s.announced >= self.reannounce):
                 s.announced, s.away = now, False
+                log.info("%s named by %s, %.1f s after first seen or heard", person.name, via, now - s.since)
                 return who_text([person])
             return None
 

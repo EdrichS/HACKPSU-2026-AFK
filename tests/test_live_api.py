@@ -2,6 +2,7 @@
 the same embedding, so a frame of an enrolled picture is a match)."""
 
 import json
+import logging
 from pathlib import Path
 
 import pytest
@@ -40,6 +41,11 @@ def maya(backend_client, monkeypatch):
     )
     assert r.status_code == 201, r.text
     return r.json()["person"]
+
+
+def test_the_server_shows_how_long_naming_took(backend_module):
+    # uvicorn shows only its own info lines; the server lets this one through, and captions stay out
+    assert logging.getLogger("live.presence").getEffectiveLevel() == logging.INFO
 
 
 def test_a_known_face_is_named_announced_and_carded(backend_client, maya):

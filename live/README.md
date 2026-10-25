@@ -33,7 +33,10 @@ transcript.
 `live/presence.py` merges the two: a voice match counts at once, a face needs two sightings
 within three seconds. Each arrival is announced once, with the sentence the contract fixes
 (`That's David, your grandson.`); someone who leaves and comes back is announced again only if
-at least five minutes have passed since their last announcement.
+at least five minutes have passed since their last announcement. Each announcement is logged with
+how long naming took, from the first time that stay's face or voice was matched:
+`live.presence: David named by face, 0.6 s after first seen or heard`. The time to say a sentence
+and to match it comes before that, so a voice always shows 0.0 s.
 
 ## The user
 

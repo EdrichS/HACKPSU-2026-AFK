@@ -1,6 +1,7 @@
 """The live program's pieces, without a camera, a microphone or a network: presence, visits,
 the summary parsing and storage, Nova's database tools, and the database matchers."""
 
+import logging
 from datetime import date
 from pathlib import Path
 from types import SimpleNamespace
@@ -63,6 +64,25 @@ def test_leaving_and_coming_back_much_later_is_announced_again():
     assert p.saw(DAVID, "voice") is None  # back soon: no repeat
     clock.t += 300
     assert p.saw(DAVID, "voice") == "That's David, your grandson."
+
+
+def test_each_arrival_logs_how_long_naming_took(caplog):
+    clock = Clock()
+    p = Presence(clock=clock)
+    with caplog.at_level(logging.INFO, logger="live.presence"):
+        p.saw(DAVID, "face")
+        clock.t += 0.8
+        p.saw(DAVID, "face")  # the second sighting names him
+        p.saw(MARIA, "voice")  # a voice counts at once
+        clock.t += 330  # gone, and back after more than five minutes: timed from the return
+        p.saw(DAVID, "face")
+        clock.t += 0.5
+        p.saw(DAVID, "face")
+    assert [r.getMessage() for r in caplog.records if r.name == "live.presence"] == [
+        "David named by face, 0.8 s after first seen or heard",
+        "Maria named by voice, 0.0 s after first seen or heard",
+        "David named by face, 0.5 s after first seen or heard",
+    ]
 
 
 def test_who_answer_names_everyone_in_arrival_order():
