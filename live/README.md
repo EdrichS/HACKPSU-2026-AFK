@@ -31,10 +31,11 @@ microphone any voice the database can't name, including a not-sure match, is "So
 transcript.
 
 `live/presence.py` merges the two: a voice match counts at once, a face needs two sightings
-within three seconds. Each arrival is announced once, with the sentence the contract fixes
-(`That's David, your grandson.`); someone who leaves and comes back is announced again only if
-at least five minutes have passed since their last announcement. Each announcement is logged with
-how long naming took, from the first time that stay's face or voice was matched:
+within three seconds. Each arrival is announced once, with the sentence the contract fixes:
+`Here's David, your grandson.`, an introduction rather than a correction (asked "Who is this?",
+it answers `That's David, your grandson.`). Someone who leaves and comes back is announced again
+only if at least five minutes have passed since their last announcement. Each announcement is
+logged with how long naming took, from the first time that stay's face or voice was matched:
 `live.presence: David named by face, 0.6 s after first seen or heard`. The time to say a sentence
 and to match it comes before that, so a voice always shows 0.0 s.
 
@@ -84,7 +85,7 @@ three tools. `list_people` and `person_context(name)` read Postgres, and `who_is
 the program sees and hears right now. The system prompt tells it the database is the only source
 of truth, so it looks a person up before answering. When nobody has the name she heard (often a
 misheard one), she says so and then who is here, rather than stopping there. Her first answer in a
-visit starts with "I'm Nova, the helper in your glasses."
+visit starts with "I'm Nova, the helper in your glasses.", and she never claims to be a person.
 The answer is spoken with the local Supertonic voice (macOS `say` if the model folder is missing).
 
 ## Echo, and what leaves the laptop

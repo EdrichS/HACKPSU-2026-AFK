@@ -36,7 +36,7 @@ def test_a_face_needs_two_sightings_and_is_announced_once():
     p = Presence(clock=clock)
     assert p.saw(DAVID, "face") is None and p.present() == []
     clock.t += 0.5
-    assert p.saw(DAVID, "face") == "That's David, your grandson."
+    assert p.saw(DAVID, "face") == "Here's David, your grandson."
     assert p.present() == [DAVID]
     for _ in range(50):  # staying in view never repeats the announcement
         clock.t += 1
@@ -47,12 +47,12 @@ def test_the_wearer_is_never_announced_or_listed():
     p = Presence(clock=Clock(), user_id=MARIA.person_id)
     assert p.saw(MARIA, "voice") is None
     assert p.present() == []
-    assert p.saw(DAVID, "voice") == "That's David, your grandson."
+    assert p.saw(DAVID, "voice") == "Here's David, your grandson."
 
 
 def test_a_voice_counts_at_once():
     p = Presence(clock=Clock())
-    assert p.saw(MARIA, "voice") == "That's Maria, your daughter."
+    assert p.saw(MARIA, "voice") == "Here's Maria, your daughter."
 
 
 def test_leaving_and_coming_back_much_later_is_announced_again():
@@ -63,7 +63,7 @@ def test_leaving_and_coming_back_much_later_is_announced_again():
     assert p.present() == []  # gone
     assert p.saw(DAVID, "voice") is None  # back soon: no repeat
     clock.t += 300
-    assert p.saw(DAVID, "voice") == "That's David, your grandson."
+    assert p.saw(DAVID, "voice") == "Here's David, your grandson."
 
 
 def test_each_arrival_logs_how_long_naming_took(caplog):
@@ -234,6 +234,16 @@ def test_nova_introduces_herself_once_per_visit(pool):
     assert nova.answer("who is David?") == "David is your grandson."
     nova.new_visit()
     assert nova.answer("who is David?") == "I'm Nova, the helper in your glasses. David is your grandson."
+
+
+def test_nova_is_told_never_to_claim_to_be_a_person(pool):
+    from live.nova import NovaBrain
+    from tests.helpers import FakeClaude
+
+    claude = FakeClaude("I'm the helper in your glasses.")
+    NovaBrain(client=claude, pool=pool, presence=Presence(clock=Clock()), user_name="Rose").answer("are you a real person?")
+    [call] = claude.calls
+    assert "never claim to be a person" in call["system"][0]["text"]
 
 
 def test_python_m_live_lets_nova_introduce_herself_again_after_a_visit(pool):

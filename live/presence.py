@@ -5,7 +5,7 @@ import threading
 import time
 from dataclasses import dataclass
 
-from contract.live import UNKNOWN_TEXT, PresentPerson, who_text
+from contract.live import UNKNOWN_TEXT, PresentPerson, arrival_text, who_text
 
 log = logging.getLogger("live.presence")
 
@@ -78,7 +78,7 @@ class Presence:
             if s.announced == 0.0 or (s.away and now - s.announced >= self.reannounce):
                 s.announced, s.away = now, False
                 log.info("%s named by %s, %.1f s after first seen or heard", person.name, via, now - s.since)
-                return who_text([person])
+                return arrival_text(person)
             return None
 
     def present(self) -> list[PresentPerson]:

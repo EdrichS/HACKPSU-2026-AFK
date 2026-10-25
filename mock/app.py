@@ -11,7 +11,19 @@ from pydantic import ValidationError
 from contract.audio import check_wav
 from contract.embedders import Box
 from contract.fakes import FakeFaceEmbedder, FakeVoiceEmbedder
-from contract.live import Arrived, Error, Frame, Present, PresentPerson, TrackedFace, Who, WhoAnswer, parse_client, who_text
+from contract.live import (
+    Arrived,
+    Error,
+    Frame,
+    Present,
+    PresentPerson,
+    TrackedFace,
+    Who,
+    WhoAnswer,
+    arrival_text,
+    parse_client,
+    who_text,
+)
 from contract.setup_api import (
     LOCAL_ORIGIN_REGEX,
     PHOTO_FORMATS,
@@ -288,7 +300,7 @@ async def live(ws: WebSocket) -> None:
                 face = TrackedFace(box=Box(x=0, y=0, width=1, height=1), state="named", person_id=sam.person_id)
                 await ws.send_text(Present(people=[sam], faces=[face]).model_dump_json())
                 if not announced:
-                    await ws.send_text(Arrived(person=sam, via="face", text=who_text([sam])).model_dump_json())
+                    await ws.send_text(Arrived(person=sam, via="face", text=arrival_text(sam)).model_dump_json())
                     announced = True
             elif isinstance(message, Who):
                 await ws.send_text(WhoAnswer(text=who_text([sam] if announced else [])).model_dump_json())

@@ -1,4 +1,4 @@
-from contract.live import Frame, PresentPerson, Who, parse_client, who_text
+from contract.live import Frame, PresentPerson, Who, arrival_text, parse_client, who_text
 from tests.helpers import PNG_1x1, b64
 
 
@@ -20,6 +20,10 @@ def test_who_text_nobody():
     assert who_text([]) == "I don't see anyone I know right now."
 
 
+def test_arrival_text_introduces_rather_than_corrects():
+    assert arrival_text(P("David", "grandson")) == "Here's David, your grandson."
+
+
 def test_parse_client_roundtrip():
     assert parse_client('{"type":"who"}') == Who()
 
@@ -29,6 +33,7 @@ def test_mock_live_first_frame_announces_once(client):
         ws.send_text(Frame(ts=1, jpeg=b64(PNG_1x1)).model_dump_json())
         msgs = [ws.receive_json(), ws.receive_json()]
         assert {m["type"] for m in msgs} == {"present", "arrived"}
+        assert next(m for m in msgs if m["type"] == "arrived")["text"].startswith("Here's ")
         ws.send_text(Frame(ts=2, jpeg=b64(PNG_1x1)).model_dump_json())
         assert ws.receive_json()["type"] == "present"
 

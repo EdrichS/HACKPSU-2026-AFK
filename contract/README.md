@@ -128,12 +128,13 @@ frame that doesn't decode gets only an `error`:
 
 ```json
 {"type":"present","people":[{"person_id":1,"name":"David","relationship":"grandson","small_context":"Lives in Pittsburgh · Works as a nurse | Ask about: the new job","facts":["David works as a nurse.","David loves cars.","David moved to Pittsburgh in September 2026."]}],"faces":[{"box":{"x":212,"y":96,"width":148,"height":148},"state":"named","person_id":1},{"box":{"x":430,"y":120,"width":120,"height":120},"state":"unsure","person_id":null}]}
-{"type":"arrived","person":{"person_id":1,"name":"David","relationship":"grandson","small_context":"Lives in Pittsburgh · Works as a nurse | Ask about: the new job","facts":["David works as a nurse.","David loves cars.","David moved to Pittsburgh in September 2026."]},"via":"face","text":"That's David, your grandson."}
+{"type":"arrived","person":{"person_id":1,"name":"David","relationship":"grandson","small_context":"Lives in Pittsburgh · Works as a nurse | Ask about: the new job","facts":["David works as a nurse.","David loves cars.","David moved to Pittsburgh in September 2026."]},"via":"face","text":"Here's David, your grandson."}
 {"type":"unknown","text":"I don't recognize this person."}
 {"type":"who_answer","text":"That's David, your grandson, and Maria, your daughter."}
 {"type":"error","message":"Unrecognised message; expected frame, audio or who."}
 ```
 
+`arrived` introduces someone ("Here's …"), while `who_answer` answers "Who is this?" ("That's …").
 When nobody known is present, `who_answer` says "I don't see anyone I know right now." The
 `error` text above is the mock's; the real backend's also lists `end_visit`.
 

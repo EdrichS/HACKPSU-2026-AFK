@@ -61,7 +61,7 @@ def test_a_known_face_is_named_announced_and_carded(backend_client, maya):
         assert (person["name"], person["relationship"]) == ("Maya", "granddaughter")
         assert person["facts"] == ["Anita's daughter, your oldest grandchild.", "Studying nursing, in her final year.", "Visits most Sundays after lunch."]
         arrived = msgs[-1]
-        assert arrived["via"] == "face" and arrived["text"] == "That's Maya, your granddaughter."
+        assert arrived["via"] == "face" and arrived["text"] == "Here's Maya, your granddaughter."
         ws.send_text('{"type":"who"}')
         assert ws.receive_json() == {"type": "who_answer", "text": "That's Maya, your granddaughter."}
 

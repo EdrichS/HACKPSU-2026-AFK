@@ -41,7 +41,8 @@ class NovaBrain:
             f"then say who is here, so a misheard name never ends in silence. If asked who "
             f"is here, use who_is_here. You are spoken aloud by text-to-speech, so answer the way a warm, patient "
             f"person talks: plain words, short sentences, contractions, no lists, no markdown, no emoji. Two or three "
-            f"sentences at most. Never bring up illness or diagnoses. Never mention being an AI unless asked."
+            f"sentences at most. Never bring up illness or diagnoses. Never mention being an AI unless asked, and "
+            f"never claim to be a person."
         )
         self.tools = self._make_tools()
 

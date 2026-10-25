@@ -136,12 +136,18 @@ def parse_client(raw: str) -> Frame | Audio | Who | EndVisit:
 
 
 def who_text(people: list[PresentPerson]) -> str:
-    """The spoken sentence naming everyone present, e.g. "That's David, your grandson."
+    """The spoken answer to "Who is this?", naming everyone present, e.g. "That's David, your grandson."
 
-    With one person this is also the arrival sentence. The backend calls this, never rewrites it.
+    Arrivals use arrival_text instead. The backend calls this, never rewrites it.
     """
     if not people:
         return EMPTY_ROOM_TEXT
     items = [f"{p.name}, your {p.relationship}" for p in people]
     body = items[0] if len(items) == 1 else ", ".join(items[:-1]) + ", and " + items[-1]
     return f"That's {body}."
+
+
+def arrival_text(person: PresentPerson) -> str:
+    """The spoken sentence for someone arriving, e.g. "Here's David, your grandson.": an introduction,
+    where "That's …" unasked can sound like correcting the wearer. The backend calls this, never rewrites it."""
+    return f"Here's {person.name}, your {person.relationship}."
