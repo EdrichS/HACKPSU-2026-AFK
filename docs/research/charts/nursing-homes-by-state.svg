@@ -1,0 +1,647 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="518.4pt" height="763.2pt" viewBox="0 0 518.4 763.2" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 763.2 
+L 518.4 763.2 
+L 518.4 0 
+L 0 0 
+z
+" style="fill: #fcfcfb"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 124.416 691.2 
+L 492.48 691.2 
+L 492.48 90 
+L 124.416 90 
+z
+" style="fill: #fcfcfb"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <path d="M 124.416 691.2 
+L 124.416 90 
+" clip-path="url(#pc00bec755f)" style="fill: none; stroke: #e1e0d9; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_2">
+      <defs>
+       <path id="mfc7a776c01" d="M 0 0 
+L 0 3.5 
+" style="stroke: #898781; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#mfc7a776c01" x="124.416" y="691.2" style="fill: #898781; stroke: #898781; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_1">
+      <text style="font-size: 10px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #898781" x="124.416" y="707.72" transform="rotate(-0 124.416 707.72)">0</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_3">
+      <path d="M 191.336727 691.2 
+L 191.336727 90 
+" clip-path="url(#pc00bec755f)" style="fill: none; stroke: #e1e0d9; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_4">
+      <g>
+       <use xlink:href="#mfc7a776c01" x="191.336727" y="691.2" style="fill: #898781; stroke: #898781; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_2">
+      <text style="font-size: 10px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #898781" x="191.336727" y="707.72" transform="rotate(-0 191.336727 707.72)">10</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_5">
+      <path d="M 258.257455 691.2 
+L 258.257455 90 
+" clip-path="url(#pc00bec755f)" style="fill: none; stroke: #e1e0d9; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_6">
+      <g>
+       <use xlink:href="#mfc7a776c01" x="258.257455" y="691.2" style="fill: #898781; stroke: #898781; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_3">
+      <text style="font-size: 10px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #898781" x="258.257455" y="707.72" transform="rotate(-0 258.257455 707.72)">20</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_7">
+      <path d="M 325.178182 691.2 
+L 325.178182 90 
+" clip-path="url(#pc00bec755f)" style="fill: none; stroke: #e1e0d9; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_8">
+      <g>
+       <use xlink:href="#mfc7a776c01" x="325.178182" y="691.2" style="fill: #898781; stroke: #898781; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_4">
+      <text style="font-size: 10px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #898781" x="325.178182" y="707.72" transform="rotate(-0 325.178182 707.72)">30</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_9">
+      <path d="M 392.098909 691.2 
+L 392.098909 90 
+" clip-path="url(#pc00bec755f)" style="fill: none; stroke: #e1e0d9; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_10">
+      <g>
+       <use xlink:href="#mfc7a776c01" x="392.098909" y="691.2" style="fill: #898781; stroke: #898781; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_5">
+      <text style="font-size: 10px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #898781" x="392.098909" y="707.72" transform="rotate(-0 392.098909 707.72)">40</text>
+     </g>
+    </g>
+    <g id="xtick_6">
+     <g id="line2d_11">
+      <path d="M 459.019636 691.2 
+L 459.019636 90 
+" clip-path="url(#pc00bec755f)" style="fill: none; stroke: #e1e0d9; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_12">
+      <g>
+       <use xlink:href="#mfc7a776c01" x="459.019636" y="691.2" style="fill: #898781; stroke: #898781; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_6">
+      <text style="font-size: 10px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #898781" x="459.019636" y="707.72" transform="rotate(-0 459.019636 707.72)">50</text>
+     </g>
+    </g>
+    <g id="text_7">
+     <text style="font-size: 10px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: middle; fill: #52514e" x="308.448" y="723.37" transform="rotate(-0 308.448 723.37)">Share of nursing-home residents with an active diagnosis (%)</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_13"/>
+     <g id="text_8">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="672.321208" transform="rotate(-0 120.916 672.321208)">Nevada</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_14"/>
+     <g id="text_9">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="660.977811" transform="rotate(-0 120.916 660.977811)">Arizona</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_15"/>
+     <g id="text_10">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="649.634415" transform="rotate(-0 120.916 649.634415)">Oregon</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_16"/>
+     <g id="text_11">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="638.291019" transform="rotate(-0 120.916 638.291019)">Utah</text>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_17"/>
+     <g id="text_12">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="626.947623" transform="rotate(-0 120.916 626.947623)">Washington</text>
+     </g>
+    </g>
+    <g id="ytick_6">
+     <g id="line2d_18"/>
+     <g id="text_13">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="615.604226" transform="rotate(-0 120.916 615.604226)">Minnesota</text>
+     </g>
+    </g>
+    <g id="ytick_7">
+     <g id="line2d_19"/>
+     <g id="text_14">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="604.26083" transform="rotate(-0 120.916 604.26083)">Idaho</text>
+     </g>
+    </g>
+    <g id="ytick_8">
+     <g id="line2d_20"/>
+     <g id="text_15">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="592.917434" transform="rotate(-0 120.916 592.917434)">California</text>
+     </g>
+    </g>
+    <g id="ytick_9">
+     <g id="line2d_21"/>
+     <g id="text_16">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="581.574038" transform="rotate(-0 120.916 581.574038)">Oklahoma</text>
+     </g>
+    </g>
+    <g id="ytick_10">
+     <g id="line2d_22"/>
+     <g id="text_17">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="570.230642" transform="rotate(-0 120.916 570.230642)">New Jersey</text>
+     </g>
+    </g>
+    <g id="ytick_11">
+     <g id="line2d_23"/>
+     <g id="text_18">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="558.887245" transform="rotate(-0 120.916 558.887245)">Missouri</text>
+     </g>
+    </g>
+    <g id="ytick_12">
+     <g id="line2d_24"/>
+     <g id="text_19">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="547.543849" transform="rotate(-0 120.916 547.543849)">Mississippi</text>
+     </g>
+    </g>
+    <g id="ytick_13">
+     <g id="line2d_25"/>
+     <g id="text_20">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="536.200453" transform="rotate(-0 120.916 536.200453)">Louisiana</text>
+     </g>
+    </g>
+    <g id="ytick_14">
+     <g id="line2d_26"/>
+     <g id="text_21">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="524.857057" transform="rotate(-0 120.916 524.857057)">Kansas</text>
+     </g>
+    </g>
+    <g id="ytick_15">
+     <g id="line2d_27"/>
+     <g id="text_22">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="513.51366" transform="rotate(-0 120.916 513.51366)">Illinois</text>
+     </g>
+    </g>
+    <g id="ytick_16">
+     <g id="line2d_28"/>
+     <g id="text_23">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="502.170264" transform="rotate(-0 120.916 502.170264)">Montana</text>
+     </g>
+    </g>
+    <g id="ytick_17">
+     <g id="line2d_29"/>
+     <g id="text_24">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="490.826868" transform="rotate(-0 120.916 490.826868)">Wisconsin</text>
+     </g>
+    </g>
+    <g id="ytick_18">
+     <g id="line2d_30"/>
+     <g id="text_25">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="479.483472" transform="rotate(-0 120.916 479.483472)">Alaska</text>
+     </g>
+    </g>
+    <g id="ytick_19">
+     <g id="line2d_31"/>
+     <g id="text_26">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="468.140075" transform="rotate(-0 120.916 468.140075)">Georgia</text>
+     </g>
+    </g>
+    <g id="ytick_20">
+     <g id="line2d_32"/>
+     <g id="text_27">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="456.796679" transform="rotate(-0 120.916 456.796679)">Iowa</text>
+     </g>
+    </g>
+    <g id="ytick_21">
+     <g id="line2d_33"/>
+     <g id="text_28">
+      <text style="font-weight: 700; font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #0b0b0b" x="120.916" y="445.545283" transform="rotate(-0 120.916 445.545283)">Pennsylvania</text>
+     </g>
+    </g>
+    <g id="ytick_22">
+     <g id="line2d_34"/>
+     <g id="text_29">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="434.109887" transform="rotate(-0 120.916 434.109887)">Ohio</text>
+     </g>
+    </g>
+    <g id="ytick_23">
+     <g id="line2d_35"/>
+     <g id="text_30">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="422.766491" transform="rotate(-0 120.916 422.766491)">Nebraska</text>
+     </g>
+    </g>
+    <g id="ytick_24">
+     <g id="line2d_36"/>
+     <g id="text_31">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="411.423094" transform="rotate(-0 120.916 411.423094)">Wyoming</text>
+     </g>
+    </g>
+    <g id="ytick_25">
+     <g id="line2d_37"/>
+     <g id="text_32">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="400.079698" transform="rotate(-0 120.916 400.079698)">Hawaii</text>
+     </g>
+    </g>
+    <g id="ytick_26">
+     <g id="line2d_38"/>
+     <g id="text_33">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="388.736302" transform="rotate(-0 120.916 388.736302)">South Dakota</text>
+     </g>
+    </g>
+    <g id="ytick_27">
+     <g id="line2d_39"/>
+     <g id="text_34">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="377.392906" transform="rotate(-0 120.916 377.392906)">New Mexico</text>
+     </g>
+    </g>
+    <g id="ytick_28">
+     <g id="line2d_40"/>
+     <g id="text_35">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="366.049509" transform="rotate(-0 120.916 366.049509)">Virginia</text>
+     </g>
+    </g>
+    <g id="ytick_29">
+     <g id="line2d_41"/>
+     <g id="text_36">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="354.706113" transform="rotate(-0 120.916 354.706113)">Maryland</text>
+     </g>
+    </g>
+    <g id="ytick_30">
+     <g id="line2d_42"/>
+     <g id="text_37">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="343.362717" transform="rotate(-0 120.916 343.362717)">Tennessee</text>
+     </g>
+    </g>
+    <g id="ytick_31">
+     <g id="line2d_43"/>
+     <g id="text_38">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="332.019321" transform="rotate(-0 120.916 332.019321)">Florida</text>
+     </g>
+    </g>
+    <g id="ytick_32">
+     <g id="line2d_44"/>
+     <g id="text_39">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="320.675925" transform="rotate(-0 120.916 320.675925)">South Carolina</text>
+     </g>
+    </g>
+    <g id="ytick_33">
+     <g id="line2d_45"/>
+     <g id="text_40">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="309.332528" transform="rotate(-0 120.916 309.332528)">North Carolina</text>
+     </g>
+    </g>
+    <g id="ytick_34">
+     <g id="line2d_46"/>
+     <g id="text_41">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="297.989132" transform="rotate(-0 120.916 297.989132)">Vermont</text>
+     </g>
+    </g>
+    <g id="ytick_35">
+     <g id="line2d_47"/>
+     <g id="text_42">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="286.645736" transform="rotate(-0 120.916 286.645736)">Kentucky</text>
+     </g>
+    </g>
+    <g id="ytick_36">
+     <g id="line2d_48"/>
+     <g id="text_43">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="275.30234" transform="rotate(-0 120.916 275.30234)">Delaware</text>
+     </g>
+    </g>
+    <g id="ytick_37">
+     <g id="line2d_49"/>
+     <g id="text_44">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="263.958943" transform="rotate(-0 120.916 263.958943)">Colorado</text>
+     </g>
+    </g>
+    <g id="ytick_38">
+     <g id="line2d_50"/>
+     <g id="text_45">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="252.615547" transform="rotate(-0 120.916 252.615547)">Indiana</text>
+     </g>
+    </g>
+    <g id="ytick_39">
+     <g id="line2d_51"/>
+     <g id="text_46">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="241.272151" transform="rotate(-0 120.916 241.272151)">Michigan</text>
+     </g>
+    </g>
+    <g id="ytick_40">
+     <g id="line2d_52"/>
+     <g id="text_47">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="229.928755" transform="rotate(-0 120.916 229.928755)">Rhode Island</text>
+     </g>
+    </g>
+    <g id="ytick_41">
+     <g id="line2d_53"/>
+     <g id="text_48">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="218.585358" transform="rotate(-0 120.916 218.585358)">New York</text>
+     </g>
+    </g>
+    <g id="ytick_42">
+     <g id="line2d_54"/>
+     <g id="text_49">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="207.241962" transform="rotate(-0 120.916 207.241962)">District of Columbia</text>
+     </g>
+    </g>
+    <g id="ytick_43">
+     <g id="line2d_55"/>
+     <g id="text_50">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="195.898566" transform="rotate(-0 120.916 195.898566)">Alabama</text>
+     </g>
+    </g>
+    <g id="ytick_44">
+     <g id="line2d_56"/>
+     <g id="text_51">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="184.55517" transform="rotate(-0 120.916 184.55517)">Arkansas</text>
+     </g>
+    </g>
+    <g id="ytick_45">
+     <g id="line2d_57"/>
+     <g id="text_52">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="173.211774" transform="rotate(-0 120.916 173.211774)">Connecticut</text>
+     </g>
+    </g>
+    <g id="ytick_46">
+     <g id="line2d_58"/>
+     <g id="text_53">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="161.868377" transform="rotate(-0 120.916 161.868377)">Massachusetts</text>
+     </g>
+    </g>
+    <g id="ytick_47">
+     <g id="line2d_59"/>
+     <g id="text_54">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="150.524981" transform="rotate(-0 120.916 150.524981)">Maine</text>
+     </g>
+    </g>
+    <g id="ytick_48">
+     <g id="line2d_60"/>
+     <g id="text_55">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="139.181585" transform="rotate(-0 120.916 139.181585)">North Dakota</text>
+     </g>
+    </g>
+    <g id="ytick_49">
+     <g id="line2d_61"/>
+     <g id="text_56">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="127.838189" transform="rotate(-0 120.916 127.838189)">West Virginia</text>
+     </g>
+    </g>
+    <g id="ytick_50">
+     <g id="line2d_62"/>
+     <g id="text_57">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="116.494792" transform="rotate(-0 120.916 116.494792)">New Hampshire</text>
+     </g>
+    </g>
+    <g id="ytick_51">
+     <g id="line2d_63"/>
+     <g id="text_58">
+      <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: end; fill: #52514e" x="120.916" y="105.151396" transform="rotate(-0 120.916 105.151396)">Texas</text>
+     </g>
+    </g>
+   </g>
+   <g id="line2d_64">
+    <path d="M 384.670708 691.2 
+L 384.670708 90 
+" clip-path="url(#pc00bec755f)" style="fill: none; stroke: #2a78d6; stroke-opacity: 0.5; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_65">
+    <path d="M 192.273617 691.2 
+L 192.273617 90 
+" clip-path="url(#pc00bec755f)" style="fill: none; stroke: #eb6834; stroke-opacity: 0.5; stroke-width: 0.8; stroke-linecap: square"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 124.416 691.2 
+L 124.416 90 
+" style="fill: none; stroke: #c3c2b7; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 124.416 691.2 
+L 492.48 691.2 
+" style="fill: none; stroke: #c3c2b7; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="PathCollection_1">
+    <defs>
+     <path id="m19d8177693" d="M 0 2.738613 
+C 0.726289 2.738613 1.422928 2.450055 1.936492 1.936492 
+C 2.450055 1.422928 2.738613 0.726289 2.738613 0 
+C 2.738613 -0.726289 2.450055 -1.422928 1.936492 -1.936492 
+C 1.422928 -2.450055 0.726289 -2.738613 0 -2.738613 
+C -0.726289 -2.738613 -1.422928 -2.450055 -1.936492 -1.936492 
+C -2.450055 -1.422928 -2.738613 -0.726289 -2.738613 0 
+C -2.738613 0.726289 -2.450055 1.422928 -1.936492 1.936492 
+C -1.422928 2.450055 -0.726289 2.738613 0 2.738613 
+z
+" style="stroke: #fcfcfb"/>
+    </defs>
+    <g clip-path="url(#pc00bec755f)">
+     <use xlink:href="#m19d8177693" x="277.329862" y="668.513208" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="303.295104" y="657.169811" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="311.927878" y="645.826415" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="316.612329" y="634.483019" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="324.308212" y="623.139623" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="332.40562" y="611.796226" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="336.822388" y="600.45283" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="339.164614" y="589.109434" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="340.436108" y="577.766038" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="346.726656" y="566.422642" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="347.12818" y="555.079245" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="347.328943" y="543.735849" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="355.292509" y="532.392453" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="356.095558" y="521.049057" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="362.051503" y="509.70566" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="365.263697" y="498.362264" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="368.074368" y="487.018868" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="370.751197" y="475.675472" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="371.152721" y="464.332075" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="380.387782" y="452.988679" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="381.056989" y="441.645283" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="382.328483" y="430.301887" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="382.596166" y="418.958491" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="382.796928" y="407.615094" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="383.131532" y="396.271698" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="385.072233" y="384.928302" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="389.355159" y="373.584906" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="389.756684" y="362.241509" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="390.894336" y="350.898113" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="391.095098" y="339.554717" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="392.098909" y="328.211321" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="395.110342" y="316.867925" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="398.389457" y="305.524528" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="400.062476" y="294.181132" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="400.664762" y="282.837736" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="401.869335" y="271.49434" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="403.810036" y="260.150943" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="404.613085" y="248.807547" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="404.746927" y="237.464151" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="407.691439" y="226.120755" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="409.297536" y="214.777358" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="409.63214" y="203.433962" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="413.446621" y="192.090566" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="415.989609" y="180.74717" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="419.937932" y="169.403774" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="423.886255" y="158.060377" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="424.3547" y="146.716981" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="433.857443" y="135.373585" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="441.821009" y="124.030189" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="447.843875" y="112.686792" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     <use xlink:href="#m19d8177693" x="457.012015" y="101.343396" style="fill: #2a78d6; stroke: #fcfcfb"/>
+    </g>
+   </g>
+   <g id="PathCollection_2">
+    <defs>
+     <path id="m4b2f414532" d="M 0 2.738613 
+C 0.726289 2.738613 1.422928 2.450055 1.936492 1.936492 
+C 2.450055 1.422928 2.738613 0.726289 2.738613 0 
+C 2.738613 -0.726289 2.450055 -1.422928 1.936492 -1.936492 
+C 1.422928 -2.450055 0.726289 -2.738613 0 -2.738613 
+C -0.726289 -2.738613 -1.422928 -2.450055 -1.936492 -1.936492 
+C -2.450055 -1.422928 -2.738613 -0.726289 -2.738613 0 
+C -2.738613 0.726289 -2.450055 1.422928 -1.936492 1.936492 
+C -1.422928 2.450055 -0.726289 2.738613 0 2.738613 
+z
+" style="stroke: #fcfcfb"/>
+    </defs>
+    <g clip-path="url(#pc00bec755f)">
+     <use xlink:href="#m4b2f414532" x="152.790388" y="668.513208" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="156.671791" y="657.169811" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="157.274077" y="645.826415" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="158.077126" y="634.483019" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="169.989015" y="623.139623" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="201.642519" y="611.796226" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="162.293132" y="600.45283" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="169.319808" y="589.109434" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="177.015692" y="577.766038" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="185.983069" y="566.422642" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="204.185507" y="555.079245" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="189.529868" y="543.735849" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="197.225751" y="532.392453" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="190.265996" y="521.049057" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="184.711575" y="509.70566" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="172.26432" y="498.362264" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="195.485812" y="487.018868" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="172.197399" y="475.675472" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="204.185507" y="464.332075" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="205.189318" y="452.988679" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="195.418892" y="441.645283" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="203.5163" y="430.301887" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="189.797551" y="418.958491" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="207.866147" y="407.615094" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="196.288861" y="396.271698" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="215.428189" y="384.928302" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="168.249076" y="373.584906" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="189.462947" y="362.241509" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="163.430784" y="350.898113" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="186.98688" y="339.554717" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="173.803497" y="328.211321" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="193.277428" y="316.867925" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="198.162641" y="305.524528" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="219.844957" y="294.181132" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="200.304105" y="282.837736" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="187.388404" y="271.49434" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="178.822551" y="260.150943" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="207.665385" y="248.807547" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="200.705629" y="237.464151" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="215.428189" y="226.120755" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="186.786118" y="214.777358" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="158.144047" y="203.433962" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="226.871633" y="192.090566" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="200.839471" y="180.74717" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="192.005935" y="169.403774" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="204.520111" y="158.060377" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="206.126208" y="146.716981" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="260.064314" y="135.373585" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="229.080017" y="124.030189" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="214.089775" y="112.686792" style="fill: #eb6834; stroke: #fcfcfb"/>
+     <use xlink:href="#m4b2f414532" x="215.762793" y="101.343396" style="fill: #eb6834; stroke: #fcfcfb"/>
+    </g>
+   </g>
+   <g id="text_59">
+    <text style="font-size: 8.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="387.749062" y="444.786033" transform="rotate(-0 387.749062 444.786033)">PA 38.35%</text>
+   </g>
+   <g id="text_60">
+    <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #52514e" x="387.347537" y="686.215623" transform="rotate(-0 387.347537 686.215623)">US 38.89%</text>
+   </g>
+   <g id="text_61">
+    <text style="font-size: 8px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #52514e" x="194.950447" y="686.215623" transform="rotate(-0 194.950447 686.215623)">US 10.14%</text>
+   </g>
+   <g id="legend_1">
+    <g id="PathCollection_3">
+     <g>
+      <use xlink:href="#m19d8177693" x="133.20472" y="78.30825" style="fill: #2a78d6; stroke: #fcfcfb"/>
+     </g>
+    </g>
+    <g id="text_62">
+     <text style="font-size: 8.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="144.25472" y="80.5395" transform="rotate(-0 144.25472 80.5395)">Non-Alzheimer's dementia (I4800)</text>
+    </g>
+    <g id="PathCollection_4">
+     <g>
+      <use xlink:href="#m4b2f414532" x="298.222923" y="78.30825" style="fill: #eb6834; stroke: #fcfcfb"/>
+     </g>
+    </g>
+    <g id="text_63">
+     <text style="font-size: 8.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="309.272923" y="80.5395" transform="rotate(-0 309.272923 80.5395)">Alzheimer's disease (I4200)</text>
+    </g>
+   </g>
+  </g>
+  <g id="text_64">
+   <text style="font-weight: 700; font-size: 12.5px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #0b0b0b" x="5.184" y="19.3875" transform="rotate(-0 5.184 19.3875)">Dementia diagnoses in US nursing homes, by state</text>
+  </g>
+  <g id="text_65">
+   <text style="font-size: 9.3px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #52514e" transform="translate(5.184 36.3438)">Q3 2026. The two diagnoses can overlap, so they are never added. Puerto Rico and the Virgin Islands</text>
+   <text style="font-size: 9.3px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; fill: #52514e" transform="translate(5.184 47.4387)">are suppressed by CMS.</text>
+  </g>
+  <g id="text_66">
+   <text style="font-size: 7.6px; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', 'DejaVu Sans', sans-serif; text-anchor: start; fill: #898781" x="5.184" y="757.2612" transform="rotate(-0 5.184 757.2612)">Source: CMS Minimum Data Set Frequency, state level, Q3 2026 (MDS_Frequency_Q3_2026.csv); counted with Spark.</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pc00bec755f">
+   <rect x="124.416" y="90" width="368.064" height="601.2"/>
+  </clipPath>
+ </defs>
+</svg>
