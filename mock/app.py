@@ -4,6 +4,7 @@ import io
 from datetime import datetime, timezone
 
 from fastapi import FastAPI, HTTPException, Response, UploadFile, WebSocket, WebSocketDisconnect
+from fastapi.middleware.cors import CORSMiddleware
 from PIL import Image, UnidentifiedImageError
 from pydantic import ValidationError
 
@@ -12,6 +13,8 @@ from contract.embedders import Box
 from contract.fakes import FakeFaceEmbedder, FakeVoiceEmbedder
 from contract.live import Arrived, Error, Frame, Present, PresentPerson, TrackedFace, Who, WhoAnswer, parse_client, who_text
 from contract.setup_api import (
+    LOCAL_ORIGIN_REGEX,
+    PHOTO_FORMATS,
     AssignIn,
     ConversationIn,
     DetectedFace,
@@ -28,6 +31,7 @@ from contract.setup_api import (
 PLACEHOLDER_CARD = "Placeholder card from the mock server. The real card comes from Gemini."
 
 app = FastAPI(title="Nametags mock")
+app.add_middleware(CORSMiddleware, allow_origin_regex=LOCAL_ORIGIN_REGEX, allow_methods=["*"], allow_headers=["*"])
 face_embedder = FakeFaceEmbedder()
 voice_embedder = FakeVoiceEmbedder()
 
@@ -149,12 +153,12 @@ def upload_photo(file: UploadFile) -> PhotoOut:
         image = Image.open(io.BytesIO(data))
     except UnidentifiedImageError:
         raise HTTPException(422, "Photos must be JPEG or PNG.") from None
-    if image.format not in ("JPEG", "PNG"):
+    if image.format not in PHOTO_FORMATS:
         raise HTTPException(422, "Photos must be JPEG or PNG.")
     photo_id = _new_id()
     _photos[photo_id] = {
         "data": data,
-        "media_type": "image/png" if image.format == "PNG" else "image/jpeg",
+        "media_type": "image/png" if PHOTO_FORMATS[image.format] == "png" else "image/jpeg",
         "width": image.width,
         "height": image.height,
     }
@@ -268,7 +272,13 @@ async def live(ws: WebSocket) -> None:
     announced = False
     try:
         while True:
-            raw = await ws.receive_text()
+            received = await ws.receive()
+            if received["type"] == "websocket.disconnect":
+                return
+            raw = received.get("text")
+            if raw is None:  # a binary frame; every contract message is JSON text
+                await ws.send_text(Error(message="Messages must be JSON text: frame, audio or who.").model_dump_json())
+                continue
             try:
                 message = parse_client(raw)
             except ValidationError:

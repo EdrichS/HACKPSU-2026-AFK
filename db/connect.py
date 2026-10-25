@@ -56,7 +56,8 @@ def check_embedders(conn: psycopg.Connection, face: EmbedderSpec, voice: Embedde
         if sizes[table] != spec.dimensions:
             raise EmbedderMismatch(
                 f"{table}.embedding is vector({sizes[table]}) but the {kind} embedder returns "
-                f"{spec.dimensions} numbers. Reset the database (deletes everything): {RESET_COMMAND}"
+                f"{spec.dimensions} numbers. Change vector({sizes[table]}) to vector({spec.dimensions}) "
+                f"in db/schema.sql, then reset the database (deletes everything): {RESET_COMMAND}"
             )
         query = sql.SQL("SELECT DISTINCT model FROM {} ORDER BY model").format(sql.Identifier(table))
         others = [m for (m,) in conn.execute(query) if m != spec.model]

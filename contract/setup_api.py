@@ -7,6 +7,13 @@ from pydantic import BaseModel, Field
 
 from contract.embedders import Box
 
+# Pages served from any port on this laptop may call the API from a browser; other sites may not.
+LOCAL_ORIGIN_REGEX = r"http://(localhost|127\.0\.0\.1)(:\d+)?"
+
+# Accepted photo formats as Pillow names them, with the extension each is stored under. "MPO" is a
+# JPEG that carries a second image, as phone Ultra HDR and portrait photos do.
+PHOTO_FORMATS = {"JPEG": "jpg", "MPO": "jpg", "PNG": "png"}
+
 
 class Person(BaseModel):
     id: int

@@ -1,4 +1,7 @@
+import io
+
 import pytest
+from PIL import Image
 
 from contract.fakes import FakeFaceEmbedder, make_wav
 from tests.helpers import PNG_1x1
@@ -114,3 +117,31 @@ def test_recordings_can_be_listed_and_one_deleted(client):
 def test_patch_rejects_an_overlong_name(client):
     pid = client.post("/people", json={"name": "David", "relationship": "grandson"}).json()["id"]
     assert client.patch(f"/people/{pid}", json={"name": "x" * 81}).status_code == 422
+
+
+def test_phone_jpeg_with_a_second_image_is_accepted(client):
+    # Ultra HDR and portrait photos from phones are JPEGs that carry a second image (Pillow: "MPO").
+    buf = io.BytesIO()
+    Image.new("RGB", (4, 3)).save(buf, "MPO", save_all=True, append_images=[Image.new("RGB", (4, 3))])
+    r = client.post("/photos", files={"file": ("p.jpg", buf.getvalue(), "image/jpeg")})
+    assert r.status_code == 201
+    assert (r.json()["width"], r.json()["height"]) == (4, 3)
+
+
+def test_voice_rejects_a_too_short_recording(client):
+    pid = add_person(client)
+    r = client.post(f"/people/{pid}/voice", files={"file": ("v.wav", make_wav(0.5), "audio/wav")})
+    assert r.status_code == 422 and "at least 1 second" in r.text
+    assert client.get("/people").json()[0]["has_voice"] is False
+
+
+def test_a_page_on_another_localhost_port_can_call_the_api(client):
+    preflight = client.options("/people", headers={
+        "Origin": "http://localhost:5173",
+        "Access-Control-Request-Method": "POST",
+        "Access-Control-Request-Headers": "content-type",
+    })
+    assert preflight.status_code == 200
+    assert preflight.headers["access-control-allow-origin"] == "http://localhost:5173"
+    other_site = client.get("/people", headers={"Origin": "https://example.com"})
+    assert "access-control-allow-origin" not in other_site.headers

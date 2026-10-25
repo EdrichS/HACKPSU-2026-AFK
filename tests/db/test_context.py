@@ -34,6 +34,15 @@ def test_a_bad_reply_changes_nothing(conn):                             # Review
     assert get_person(conn, pid).small_context == "" and list_facts(conn, pid) == []
 
 
+def test_a_blank_card_keeps_the_old_one(conn):
+    pid = create_person(conn, "David", "grandson").id
+    save_context(conn, pid, [], "notes", "David is your grandson.")
+    with pytest.raises(ValueError):
+        save_context(conn, pid, ["Works as a nurse"], "conversation", "   ")
+    assert get_person(conn, pid).small_context == "David is your grandson."
+    assert list_facts(conn, pid) == []
+
+
 def test_deleting_one_fact(conn):
     pid = create_person(conn, "David", "grandson").id
     save_context(conn, pid, ["Moved to Pittsburgh", "Works as a nurse"], "notes", "Card.")

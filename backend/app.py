@@ -15,13 +15,24 @@ from contextlib import asynccontextmanager
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException, Request, Response, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse, JSONResponse
 from PIL import Image, ImageOps, UnidentifiedImageError
 from psycopg import errors
 
 from contract.audio import check_wav
 from contract.fakes import FakeFaceEmbedder, FakeVoiceEmbedder
-from contract.setup_api import AssignIn, Person, PersonIn, PersonPatch, PhotoOut, VoiceOut, VoiceSample
+from contract.setup_api import (
+    LOCAL_ORIGIN_REGEX,
+    PHOTO_FORMATS,
+    AssignIn,
+    Person,
+    PersonIn,
+    PersonPatch,
+    PhotoOut,
+    VoiceOut,
+    VoiceSample,
+)
 from db import people, photos, voice
 from db.connect import DEFAULT_URL, check_embedders, open_pool
 from db.errors import Conflict, NotFound
@@ -31,7 +42,6 @@ face_embedder = FakeFaceEmbedder()
 voice_embedder = FakeVoiceEmbedder()
 
 EXIF_ORIENTATION = 0x0112
-FORMATS = {"JPEG": "jpg", "PNG": "png"}
 
 
 @asynccontextmanager
@@ -48,6 +58,7 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(title="Nametags backend", lifespan=lifespan)
+app.add_middleware(CORSMiddleware, allow_origin_regex=LOCAL_ORIGIN_REGEX, allow_methods=["*"], allow_headers=["*"])
 
 
 @app.exception_handler(NotFound)
@@ -80,13 +91,13 @@ def _upright(data: bytes) -> tuple[bytes, str, int, int]:
         image = Image.open(io.BytesIO(data))
     except UnidentifiedImageError:
         raise HTTPException(422, "Photos must be JPEG or PNG.") from None
-    if image.format not in FORMATS:
+    if image.format not in PHOTO_FORMATS:
         raise HTTPException(422, "Photos must be JPEG or PNG.")
-    extension = FORMATS[image.format]
+    extension = PHOTO_FORMATS[image.format]
     if image.getexif().get(EXIF_ORIENTATION, 1) != 1:
         upright = ImageOps.exif_transpose(image)
         buf = io.BytesIO()
-        upright.save(buf, image.format, quality=95)
+        upright.save(buf, "PNG" if extension == "png" else "JPEG", quality=95)  # an MPO becomes a plain JPEG
         return buf.getvalue(), extension, upright.width, upright.height
     return data, extension, image.width, image.height
 

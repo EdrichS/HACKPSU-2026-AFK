@@ -37,8 +37,13 @@ It makes no network calls.
 
 ## Setup and person-context routes
 
-Boxes are `{x, y, width, height}` in integer pixels of the submitted image, from the top left.
-Audio is WAV, 16 kHz, mono, 16-bit.
+- **Boxes** are `{x, y, width, height}` in integer pixels of the submitted image, from the top
+  left.
+- **Audio** is WAV, 16 kHz, mono, 16-bit, and at least 1 second long.
+- **Photos** are JPEG or PNG. Phone photos that carry a second image (Ultra HDR, portrait) count
+  as JPEG.
+- **Browsers:** a page served from any port on `localhost` or `127.0.0.1` may call both apps.
+  Pages from other sites can't.
 
 | Method and path | Body | Returns |
 |---|---|---|
@@ -50,7 +55,7 @@ Audio is WAV, 16 kHz, mono, 16-bit.
 | `GET /photos` | — | `list[PhotoOut]`, with each face's current label |
 | `GET /photos/{id}/image` | — | the stored image; 404 for an unknown photo |
 | `POST /faces/{face_id}/assign` | `AssignIn` (`person_id`, or null to unlabel) | `204`; 404 for an unknown face or person; 409 if that person is already labelled on another face in this photo |
-| `POST /people/{id}/voice` | multipart `file` (WAV) | `201 VoiceOut`; 422 for a wrong format; 404 for an unknown person |
+| `POST /people/{id}/voice` | multipart `file` (WAV) | `201 VoiceOut`; 422 for a wrong format or a recording under 1 second; 404 for an unknown person |
 | `GET /people/{id}/voice` | — | `list[VoiceSample]`, oldest first; 404 for an unknown person |
 | `DELETE /people/{id}/voice/{voice_sample_id}` | — | `204`; 404 if that person has no such recording |
 | `POST /people/{id}/notes` | `NotesIn` | `Person` with the updated card; 404 for an unknown person |

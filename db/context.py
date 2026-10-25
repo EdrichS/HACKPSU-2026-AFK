@@ -32,6 +32,8 @@ def save_context(
     small_context: str,
 ) -> Person:
     """Replace the card and add the new facts. A reply that breaks the limits changes nothing."""
+    if not small_context.strip():
+        raise ValueError("The card is blank.")  # the family clears a card with PATCH, not Gemini
     if len(small_context) > LIMIT:
         raise ValueError(f"The card is {len(small_context)} characters; the limit is {LIMIT}.")
     for fact in new_facts:

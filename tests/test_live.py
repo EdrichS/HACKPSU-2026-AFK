@@ -39,3 +39,11 @@ def test_mock_live_bad_message_keeps_socket_open(client):   # Review Focus 5
         assert ws.receive_json()["type"] == "error"
         ws.send_text('{"type":"who"}')
         assert ws.receive_json()["type"] == "who_answer"
+
+
+def test_mock_live_binary_message_keeps_socket_open(client):
+    with client.websocket_connect("/live") as ws:
+        ws.send_bytes(b"\xff\xd8 raw camera bytes")
+        assert ws.receive_json()["type"] == "error"
+        ws.send_text('{"type":"who"}')
+        assert ws.receive_json()["type"] == "who_answer"

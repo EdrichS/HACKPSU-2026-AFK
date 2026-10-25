@@ -54,8 +54,10 @@ def test_open_pool_names_the_fix_when_postgres_is_down():
 
 def test_check_embedders_catches_a_size_mismatch(conn):
     bigger = EmbedderSpec(dimensions=512, metric="cosine", cutoff=0.75, model="bigger-voice")
-    with pytest.raises(EmbedderMismatch, match=r"vector\(192\)"):
+    with pytest.raises(EmbedderMismatch, match=r"vector\(192\)") as caught:
         check_embedders(conn, FakeFaceEmbedder().spec, bigger)
+    # A reset alone recreates vector(192); the message must name the schema edit first.
+    assert "vector(512) in db/schema.sql" in str(caught.value)
 
 
 def test_check_embedders_catches_samples_from_another_model(conn):
