@@ -1,6 +1,14 @@
 # syntax=docker/dockerfile:1
 # The Nametags API in one image: Python 3.12, dlib built from source, the face and voice packages,
-# and the speech models baked in. Postgres runs beside it (docker-compose.yml).
+# the speech models, and the built frontend. Postgres runs beside it (docker-compose.yml).
+
+# The frontend: React + Vite, built to static files the API serves at /.
+FROM node:22-alpine AS web
+WORKDIR /web
+COPY frontend/package.json frontend/package-lock.json ./
+RUN npm ci --no-audit --no-fund
+COPY frontend/ ./
+RUN npm run build
 
 FROM python:3.12-slim-bookworm AS build
 ENV DEBIAN_FRONTEND=noninteractive
@@ -32,6 +40,7 @@ WORKDIR /app
 COPY --from=build /app/.venv /app/.venv
 COPY --from=build /app/hackpsu_voice_rec/models /app/hackpsu_voice_rec/models
 COPY . .
+COPY --from=web /web/dist /app/frontend/dist
 ENV PATH=/app/.venv/bin:$PATH \
     PYTHONUNBUFFERED=1 \
     NAMETAGS_DATA=data \

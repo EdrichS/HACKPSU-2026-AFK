@@ -14,6 +14,7 @@ dependencies = [
     "pydantic>=2.7",
     "python-dotenv>=1.0.1",
     "python-multipart>=0.0.32",
+    "speechmatics-rt>=1.2.1",
     "uvicorn>=0.54.0",
     "websockets>=17.3",
 ]

@@ -16,10 +16,13 @@ docker compose ps               # both services "healthy"
 curl -s localhost:8000/health   # {"status":"ok",...}
 ```
 
-The API listens on port 8000 (`NAMETAGS_PORT` in `.env`), with interactive docs at `/docs` and a
-rough test UI at `/ui/` (the enrollment wizard) and `/ui/live.html` (the glasses view) that
-exercises every route from a browser. Open it on `http://localhost:8000/ui/` on the machine
-itself, since browsers allow the camera and microphone only on localhost or https.
+The API listens on port 8000 (`NAMETAGS_PORT` in `.env`), with interactive docs at `/docs`. It
+also serves the frontend (`frontend/`, built into the image): `http://localhost:8000/` is the
+launcher, `/visitor` the visitor sign-up, `/setup` the glasses user's setup and `/live` the glasses
+view. The pages call `/api/...`, which the API maps onto its routes, so no CORS is involved. Open
+them on the machine itself, since browsers allow the camera and microphone only on localhost or
+https. For frontend development, `npm run dev` in `frontend/` serves the pages on port 5173 and
+proxies `/api` to this API.
 The API has no login, so it listens on 127.0.0.1 only and answers pages from localhost only;
 `NAMETAGS_BIND` and `NAMETAGS_CORS_ORIGINS` open it up (see Environment).
 Postgres is reachable only from the host itself, on 5433, for the CLIs and `psql`.
@@ -91,12 +94,16 @@ deletes every person, photo and recording.
 | Variable | Default | Meaning |
 |---|---|---|
 | `GEMINI_API_KEY` | empty | notes and visit summaries into facts and cards; without it the wizard and `python -m enroll` store notes as typed, `POST /people/{id}/notes` and `/conversation` store nothing, and visits aren't summarized |
+| `GEMINI_MODEL` | the default in `backend/gemini.py` | the Gemini model for notes and visits; set an older Flash (`gemini-3.6-flash`) when the default answers 503 "high demand" |
 | `ANTHROPIC_API_KEY` | empty | Nova; without it the API still recognizes, captions and summarizes |
+| `SPEECHMATICS_API_KEY` | empty | live captions word by word from Speechmatics real-time (`SPEECHMATICS` works too); the `/live` audio is streamed to the service while set. Empty: the local model captions each finished sentence |
+| `NAMETAGS_CAPTIONS` | empty | `local` keeps captions on this machine even with a key |
 | `NAMETAGS_BIND` | `127.0.0.1` | address the API listens on; `0.0.0.0` opens it to the network, and it has no login |
 | `NAMETAGS_CORS_ORIGINS` | empty | origins of a UI on another site, comma-separated; empty allows pages on localhost only, `*` lets any site read everything |
 | `NAMETAGS_PORT` | `8000` | host port |
 | `NAMETAGS_EMBEDDERS` | `real` | `fake` uses the contract's stand-ins (tests only) |
 | `NAMETAGS_TRANSCRIBE` | `1` | `0` turns captions off |
+| `NAMETAGS_FRONTEND_DIST` | `frontend/dist` | the built frontend the API serves at `/` (the image builds it there) |
 
 ## Running without Docker
 

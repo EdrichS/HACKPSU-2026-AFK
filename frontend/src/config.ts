@@ -32,6 +32,24 @@ export function resolveGlassesUserName(search: string = location.search): string
   return fromEnv || PLACEHOLDER_NAME;
 }
 
+/** The name a ?for= link gave this tab, if any. It beats the API: a visitor may sign up for someone else's glasses. */
+export function linkedGlassesUserName(): string | null {
+  try {
+    return sessionStorage.getItem(LINK_NAME_KEY)?.trim() || null;
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Voices the glasses prefer to speak with, best first, by name (a substring of the browser's voice
+ * name, case-insensitive). VITE_VOICE overrides the list, comma-separated. Only voices installed
+ * on the device count; with none of them installed, the system's default English voice speaks.
+ */
+export const PREFERRED_VOICES: readonly string[] = ((import.meta.env.VITE_VOICE as string | undefined)?.split(",") ?? ["Daniel", "Samantha"])
+  .map((name) => name.trim())
+  .filter(Boolean);
+
 /** The Consent screen's contact address, or null to show the design's placeholder. */
 export const CONTACT_EMAIL: string | null = (import.meta.env.VITE_CONTACT_EMAIL as string | undefined)?.trim() || null;
 

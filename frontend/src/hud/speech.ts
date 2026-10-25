@@ -3,6 +3,8 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 
+import { PREFERRED_VOICES } from "../config";
+
 const RATE = 0.95;
 /** The mic stays muted this long after speech ends, for the room's echo. */
 const MUTE_TAIL_MS = 300;
@@ -29,9 +31,16 @@ class Speaker {
     this.pickVoice();
   }
 
+  /**
+   * The first installed voice from PREFERRED_VOICES (a name match, so "Samantha" also finds the
+   * better "Samantha (Enhanced)" once it's downloaded), else the system's default English voice.
+   */
   private readonly pickVoice = () => {
     const local = (this.synth?.getVoices() ?? []).filter((v) => v.localService && v.lang.toLowerCase().startsWith("en"));
-    this.voice = local.find((v) => v.default) ?? local.find((v) => /^en[-_]us$/i.test(v.lang)) ?? local[0] ?? null;
+    const preferred = PREFERRED_VOICES.map((name) => name.toLowerCase())
+      .map((name) => local.find((v) => v.name.toLowerCase().includes(name)))
+      .find((v) => v !== undefined);
+    this.voice = preferred ?? local.find((v) => v.default) ?? local.find((v) => /^en[-_]us$/i.test(v.lang)) ?? local[0] ?? null;
   };
 
   /** Some browsers only allow speech after one call inside a user gesture. Says nothing. */

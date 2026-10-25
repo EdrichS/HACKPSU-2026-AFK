@@ -7,15 +7,21 @@ The screens from `Design/HANDOFF.md`, in React + Vite + TypeScript:
 | `/visitor` | Visitor sign up: Intro, Consent, Face photos, Voice, About you, Thank you |
 | `/setup` | Glasses user setup: Name, Context, Voice, All set |
 | `/live` | Glasses live view (HUD) |
+| `/manage` | Manage (not designed, real backend only): every person with their card, facts, photos and voice recordings, plus faces still to label |
 | `/` | A launcher linking to the three |
 
 ## Run
 
-Start the API first, from the repo folder: the mock (no database) or the real backend.
+Start the API first, from the repo folder: the real backend (`docker compose up -d --build`, or
+`uv run uvicorn backend.app:app --port 8000` against `docker compose up -d --wait db`), or the mock
+(no database, no recognition):
 
 ```
 uv run uvicorn mock.app:app --port 8000
 ```
+
+In Docker the API also serves this app itself: `http://localhost:8000/` is the built frontend,
+calling `/api/...` on the same origin. `npm run dev` is for working on the pages.
 
 Then, from this folder:
 
@@ -54,6 +60,7 @@ in `server.https` in `vite.config.ts`) or through an HTTPS tunnel.
   Recorder, NameTag) and the page shell.
 - `src/api/contract.ts`: the TypeScript copy of `contract/*.py`. Change both together.
 - `src/api/visitor.ts`: what Upload on About you sends, in order.
-- `src/api/glassesUser.ts`: the glasses user is kept in this browser until the API has a route
-  for them (see `report.txt` in the repo folder).
+- `src/api/glassesUser.ts`: the glasses user is the Person with relationship `user` on the API
+  (`GET /user`); setup creates or updates them, uploads their voice and sends their notes. A copy
+  of the name stays in this browser so the visitor copy can greet with it at once.
 - `src/hud/`: the live view.

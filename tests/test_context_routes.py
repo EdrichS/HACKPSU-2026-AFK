@@ -112,3 +112,69 @@ def test_deleting_a_fact(backend_client, fake):
     assert backend_client.delete(f"/people/{pid}/facts/{first}").status_code == 204
     assert facts_of(backend_client, pid) == [("David loves cars.", "notes")]
     assert backend_client.delete(f"/people/{pid}/facts/{first}").status_code == 404
+
+
+# -- the management view's routes: facts typed by the family, the card rewritten from them ----------
+
+def test_the_family_adds_rewords_and_deletes_facts_directly(backend_client, fake):
+    pid = new_person(backend_client)
+    r = backend_client.post(f"/people/{pid}/facts", json={"text": "  David   plays the cello. "})
+    assert r.status_code == 201, r.text
+    fact = r.json()
+    assert fact["text"] == "David plays the cello." and fact["source"] == "notes"
+    assert backend_client.post(f"/people/{pid}/facts", json={"text": "david plays the cello."}).status_code == 409  # a repeat
+    assert backend_client.post(f"/people/{pid}/facts", json={"text": "   "}).status_code == 422
+    assert backend_client.post("/people/999/facts", json={"text": "Nobody."}).status_code == 404
+    backend_client.post(f"/people/{pid}/facts", json={"text": "David lives in Erie."})
+
+    r = backend_client.patch(f"/people/{pid}/facts/{fact['id']}", json={"text": "David plays the cello in a quartet."})
+    assert r.status_code == 200 and r.json()["text"] == "David plays the cello in a quartet." and r.json()["id"] == fact["id"]
+    assert backend_client.patch(f"/people/{pid}/facts/{fact['id']}", json={"text": "David lives in Erie."}).status_code == 409
+    assert backend_client.patch(f"/people/{pid}/facts/999", json={"text": "x"}).status_code == 404
+    other = new_person(backend_client, "Maria", "daughter")
+    assert backend_client.patch(f"/people/{other}/facts/{fact['id']}", json={"text": "x"}).status_code == 404  # not hers
+    assert facts_of(backend_client, pid) == [("David plays the cello in a quartet.", "notes"), ("David lives in Erie.", "notes")]
+    assert fake.kinds() == []  # none of this went through Gemini
+
+    assert backend_client.delete(f"/people/{pid}/facts/{fact['id']}").status_code == 204
+    assert facts_of(backend_client, pid) == [("David lives in Erie.", "notes")]
+
+
+def test_the_card_is_rewritten_from_the_stored_facts(backend_client, fake):
+    pid = new_person(backend_client)
+    assert backend_client.post(f"/people/{pid}/card").status_code == 422  # nothing to write from yet
+    backend_client.post(f"/people/{pid}/facts", json={"text": "David lives in Erie."})
+    backend_client.post(f"/people/{pid}/facts", json={"text": "David plays the cello."})
+    fake.replies = {"card": {"small_context": "Lives in Erie · Plays the cello | Ask about: the quartet"}}
+    r = backend_client.post(f"/people/{pid}/card")
+    assert r.status_code == 200, r.text
+    assert r.json()["small_context"] == "Lives in Erie · Plays the cello | Ask about: the quartet"
+    assert fake.kinds() == ["card"]  # the facts are already stored: only the card call
+    assert "David lives in Erie." in fake.contents("card") and "Just added, from typed notes" in fake.contents("card")
+    assert facts_of(backend_client, pid) == [("David lives in Erie.", "notes"), ("David plays the cello.", "notes")]  # unchanged
+    assert backend_client.post("/people/999/card").status_code == 404
+
+
+def test_rewriting_the_card_without_gemini_keeps_the_old_one(backend_client, monkeypatch):
+    monkeypatch.setattr(gemini, "get_client", lambda: (_ for _ in ()).throw(RuntimeError("GEMINI_API_KEY is not set")))
+    pid = new_person(backend_client)
+    backend_client.patch(f"/people/{pid}", json={"small_context": "Your grandson."})
+    r = backend_client.post(f"/people/{pid}/card")
+    assert r.status_code == 503 and "Gemini" in r.json()["detail"]
+    assert backend_client.get(f"/people/{pid}").json()["small_context"] == "Your grandson."
+
+
+def test_one_person_and_their_recording_can_be_fetched(backend_client):
+    from contract.fakes import make_wav
+
+    pid = new_person(backend_client)
+    assert backend_client.get(f"/people/{pid}").json()["name"] == "David"
+    assert backend_client.get("/people/999").status_code == 404
+    wav = make_wav(2.0)
+    sid = backend_client.post(f"/people/{pid}/voice", files={"file": ("v.wav", wav, "audio/wav")}).json()["voice_sample_id"]
+    r = backend_client.get(f"/people/{pid}/voice/{sid}/audio")
+    assert r.status_code == 200 and r.headers["content-type"].startswith("audio/wav") and r.content == wav
+    other = new_person(backend_client, "Maria", "daughter")
+    assert backend_client.get(f"/people/{other}/voice/{sid}/audio").status_code == 404  # not hers
+    assert backend_client.delete(f"/people/{pid}/voice/{sid}").status_code == 204
+    assert backend_client.get(f"/people/{pid}/voice/{sid}/audio").status_code == 404

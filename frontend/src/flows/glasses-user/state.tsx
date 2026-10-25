@@ -2,7 +2,7 @@
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 
-import { loadGlassesUser } from "../../api/glassesUser";
+import { loadGlassesUser, syncGlassesUser } from "../../api/glassesUser";
 import { previewEnabled, sampleRecording } from "../../dev/preview";
 import type { Recording } from "../../lib/recording";
 
@@ -28,6 +28,21 @@ export function GlassesUserFlowProvider({ children }: { children: ReactNode }) {
   const [context, setContext] = useState(saved?.context ?? "");
   const [voice, setVoiceState] = useState<Recording | null>(() => (preview ? sampleRecording() : null));
   const [doneName, setDoneName] = useState<string | null>(null);
+
+  // A user the API already knows fills the name in, unless something was typed already. The
+  // name remembered in this browser gives way too: the API is where a rename (the manage pages)
+  // lands, and keeping the old copy here would write it back over the new name on Upload.
+  useEffect(() => {
+    if (preview) return;
+    let cancelled = false;
+    const remembered = saved?.name ?? "";
+    void syncGlassesUser().then((user) => {
+      if (user && !cancelled) setName((current) => (current.trim() && current !== remembered ? current : user.name));
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [preview]);
 
   const setVoice = useCallback((next: Recording | null) => {
     setVoiceState((previous) => {

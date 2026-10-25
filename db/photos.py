@@ -84,6 +84,12 @@ def list_photos(conn: psycopg.Connection) -> list[PhotoOut]:
     return list(photos.values())
 
 
+def delete_photo(conn: psycopg.Connection, photo_id: int) -> str | None:
+    """Delete a photo and every face found in it; return its file to delete after the commit, or None if missing."""
+    row = conn.execute("DELETE FROM photos WHERE id = %(id)s RETURNING file_path", {"id": photo_id}).fetchone()
+    return row[0] if row else None
+
+
 def photo_file(conn: psycopg.Connection, photo_id: int) -> str | None:
     row = conn.execute("SELECT file_path FROM photos WHERE id = %(id)s", {"id": photo_id}).fetchone()
     return row[0] if row else None

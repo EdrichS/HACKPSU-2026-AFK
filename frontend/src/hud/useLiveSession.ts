@@ -7,7 +7,7 @@ import { liveUrl } from "../api/client";
 import type { PresentPerson, ServerMessage } from "../api/contract";
 import { MIC_CONSTRAINTS, startPcmCapture, type PcmCapture } from "../lib/pcmCapture";
 import { CONTRACT_MIN_SECONDS, concat, encodeWav, resampleTo16k, toBase64 } from "../lib/wav";
-import { useCaptions, type CaptionLine } from "./captions";
+import { useCaptions, type CaptionLine } from "./captionLines";
 import { frameToStage, type FrameGeometry } from "./geometry";
 import { useSpeech } from "./speech";
 import type { FaceSnapshot } from "./tracker";
@@ -22,7 +22,11 @@ const FRAME_INTERVAL_MS = 333;
 const FRAME_TIMEOUT_MS = 2000;
 /** Never more than this many frames awaiting a "present", or a slow server falls ever further behind. */
 const MAX_FRAMES_IN_FLIGHT = 2;
-const AUDIO_CHUNK_MS = 3000;
+/**
+ * Audio goes out as soon as a second of it is in (the contract's minimum per message): short
+ * chunks keep live captions close behind the words; the server's own voice detector joins them.
+ */
+const AUDIO_POLL_MS = 250;
 
 export interface LiveSession {
   started: boolean;
@@ -144,30 +148,41 @@ export function useLiveSession(videoRef: RefObject<HTMLVideoElement | null>, mir
         case "present": {
           const geometry = inFlight.current.shift() ?? lastGeometry.current;
           lastGeometry.current = geometry;
+          // Only people the glasses know get a box and a tag; a stranger or an unsure face shows nothing.
           const stageFaces = geometry
-            ? message.faces.map((face) => ({
-                box: frameToStage(face.box, geometry, mirrorRef.current),
-                state: face.state,
-                personId: face.person_id,
-              }))
+            ? message.faces
+                .filter((face) => face.state === "named" && face.person_id !== null)
+                .map((face) => ({
+                  box: frameToStage(face.box, geometry, mirrorRef.current),
+                  state: face.state,
+                  personId: face.person_id,
+                }))
             : [];
           setFaces({ faces: stageFaces, at: performance.now() });
           setPeople(message.people);
           remember(message.people);
           break;
         }
+        // The glasses speak only when spoken to: "Who is this?" and Nova. Arrivals update the
+        // tags and the panel silently, and a stranger is never called out.
         case "arrived":
           remember([message.person]);
           if (message.via === "voice") setVoicePersonId(message.person.person_id);
-          say(message.text);
           break;
         case "unknown":
+          break;
         case "who_answer":
           say(message.text);
           break;
         case "caption":
           setCaptionsHeard(true);
           heard(message);
+          break;
+        case "answer":
+          say(message.text); // Nova's reply, spoken by this device like every other sentence
+          break;
+        case "visit_saved":
+          console.info("Name Tags live: visit saved for", message.name, message.new_facts);
           break;
         case "error":
           console.warn("Name Tags live:", message.message);
@@ -212,7 +227,9 @@ export function useLiveSession(videoRef: RefObject<HTMLVideoElement | null>, mir
       if (!video || video.readyState < HTMLMediaElement.HAVE_CURRENT_DATA || !video.videoWidth) return;
       const now = performance.now();
       const queue = inFlight.current;
-      if (queue.length > 0 && (queue.length >= MAX_FRAMES_IN_FLIGHT || now - queue[0].sentAt < FRAME_TIMEOUT_MS)) return;
+      // A frame the server answered with an error (no "present") would otherwise wait here forever.
+      while (queue.length > 0 && now - queue[0].sentAt >= FRAME_TIMEOUT_MS) queue.shift();
+      if (queue.length >= MAX_FRAMES_IN_FLIGHT) return;
       if (now - lastSent < FRAME_INTERVAL_MS) return;
       const geometry: FrameGeometry = {
         frameWidth: FRAME_WIDTH,
@@ -233,8 +250,8 @@ export function useLiveSession(videoRef: RefObject<HTMLVideoElement | null>, mir
     return () => window.clearInterval(timer);
   }, [camera, open, send, videoRef]);
 
-  // Audio: 3 s chunks of 16 kHz WAV. While the app speaks the samples are dropped, which is how
-  // the contract mutes the mic.
+  // Audio: chunks of about 1 s of 16 kHz WAV. While the app speaks the samples are dropped, which
+  // is how the contract mutes the mic.
   useEffect(() => {
     if (!mic) return;
     let capture: PcmCapture | null = null;
@@ -265,7 +282,7 @@ export function useLiveSession(videoRef: RefObject<HTMLVideoElement | null>, mir
       const rate = capture.sampleRate;
       const samples = concat(chunks);
       if (samples.length < rate * CONTRACT_MIN_SECONDS) {
-        chunks = [samples]; // under the contract's 1 s: carry it into the next chunk
+        chunks = [samples]; // under the contract's 1 s: keep collecting
         return;
       }
       chunks = [];
@@ -273,7 +290,7 @@ export function useLiveSession(videoRef: RefObject<HTMLVideoElement | null>, mir
       void resampleTo16k(samples, rate).then((pcm) => {
         if (!stopped) send({ type: "audio", ts, wav: toBase64(encodeWav(pcm)) });
       });
-    }, AUDIO_CHUNK_MS);
+    }, AUDIO_POLL_MS);
 
     return () => {
       stopped = true;

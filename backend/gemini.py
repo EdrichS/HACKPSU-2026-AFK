@@ -152,12 +152,30 @@ def _bullets(items: list[str]) -> str:
     return "\n".join(f"- {item}" for item in items) or "(none yet)"
 
 
+def is_patient(person: Person) -> bool:
+    """The app's user (the wearer) is a people row too; their own notes are facts about the patient."""
+    return person.relationship.strip().lower() in ("user", "patient")
+
+
+def _person_line(person: Person) -> str:
+    if is_patient(person):
+        return f"Person: {person.name}, the patient themselves (the app's user, wearing the glasses)"
+    return f"Person: {person.name}, the patient's {person.relationship}"
+
+
 def facts_request(person: Person, existing: list[Fact], text: Text, today: date, patient: str | None = None) -> str:
     kind = "Typed notes" if isinstance(text, str) else "Transcript of the visit"
-    who = f"The patient is {patient}; lines from {patient} or from 'Patient' are the patient.\n" if patient else ""
+    if is_patient(person):
+        # The visitor rule "never facts about the patient" would empty this record: it IS the patient's.
+        who = (
+            f"This is {person.name}'s own record, so rule 1 is reversed here: record facts about "
+            f"{person.name} (first-person text is {person.name} speaking), and nothing about anyone else.\n"
+        )
+    else:
+        who = f"The patient is {patient}; lines from {patient} or from 'Patient' are the patient.\n" if patient else ""
     return (
         f"Today: {today.isoformat()}\n"
-        f"Person: {person.name}, the patient's {person.relationship}\n"
+        f"{_person_line(person)}\n"
         f"{who}\n"
         f"Stored facts:\n{_bullets([f.text for f in existing])}\n\n"
         f"{kind}:\n{format_text(text)}\n"
@@ -169,7 +187,7 @@ def card_request(person: Person, existing: list[Fact], new_facts: list[str], sou
     just_added = "from the latest conversation" if source == "conversation" else "from typed notes, not a conversation"
     return (
         f"Today: {today.isoformat()}\n"
-        f"Person: {person.name}, the patient's {person.relationship}\n\n"
+        f"{_person_line(person)}\n\n"
         f"Stored facts, oldest first:\n{_bullets(stored)}\n\n"
         f"Just added, {just_added}:\n{_bullets(new_facts)}\n"
     )

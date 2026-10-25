@@ -1,5 +1,5 @@
-// What the caption bar shows. Two sources: transcript lines from the server (the PROPOSED
-// "caption" message) and the app's own spoken sentences, which must also appear on screen.
+// What the caption bar shows. Two sources: transcript lines from the server (the "caption"
+// message) and the app's own spoken sentences, which must also appear on screen.
 
 import { useEffect, useMemo, useReducer } from "react";
 
@@ -40,7 +40,8 @@ function reducer(state: State, action: Action): State {
   switch (action.type) {
     case "heard": {
       const { speaker, text, final } = action.message;
-      const line = { speaker: speaker?.trim() || UNKNOWN_SPEAKER, text, final, updatedAt: action.now, active: false };
+      // The server sends finished utterances; a line without the flag is final.
+      const line = { speaker: speaker?.trim() || UNKNOWN_SPEAKER, text, final: final ?? true, updatedAt: action.now, active: false };
       return { ...state, heard: line };
     }
     case "spokenStart":

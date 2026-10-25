@@ -120,14 +120,6 @@ def test_nova_is_off_without_claude(backend_client, backend_module):
     assert r.status_code == 503
 
 
-def test_the_test_ui_is_served(backend_client):
-    r = backend_client.get("/ui/")
-    assert r.status_code == 200 and "Name Tags" in r.text and "/enroll/check/photo" in r.text
-    assert backend_client.get("/ui/live.html").status_code == 200
-    assert backend_client.get("/ui/common.js").status_code == 200
-    assert backend_client.get("/", follow_redirects=False).headers["location"] == "/ui/"
-
-
 def test_enroll_notes_go_through_gemini_when_it_is_on(backend_client, backend_module, monkeypatch, speech_as_is, conn):
     from tests.gemini_fakes import FakeGemini
 

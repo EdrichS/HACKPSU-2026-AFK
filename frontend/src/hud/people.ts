@@ -20,12 +20,15 @@ function sentences(text: string): string[] {
 }
 
 /**
- * The info panel's bullets from a person's small_context: one per line, or one per sentence when
- * the summary is a single paragraph; at most 3. The design's bullets have no closing period.
+ * The info panel's bullets from a person's small_context: one per line or per " · " / " | " part
+ * (the card's own separators: "Last spoke about: x · Works as a nurse | Ask about: y"), else one
+ * per sentence; the newest facts when there is no card yet; at most 3. The design's bullets have
+ * no closing period.
  */
-export function toBullets(smallContext: string): string[] {
-  let lines = smallContext.split(/\r?\n/).map(stripMarker).filter(Boolean);
+export function toBullets(smallContext: string, facts: readonly string[] = []): string[] {
+  let lines = smallContext.split(/\r?\n|\s*[|·•]\s*/).map(stripMarker).filter(Boolean);
   if (lines.length === 1) lines = sentences(lines[0]).map(stripMarker).filter(Boolean);
+  if (lines.length === 0) lines = facts.map(stripMarker).filter(Boolean);
   return lines.slice(0, MAX_BULLETS).map((line) => line.replace(/(?<!\.)\.$/, ""));
 }
 

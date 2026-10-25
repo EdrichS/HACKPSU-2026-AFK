@@ -29,6 +29,15 @@ def list_voice(conn: psycopg.Connection, person_id: int) -> list[VoiceSample]:
     return [VoiceSample(voice_sample_id=sid, created_at=created_at) for sid, created_at in rows]
 
 
+def voice_file(conn: psycopg.Connection, person_id: int, sample_id: int) -> str | None:
+    """The recording's path, or None when it isn't this person's."""
+    row = conn.execute(
+        "SELECT audio_path FROM voice_samples WHERE id = %(sample_id)s AND person_id = %(person_id)s",
+        {"sample_id": sample_id, "person_id": person_id},
+    ).fetchone()
+    return row[0] if row else None
+
+
 def delete_voice(conn: psycopg.Connection, person_id: int, sample_id: int) -> str | None:
     """Delete one recording; return its file to delete after the commit, or None if not theirs."""
     row = conn.execute(

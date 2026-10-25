@@ -3,7 +3,7 @@
 from datetime import datetime
 from typing import Literal
 
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, field_validator
 
 from contract.embedders import Box
 
@@ -53,6 +53,20 @@ class Fact(BaseModel):
     text: str
     source: Literal["conversation", "notes"]
     created_at: datetime
+
+
+class FactIn(BaseModel):
+    """A fact typed by the family (POST adds one, PATCH rewords one); stored as written, source 'notes'."""
+
+    text: str = Field(min_length=1, max_length=300)
+
+    @field_validator("text")
+    @classmethod
+    def _one_line(cls, text: str) -> str:
+        text = " ".join(text.split())
+        if not text:
+            raise ValueError("The fact is blank.")
+        return text
 
 
 class DetectedFace(BaseModel):

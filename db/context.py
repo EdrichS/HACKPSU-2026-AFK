@@ -8,8 +8,10 @@ from typing import Literal
 
 import psycopg
 
+import psycopg.errors
+
 from contract.setup_api import Fact, Person
-from db.errors import NotFound
+from db.errors import Conflict, NotFound
 from db.people import get_person
 
 LIMIT = 300  # characters, for the card and for each fact
@@ -75,6 +77,38 @@ def _insert_facts(conn: psycopg.Connection, person_id: int, new_facts: list[str]
             " ON CONFLICT DO NOTHING",
             {"person_id": person_id, "text": fact, "source": source},
         )
+
+
+def add_fact(conn: psycopg.Connection, person_id: int, text: str, source: Literal["conversation", "notes"] = "notes") -> Fact:
+    """One fact typed by the family, as written. Raises Conflict for a repeat, NotFound for no such person."""
+    text = " ".join(text.split())
+    _check_facts([text])
+    if get_person(conn, person_id) is None:
+        raise NotFound("person")
+    try:
+        row = conn.execute(
+            "INSERT INTO facts (person_id, text, source) VALUES (%(person_id)s, %(text)s, %(source)s)"
+            " RETURNING id, text, source, created_at",
+            {"person_id": person_id, "text": text, "source": source},
+        ).fetchone()
+    except psycopg.errors.UniqueViolation:
+        raise Conflict("That fact is already in the record.") from None
+    return Fact(id=row[0], text=row[1], source=row[2], created_at=row[3])
+
+
+def update_fact(conn: psycopg.Connection, person_id: int, fact_id: int, text: str) -> Fact | None:
+    """Reword one fact; None when it isn't this person's. Raises Conflict when the new wording repeats another fact."""
+    text = " ".join(text.split())
+    _check_facts([text])
+    try:
+        row = conn.execute(
+            "UPDATE facts SET text = %(text)s WHERE id = %(fact_id)s AND person_id = %(person_id)s"
+            " RETURNING id, text, source, created_at",
+            {"fact_id": fact_id, "person_id": person_id, "text": text},
+        ).fetchone()
+    except psycopg.errors.UniqueViolation:
+        raise Conflict("Another fact already says that.") from None
+    return Fact(id=row[0], text=row[1], source=row[2], created_at=row[3]) if row else None
 
 
 def delete_fact(conn: psycopg.Connection, person_id: int, fact_id: int) -> bool:

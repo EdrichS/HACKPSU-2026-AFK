@@ -10,6 +10,7 @@ from collections import deque
 from pathlib import Path
 from types import SimpleNamespace
 
+from contract.live import UNKNOWN_SPEAKER
 from db import people
 from db.connect import DEFAULT_URL, DatabaseUnavailable, EmbedderMismatch, check_embedders, open_pool
 from enroll import store
@@ -121,7 +122,7 @@ class Session:
             with self.visit_lock:
                 self.visit.note(u.person)
         else:
-            name = self.user_name  # an unrecognized voice is taken to be the wearer's
+            name = UNKNOWN_SPEAKER  # nobody we know, the wearer included: their own voice is enrolled like anyone's
         stamp = time.strftime("%H:%M:%S", time.localtime(u.t0))
         score = f"{u.distance:.2f}" if u.distance is not None else "-"
         print(f"{dim(stamp)}  {green(name) if u.person else yellow(name)}: {u.text or dim('(no words)')}  {dim(f'{u.verdict} {score} {u.t1 - u.t0:.1f}s')}", flush=True)

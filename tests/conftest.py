@@ -38,6 +38,10 @@ def backend_module(test_db, monkeypatch, tmp_path):
     """The real backend, pointed at an emptied nametags_test and a temporary data folder."""
     monkeypatch.setenv("DATABASE_URL", TEST_URL)
     monkeypatch.setenv("NAMETAGS_DATA", str(tmp_path))
+    monkeypatch.setenv("NAMETAGS_CAPTIONS", "local")  # a Speechmatics key in .env must not send test audio anywhere
+    # A real GEMINI_API_KEY in .env must not make the tests call Gemini: an empty value keeps
+    # load_dotenv from filling it in, so Gemini is off unless a test fakes the client.
+    monkeypatch.setenv("GEMINI_API_KEY", "")
     with psycopg.connect(TEST_URL) as c:
         c.execute("TRUNCATE people, photos, face_samples, voice_samples, facts RESTART IDENTITY CASCADE")
     import backend.app

@@ -6,7 +6,7 @@ import { toBullets } from "./people";
 
 /** The liquid glass card about the person in view. Undesigned: hidden with no one, or no notes. */
 export const InfoPanel = memo(function InfoPanel({ person }: { person: PresentPerson | null }) {
-  const bullets = useMemo(() => (person ? toBullets(person.small_context) : []), [person]);
+  const bullets = useMemo(() => (person ? toBullets(person.small_context, person.facts) : []), [person]);
   if (!person || bullets.length === 0) return null;
   return (
     <aside className={styles.panel} aria-label={`About ${person.name}`}>

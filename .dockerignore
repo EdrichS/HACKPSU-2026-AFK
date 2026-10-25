@@ -16,3 +16,7 @@ facial-recognition-foundation-46999b/data
 facial-recognition-foundation-46999b/tests
 docs
 tests
+frontend/node_modules
+frontend/dist
+frontend/.env.local
+Design
