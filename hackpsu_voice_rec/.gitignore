@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+*.egg-info/
+models/*.onnx
+models/sepformer-*/
+models/sherpa-onnx-*/
+data/
+tmp
+.env
+notes.txt
