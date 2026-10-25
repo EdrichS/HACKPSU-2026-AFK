@@ -354,8 +354,3 @@ and voice owners hand David lists of numbers, and David's database does the matc
 11. Repeat the same fact in a second visit. It is not added a second time.
 12. Mention something sad in a conversation (staged). It never appears on the card.
 13. Turn off the wifi. Recognition still shows each person's existing card.
-
-## After approval
-
-Save this design to `docs/superpowers/specs/2026-10-24-nametags-design.md` in the hackathon repo.
-Commit it only once you say so. Then write the implementation plan.
