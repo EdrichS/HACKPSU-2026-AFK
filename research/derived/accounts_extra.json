@@ -1,0 +1,51 @@
+[
+  {
+    "id": "kemp2025-abstract-reality-management",
+    "authors": "Kemp CL, Anglin E, Morgan JC, Perkins MM, Burgess EO, Bender AA, et al.",
+    "year": 2025,
+    "title": "Differing Realities Among Assisted Living Residents With Dementia: Understanding Care Partner Responses",
+    "venue": "The Gerontologist",
+    "doi": "10.1093/geront/gnaf061",
+    "url": "https://doi.org/10.1093/geront/gnaf061",
+    "setting": "assisted living (8 communities)",
+    "country": "USA",
+    "covid_period": false,
+    "speaker": "authors' summary (abstract)",
+    "quote_is_staff": false,
+    "quote": "In response, care partners engaged in a process of \"reality management,\" which involved strategies that invalidated or validated realities and emotions; these included ignoring, dismissing, correcting, redirecting, and joining.",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=DOI:%2210.1093/geront/gnaf061%22&format=json&resultType=core",
+    "themes": [
+      "misidentification",
+      "going along/truth-telling",
+      "what helps"
+    ],
+    "nametags_relevance": "Correcting is only one of five responses carers use; a truthful announcement is a correction, so its wording and timing matter.",
+    "open_access": false,
+    "status": "kept",
+    "note": "Added by the orchestrator from the abstract, because the full text on PMC refuses scripted reads."
+  },
+  {
+    "id": "cohen-mansfield2014-abstract-tailored",
+    "authors": "Cohen-Mansfield J, Golander H, Arnheim G, Cohen R",
+    "year": 2014,
+    "title": "Reactions and Interventions for Delusions in Nursing Home Residents with Dementia",
+    "venue": "American Journal of Alzheimer's Disease & Other Dementias",
+    "doi": "10.1177/1533317514522850",
+    "url": "https://doi.org/10.1177/1533317514522850",
+    "setting": "8 nursing homes",
+    "country": "Israel",
+    "covid_period": false,
+    "speaker": "authors' summary (abstract)",
+    "quote_is_staff": false,
+    "quote": "The most effective approaches may be those tailored to the individual.",
+    "text_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=DOI:%2210.1177/1533317514522850%22&format=json&resultType=core",
+    "themes": [
+      "misidentification",
+      "what helps"
+    ],
+    "nametags_relevance": "Supports letting the family tune how each person is introduced, instead of one fixed sentence for everyone.",
+    "open_access": false,
+    "status": "kept",
+    "note": "Added by the orchestrator from the abstract; the 60%-of-5 detail is in the full text only, which refuses scripted reads."
+  }
+]

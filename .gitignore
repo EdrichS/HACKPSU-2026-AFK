@@ -4,3 +4,6 @@ data/
 __pycache__/
 *.py[cod]
 report.txt
+research/raw/*
+!research/raw/manifest.json
+research/.previews/

@@ -1,0 +1,96 @@
+{
+  "pulled_at": "2026-10-25 00:51 EDT",
+  "api": "https://www.ebi.ac.uk/europepmc/webservices/rest/search",
+  "themes": [
+    {
+      "theme": "assistive",
+      "hit_count": 3218,
+      "pulled": 3218,
+      "planning_count": null,
+      "seconds": 27.3,
+      "file": "assistive.jsonl"
+    },
+    {
+      "theme": "recognition",
+      "hit_count": 692,
+      "pulled": 692,
+      "planning_count": 692,
+      "seconds": 6.2,
+      "file": "recognition.jsonl"
+    },
+    {
+      "theme": "carehome",
+      "hit_count": 1254,
+      "pulled": 1254,
+      "planning_count": 1254,
+      "seconds": 15.3,
+      "file": "carehome.jsonl"
+    },
+    {
+      "theme": "ethics",
+      "hit_count": 1064,
+      "pulled": 1064,
+      "planning_count": 1055,
+      "seconds": 9.2,
+      "file": "ethics.jsonl"
+    },
+    {
+      "theme": "truth",
+      "hit_count": 1138,
+      "pulled": 1138,
+      "planning_count": null,
+      "seconds": 17.3,
+      "file": "truth.jsonl"
+    }
+  ],
+  "queries": {
+    "assistive": "TITLE_ABS:(dementia OR alzheimer*) AND (TITLE_ABS:(\"assistive technology\" OR \"assistive technologies\" OR \"assistive device\" OR \"assistive devices\" OR \"smart home\" OR \"smart homes\" OR \"ambient assisted living\" OR gerontechnology OR telecare OR \"memory aid\" OR \"memory aids\" OR \"reminder system\" OR \"reminder systems\" OR \"cognitive prosthesis\" OR \"cognitive prostheses\" OR \"social robot\" OR \"social robots\" OR \"companion robot\" OR \"companion robots\" OR \"assistive robot\" OR \"assistive robots\" OR \"smart glasses\" OR \"wearable camera\" OR \"wearable cameras\") OR (TITLE_ABS:(technology OR technologies OR \"mobile app\" OR \"mobile apps\" OR \"smartphone app\" OR \"smartphone apps\" OR \"mobile application\" OR \"mobile applications\" OR smartphone OR smartphones OR \"tablet computer\" OR \"tablet computers\" OR \"tablet device\" OR \"tablet devices\" OR ipad OR wearable OR wearables OR robot OR robots OR \"virtual reality\" OR telehealth OR telemedicine OR \"digital health\" OR \"digital technology\" OR \"digital technologies\" OR \"digital intervention\" OR \"digital interventions\" OR \"voice assistant\" OR \"voice assistants\" OR \"conversational agent\" OR \"conversational agents\" OR chatbot OR chatbots OR \"large language model\" OR \"large language models\" OR \"smart speaker\" OR \"smart speakers\") AND TITLE_ABS:(\"daily living\" OR \"everyday life\" OR \"independent living\" OR independence OR caregiver OR caregivers OR carer OR carers OR \"quality of life\" OR \"people living with dementia\" OR \"persons with dementia\" OR \"people with dementia\" OR \"person with dementia\" OR \"living with dementia\" OR \"family members\" OR \"informal care\"))) AND HAS_ABSTRACT:y AND NOT SRC:PPR",
+    "recognition": "TITLE_ABS:(dementia OR alzheimer*) AND TITLE_ABS:(\"face recognition\" OR \"facial recognition\" OR \"face processing\" OR \"face identification\" OR \"face memory\" OR \"face perception\" OR \"recognition of faces\" OR \"recognizing faces\" OR \"face-name\" OR \"familiar face\" OR \"familiar faces\" OR \"famous face\" OR \"famous faces\" OR \"person recognition\" OR \"person identification\" OR \"voice recognition\" OR \"speaker recognition\" OR \"voice identification\" OR \"familiar voice\" OR \"familiar voices\" OR prosopagnosia OR phonagnosia OR misidentification OR misidentifications OR capgras) AND HAS_ABSTRACT:y AND NOT SRC:PPR",
+    "carehome": "TITLE_ABS:(dementia OR alzheimer*) AND (TITLE_ABS:(\"care home\" OR \"care homes\" OR \"nursing home\" OR \"nursing homes\" OR \"long-term care\" OR \"long term care\" OR \"residential care\" OR \"residential aged care\" OR \"aged care\") AND TITLE_ABS:(staff OR nurses OR \"care workers\" OR \"care worker\" OR \"care aides\" OR \"nursing assistants\" OR \"care assistants\" OR \"healthcare assistants\" OR \"personal support workers\" OR \"direct care workers\" OR \"healthcare professionals\") AND TITLE_ABS:(qualitative OR \"focus group\" OR \"focus groups\" OR \"semi-structured interviews\" OR \"interviews\" OR \"interview study\" OR \"thematic analysis\")) AND HAS_ABSTRACT:y AND NOT SRC:PPR",
+    "ethics": "TITLE_ABS:(dementia OR alzheimer*) AND (TITLE_ABS:(ethics OR ethical OR privacy OR surveillance OR \"informed consent\" OR autonomy OR dignity OR \"data protection\") AND TITLE_ABS:(\"artificial intelligence\" OR \"machine learning\" OR \"deep learning\" OR monitoring OR sensor OR sensors OR camera OR cameras OR \"video\" OR tracking OR GPS OR \"smart home\" OR \"smart homes\" OR robot OR robots OR \"assistive technology\" OR \"assistive technologies\" OR telecare OR \"facial recognition\" OR technology OR technologies OR \"smart glasses\" OR \"wearable camera\" OR \"wearable cameras\" OR \"voice assistant\" OR \"voice assistants\" OR \"conversational agent\" OR \"conversational agents\" OR chatbot OR chatbots OR \"large language model\" OR \"large language models\")) AND HAS_ABSTRACT:y AND NOT SRC:PPR",
+    "truth": "TITLE_ABS:(dementia OR alzheimer*) AND TITLE_ABS:(lying OR lie OR lies OR deception OR deceptive OR \"therapeutic lying\" OR \"truth-telling\" OR \"truth telling\" OR \"white lie\" OR \"white lies\" OR \"validation therapy\") AND HAS_ABSTRACT:y AND NOT SRC:PPR"
+  },
+  "union_query": "TITLE_ABS:(dementia OR alzheimer*) AND ((TITLE_ABS:(\"assistive technology\" OR \"assistive technologies\" OR \"assistive device\" OR \"assistive devices\" OR \"smart home\" OR \"smart homes\" OR \"ambient assisted living\" OR gerontechnology OR telecare OR \"memory aid\" OR \"memory aids\" OR \"reminder system\" OR \"reminder systems\" OR \"cognitive prosthesis\" OR \"cognitive prostheses\" OR \"social robot\" OR \"social robots\" OR \"companion robot\" OR \"companion robots\" OR \"assistive robot\" OR \"assistive robots\" OR \"smart glasses\" OR \"wearable camera\" OR \"wearable cameras\") OR (TITLE_ABS:(technology OR technologies OR \"mobile app\" OR \"mobile apps\" OR \"smartphone app\" OR \"smartphone apps\" OR \"mobile application\" OR \"mobile applications\" OR smartphone OR smartphones OR \"tablet computer\" OR \"tablet computers\" OR \"tablet device\" OR \"tablet devices\" OR ipad OR wearable OR wearables OR robot OR robots OR \"virtual reality\" OR telehealth OR telemedicine OR \"digital health\" OR \"digital technology\" OR \"digital technologies\" OR \"digital intervention\" OR \"digital interventions\" OR \"voice assistant\" OR \"voice assistants\" OR \"conversational agent\" OR \"conversational agents\" OR chatbot OR chatbots OR \"large language model\" OR \"large language models\" OR \"smart speaker\" OR \"smart speakers\") AND TITLE_ABS:(\"daily living\" OR \"everyday life\" OR \"independent living\" OR independence OR caregiver OR caregivers OR carer OR carers OR \"quality of life\" OR \"people living with dementia\" OR \"persons with dementia\" OR \"people with dementia\" OR \"person with dementia\" OR \"living with dementia\" OR \"family members\" OR \"informal care\"))) OR TITLE_ABS:(\"face recognition\" OR \"facial recognition\" OR \"face processing\" OR \"face identification\" OR \"face memory\" OR \"face perception\" OR \"recognition of faces\" OR \"recognizing faces\" OR \"face-name\" OR \"familiar face\" OR \"familiar faces\" OR \"famous face\" OR \"famous faces\" OR \"person recognition\" OR \"person identification\" OR \"voice recognition\" OR \"speaker recognition\" OR \"voice identification\" OR \"familiar voice\" OR \"familiar voices\" OR prosopagnosia OR phonagnosia OR misidentification OR misidentifications OR capgras) OR (TITLE_ABS:(\"care home\" OR \"care homes\" OR \"nursing home\" OR \"nursing homes\" OR \"long-term care\" OR \"long term care\" OR \"residential care\" OR \"residential aged care\" OR \"aged care\") AND TITLE_ABS:(staff OR nurses OR \"care workers\" OR \"care worker\" OR \"care aides\" OR \"nursing assistants\" OR \"care assistants\" OR \"healthcare assistants\" OR \"personal support workers\" OR \"direct care workers\" OR \"healthcare professionals\") AND TITLE_ABS:(qualitative OR \"focus group\" OR \"focus groups\" OR \"semi-structured interviews\" OR \"interviews\" OR \"interview study\" OR \"thematic analysis\")) OR (TITLE_ABS:(ethics OR ethical OR privacy OR surveillance OR \"informed consent\" OR autonomy OR dignity OR \"data protection\") AND TITLE_ABS:(\"artificial intelligence\" OR \"machine learning\" OR \"deep learning\" OR monitoring OR sensor OR sensors OR camera OR cameras OR \"video\" OR tracking OR GPS OR \"smart home\" OR \"smart homes\" OR robot OR robots OR \"assistive technology\" OR \"assistive technologies\" OR telecare OR \"facial recognition\" OR technology OR technologies OR \"smart glasses\" OR \"wearable camera\" OR \"wearable cameras\" OR \"voice assistant\" OR \"voice assistants\" OR \"conversational agent\" OR \"conversational agents\" OR chatbot OR chatbots OR \"large language model\" OR \"large language models\")) OR TITLE_ABS:(lying OR lie OR lies OR deception OR deceptive OR \"therapeutic lying\" OR \"truth-telling\" OR \"truth telling\" OR \"white lie\" OR \"white lies\" OR \"validation therapy\")) AND HAS_ABSTRACT:y AND NOT SRC:PPR",
+  "union_hit_count": 6816,
+  "recognition_and_ethics_hit_count": 6,
+  "recognition_and_assistive_hit_count": 11,
+  "all_dementia_per_year": {
+    "1990": 1534,
+    "1991": 1762,
+    "1992": 1892,
+    "1993": 2090,
+    "1994": 2339,
+    "1995": 2577,
+    "1996": 2886,
+    "1997": 3220,
+    "1998": 3459,
+    "1999": 3682,
+    "2000": 4141,
+    "2001": 4324,
+    "2002": 5048,
+    "2003": 5352,
+    "2004": 6491,
+    "2005": 6747,
+    "2006": 7051,
+    "2007": 7153,
+    "2008": 7648,
+    "2009": 8212,
+    "2010": 8746,
+    "2011": 8756,
+    "2012": 9261,
+    "2013": 9458,
+    "2014": 10049,
+    "2015": 10529,
+    "2016": 11163,
+    "2017": 13104,
+    "2018": 13482,
+    "2019": 14740,
+    "2020": 16689,
+    "2021": 19002,
+    "2022": 19246,
+    "2023": 18212,
+    "2024": 19675,
+    "2025": 22868,
+    "2026": 20819
+  }
+}

@@ -1,0 +1,51 @@
+[
+  {
+    "id": "MED:42247407",
+    "verdict": "corrected",
+    "problems": [
+      "The second sentence of finding_for_nametags goes beyond the abstract. It says published work on \"face-recognizing glasses like Nametags\" is very thin, but the abstract does not say what device the one Alzheimer's facial-recognition study used, and it does not count how many of the 13 smart-glasses studies (mostly for visual impairment) had a face-recognition feature. The abstract supports only that one included study focused on facial recognition for people with Alzheimer's disease.",
+      "Minor: method_and_sample gives \"any age and any disability\" as if it described the sample. Those are the eligibility criteria; 23 of the 25 included studies were on visual impairment."
+    ],
+    "corrected_fields": {
+      "finding_for_nametags": "Of 25 studies of assistive technology with smart camera features (13 involved smart glasses, 23 served visual impairment), one focused on facial recognition for people with Alzheimer's disease, and the abstract does not say what device that study used or what it found. So within this review's scope, the evidence on face recognition for people with Alzheimer's disease is thin: one focused study. The review also reports technical limitations, usability issues and high financial costs with various devices.",
+      "method_and_sample": "scoping review (Joanna Briggs Institute method) of 25 studies of assistive technology with at least one smart camera feature, used in rehabilitation in any setting; participants of any age with any disability were eligible, and 23 of the 25 studies were on visual impairment"
+    },
+    "checked_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:42247407%20AND%20SRC:MED&format=json&resultType=core"
+  },
+  {
+    "id": "MED:29200563",
+    "verdict": "confirmed",
+    "problems": [],
+    "checked_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC5688894/fullTextXML"
+  },
+  {
+    "id": "MED:12554311",
+    "verdict": "corrected",
+    "problems": [
+      "Minor: finding_for_nametags says the study \"tested timed task reminders\". The abstract says patients had to remember to carry out seven tasks at a particular time, with \"support available from an EMA\"; it does not say the aid gave reminders, and the entry's own limitation notes that the abstract does not describe how the aid worked."
+    ],
+    "corrected_fields": {
+      "finding_for_nametags": "In five people with mild-to-moderate Alzheimer's, an electronic memory aid improved remembering to do seven tasks at set times, while a written list and unaided recall did not help. This is weak, indirect prior art: it hints that an electronic aid can beat a written one in early Alzheimer's, but it tested remembering to carry out tasks at set times (prospective memory), which Nametags does not support, not recognizing people."
+    },
+    "checked_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:12554311%20AND%20SRC:MED&format=json&resultType=core"
+  },
+  {
+    "id": "MED:24528204",
+    "verdict": "confirmed",
+    "problems": [],
+    "checked_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:24528204%20AND%20SRC:MED&format=json&resultType=core"
+  },
+  {
+    "id": "MED:35032536",
+    "verdict": "corrected",
+    "problems": [
+      "The abstract says the nine eligible studies \"all included patients with Alzheimer's disease\". The entry turns this into \"all of Alzheimer's disease\" (finding_for_nametags), \"all of patients with Alzheimer's disease\" (method_and_sample) and \"all nine studies were of Alzheimer's disease\" (limitation). The abstract does not say the studies were limited to Alzheimer's disease."
+    ],
+    "corrected_fields": {
+      "finding_for_nametags": "In a review of nine studies, all of which included patients with Alzheimer's disease, patients whose psychosis took the misidentification form (misidentification delusions or hallucinations) had worse global cognition, faster decline and more volume loss in regions for object recognition and for spatial and temporal context. That is background for tension 1 (truthful naming versus care practice), not evidence on it: the review covered only brain and cognitive correlates, so it cannot say whether a truthful announcement helps or upsets a wearer who misidentifies people.",
+      "method_and_sample": "review of the neurobiological and neuropsychological correlates of paranoid and misidentification subtypes of psychosis in dementia; 9 eligible studies, all of which included patients with Alzheimer's disease",
+      "limitation": "The authors say the small number of studies and their methodological heterogeneity limit interpretation; all nine studies included patients with Alzheimer's disease, and the authors call for extending the investigation to other forms of dementia."
+    },
+    "checked_url": "https://www.ebi.ac.uk/europepmc/webservices/rest/search?query=EXT_ID:35032536%20AND%20SRC:MED&format=json&resultType=core"
+  }
+]

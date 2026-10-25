@@ -1,0 +1,486 @@
+{
+  "query": {
+    "face recognition": 3.0,
+    "facial recognition": 3.0,
+    "voice recognition": 3.0,
+    "speaker recognition": 3.0,
+    "familiar faces": 3.0,
+    "recognize family": 3.0,
+    "misidentification": 3.0,
+    "smart glasses": 3.0,
+    "wearable camera": 3.0,
+    "voice assistant": 3.0,
+    "conversational agent": 3.0,
+    "memory aid": 3.0,
+    "assistive technology": 3.0,
+    "care home": 1.0,
+    "nursing home": 1.0,
+    "family members": 1.0,
+    "visitors": 1.0,
+    "staff": 1.0,
+    "privacy": 1.0,
+    "consent": 1.0,
+    "deception": 1.0,
+    "truth telling": 1.0
+  },
+  "ranked": [
+    {
+      "rank": 1,
+      "score": 0.107,
+      "id": "MED:32955452",
+      "title": "A Personalized Voice-Based Diet Assistant for Caregivers of Alzheimer Disease and Related Dementias: System Development and Validation.",
+      "year": 2020,
+      "journal": "Journal of medical Internet research",
+      "doi": "10.2196/19897",
+      "pmcid": "PMC7536606",
+      "open_access": true,
+      "cited_by": 15,
+      "tags": [
+        "assistive"
+      ]
+    },
+    {
+      "rank": 2,
+      "score": 0.0957,
+      "id": "MED:36274581",
+      "title": "Can Technology-Based Social Memory Aids Improve Social Engagement? Perceptions of a Novel Memory Aid for Persons With Memory Concerns.",
+      "year": 2023,
+      "journal": "Journal of applied gerontology : the official journal of the Southern Gerontological Society",
+      "doi": "10.1177/07334648221134869",
+      "pmcid": "PMC9957785",
+      "open_access": false,
+      "cited_by": 5,
+      "tags": [
+        "assistive"
+      ]
+    },
+    {
+      "rank": 3,
+      "score": 0.0824,
+      "id": "MED:27916672",
+      "title": "Famous faces and voices: Differential profiles in early right and left semantic dementia and in Alzheimer's disease.",
+      "year": 2017,
+      "journal": "Neuropsychologia",
+      "doi": "10.1016/j.neuropsychologia.2016.11.020",
+      "pmcid": null,
+      "open_access": false,
+      "cited_by": 46,
+      "tags": [
+        "recognition"
+      ]
+    },
+    {
+      "rank": 4,
+      "score": 0.0758,
+      "id": "MED:14511845",
+      "title": "Misidentification in patients with dementia.",
+      "year": 2003,
+      "journal": "Archives of gerontology and geriatrics",
+      "doi": "10.1016/s0167-4943(03)00045-1",
+      "pmcid": null,
+      "open_access": false,
+      "cited_by": 11,
+      "tags": [
+        "recognition"
+      ]
+    },
+    {
+      "rank": 5,
+      "score": 0.0706,
+      "id": "MED:42247407",
+      "title": "Uses of assistive technology incorporating smart camera features in the rehabilitation of people living with disabilities: a scoping review.",
+      "year": 2026,
+      "journal": "Disability and rehabilitation. Assistive technology",
+      "doi": "10.1080/17483107.2026.2678548",
+      "pmcid": null,
+      "open_access": false,
+      "cited_by": 0,
+      "tags": [
+        "assistive",
+        "recognition"
+      ]
+    },
+    {
+      "rank": 6,
+      "score": 0.0687,
+      "id": "MED:31196003",
+      "title": "Informal carers' experience of assistive technology use in dementia care at home: a systematic review.",
+      "year": 2019,
+      "journal": "BMC geriatrics",
+      "doi": "10.1186/s12877-019-1169-0",
+      "pmcid": "PMC6567448",
+      "open_access": true,
+      "cited_by": 77,
+      "tags": [
+        "assistive",
+        "ethics"
+      ]
+    },
+    {
+      "rank": 7,
+      "score": 0.0673,
+      "id": "MED:25913061",
+      "title": "Recognition of personally familiar faces and functional connectivity in Alzheimer's disease.",
+      "year": 2015,
+      "journal": "Cortex; a journal devoted to the study of the nervous system and behavior",
+      "doi": "10.1016/j.cortex.2015.03.013",
+      "pmcid": null,
+      "open_access": false,
+      "cited_by": 18,
+      "tags": [
+        "recognition"
+      ]
+    },
+    {
+      "rank": 8,
+      "score": 0.0647,
+      "id": "MED:12554311",
+      "title": "An electronic memory aid to support prospective memory in patients in the early stages of Alzheimer's disease: a pilot study.",
+      "year": 2003,
+      "journal": "Aging & mental health",
+      "doi": "10.1080/1360786021000045863",
+      "pmcid": null,
+      "open_access": false,
+      "cited_by": 47,
+      "tags": [
+        "assistive"
+      ]
+    },
+    {
+      "rank": 9,
+      "score": 0.0635,
+      "id": "MED:29200563",
+      "title": "Problems of Face Recognition in Patients with Behavioral Variant Frontotemporal Dementia.",
+      "year": 2017,
+      "journal": "Indian journal of psychological medicine",
+      "doi": "10.4103/ijpsym.ijpsym_90_17",
+      "pmcid": "PMC5688894",
+      "open_access": true,
+      "cited_by": 6,
+      "tags": [
+        "recognition"
+      ]
+    },
+    {
+      "rank": 10,
+      "score": 0.063,
+      "id": "MED:24803646",
+      "title": "The provision of assistive technology products and services for people with dementia in the United Kingdom.",
+      "year": 2016,
+      "journal": "Dementia (London, England)",
+      "doi": "10.1177/1471301214532643",
+      "pmcid": null,
+      "open_access": false,
+      "cited_by": 76,
+      "tags": [
+        "assistive"
+      ]
+    },
+    {
+      "rank": 11,
+      "score": 0.0624,
+      "id": "MED:26468655",
+      "title": "Wearable Technology to Garner the Perspective of Dementia Family Caregivers.",
+      "year": 2016,
+      "journal": "Journal of gerontological nursing",
+      "doi": "10.3928/00989134-20151008-65",
+      "pmcid": "PMC4814293",
+      "open_access": false,
+      "cited_by": 5,
+      "tags": [
+        "assistive"
+      ]
+    },
+    {
+      "rank": 12,
+      "score": 0.062,
+      "id": "MED:24528204",
+      "title": "The use of a wearable camera improves autobiographical memory in patients with Alzheimer's disease.",
+      "year": 2015,
+      "journal": "Memory (Hove, England)",
+      "doi": "10.1080/09658211.2014.886703",
+      "pmcid": null,
+      "open_access": false,
+      "cited_by": 41,
+      "tags": [
+        "assistive"
+      ]
+    },
+    {
+      "rank": 13,
+      "score": 0.0607,
+      "id": "MED:35976047",
+      "title": "Design, development, and use of conversational agents in rehabilitation for adults with brain-related neurological conditions: a scoping review.",
+      "year": 2023,
+      "journal": "JBI evidence synthesis",
+      "doi": "10.11124/jbies-22-00025",
+      "pmcid": null,
+      "open_access": false,
+      "cited_by": 6,
+      "tags": [
+        "assistive"
+      ]
+    },
+    {
+      "rank": 14,
+      "score": 0.0566,
+      "id": "MED:2139873",
+      "title": "Enhancing conversation skills in patients with Alzheimer's disease using a prosthetic memory aid.",
+      "year": 1990,
+      "journal": "Journal of applied behavior analysis",
+      "doi": "10.1901/jaba.1990.23-29",
+      "pmcid": "PMC1286209",
+      "open_access": false,
+      "cited_by": 60,
+      "tags": [
+        "assistive"
+      ]
+    },
+    {
+      "rank": 15,
+      "score": 0.0565,
+      "id": "MED:34764541",
+      "title": "Evaluating Voice-Assistant Commands for Dementia Detection.",
+      "year": 2022,
+      "journal": "Computer speech & language",
+      "doi": "10.1016/j.csl.2021.101297",
+      "pmcid": "PMC8577405",
+      "open_access": false,
+      "cited_by": 21,
+      "tags": [
+        "assistive"
+      ]
+    },
+    {
+      "rank": 16,
+      "score": 0.0563,
+      "id": "MED:24339118",
+      "title": "Experiences of using a memory aid to structure and support daily activities in a small-scale group accommodation for people with dementia.",
+      "year": 2015,
+      "journal": "Dementia (London, England)",
+      "doi": "10.1177/1471301213504210",
+      "pmcid": null,
+      "open_access": false,
+      "cited_by": 15,
+      "tags": [
+        "assistive"
+      ]
+    },
+    {
+      "rank": 17,
+      "score": 0.0548,
+      "id": "MED:26288888",
+      "title": "Usability of a Wearable Camera System for Dementia Family Caregivers.",
+      "year": 2015,
+      "journal": "Journal of healthcare engineering",
+      "doi": "10.1260/2040-2295.6.2.213",
+      "pmcid": "PMC4545579",
+      "open_access": false,
+      "cited_by": 17,
+      "tags": [
+        "assistive",
+        "ethics"
+      ]
+    },
+    {
+      "rank": 18,
+      "score": 0.0546,
+      "id": "PMC:PMC6841622",
+      "title": "A WEB-BASED MOBILE APPLICATION TO SUPPORT SOCIAL ENGAGEMENT IN PERSONS WITH DEMENTIA",
+      "year": 2019,
+      "journal": "Innovation in aging",
+      "doi": null,
+      "pmcid": "PMC6841622",
+      "open_access": true,
+      "cited_by": 0,
+      "tags": [
+        "assistive",
+        "ethics"
+      ]
+    },
+    {
+      "rank": 19,
+      "score": 0.0544,
+      "id": "MED:35032536",
+      "title": "Paranoid and misidentification subtypes of psychosis in dementia.",
+      "year": 2022,
+      "journal": "Neuroscience and biobehavioral reviews",
+      "doi": "10.1016/j.neubiorev.2022.104529",
+      "pmcid": null,
+      "open_access": false,
+      "cited_by": 8,
+      "tags": [
+        "recognition"
+      ]
+    },
+    {
+      "rank": 20,
+      "score": 0.054,
+      "id": "MED:34717561",
+      "title": "Differences in assistive technology installed for people with dementia living at home who have wandering and safety risks.",
+      "year": 2021,
+      "journal": "BMC geriatrics",
+      "doi": "10.1186/s12877-021-02546-7",
+      "pmcid": "PMC8556981",
+      "open_access": true,
+      "cited_by": 9,
+      "tags": [
+        "assistive"
+      ]
+    },
+    {
+      "rank": 21,
+      "score": 0.0517,
+      "id": "MED:40337281",
+      "title": "Assistive technology: Occupational therapy assessment and services for people with dementia.",
+      "year": 2024,
+      "journal": "The British journal of occupational therapy",
+      "doi": "10.1177/03080226241252280",
+      "pmcid": "PMC11887907",
+      "open_access": true,
+      "cited_by": 0,
+      "tags": [
+        "assistive"
+      ]
+    },
+    {
+      "rank": 22,
+      "score": 0.051,
+      "id": "MED:42460246",
+      "title": "Wearable Electronic Devices for Alzheimer's Disease Care: A Systematic Review of Applications, Benefits, and Challenges.",
+      "year": 2026,
+      "journal": "Health science reports",
+      "doi": "10.1002/hsr2.72806",
+      "pmcid": "PMC13369575",
+      "open_access": true,
+      "cited_by": 0,
+      "tags": [
+        "assistive"
+      ]
+    },
+    {
+      "rank": 23,
+      "score": 0.0486,
+      "id": "MED:7781310",
+      "title": "Understanding impaired analysis of faces by patients with probable Alzheimer's disease.",
+      "year": 1995,
+      "journal": "Cortex; a journal devoted to the study of the nervous system and behavior",
+      "doi": "10.1016/s0010-9452(13)80111-6",
+      "pmcid": null,
+      "open_access": false,
+      "cited_by": 13,
+      "tags": [
+        "recognition"
+      ]
+    },
+    {
+      "rank": 24,
+      "score": 0.0474,
+      "id": "MED:38898457",
+      "title": "Does assistive technology contribute to safety among home-dwelling older adults?",
+      "year": 2024,
+      "journal": "BMC health services research",
+      "doi": "10.1186/s12913-024-11185-8",
+      "pmcid": "PMC11188293",
+      "open_access": true,
+      "cited_by": 4,
+      "tags": [
+        "assistive",
+        "carehome"
+      ]
+    },
+    {
+      "rank": 25,
+      "score": 0.0455,
+      "id": "MED:2055900",
+      "title": "Neuroanatomical correlates of clinical misidentification and misperception in senile dementia of the Alzheimer type.",
+      "year": 1991,
+      "journal": "The Journal of clinical psychiatry",
+      "doi": null,
+      "pmcid": null,
+      "open_access": false,
+      "cited_by": 40,
+      "tags": [
+        "recognition"
+      ]
+    },
+    {
+      "rank": 26,
+      "score": 0.0444,
+      "id": "MED:35499674",
+      "title": "[Recognizing delusional misidentification syndromes].",
+      "year": 2022,
+      "journal": "Nederlands tijdschrift voor geneeskunde",
+      "doi": null,
+      "pmcid": null,
+      "open_access": false,
+      "cited_by": 0,
+      "tags": [
+        "recognition"
+      ]
+    },
+    {
+      "rank": 27,
+      "score": 0.044,
+      "id": "MED:28124633",
+      "title": "It is not only memory: effects of sensecam on improving well-being in patients with mild alzheimer disease.",
+      "year": 2017,
+      "journal": "International psychogeriatrics",
+      "doi": "10.1017/s104161021600243x",
+      "pmcid": null,
+      "open_access": false,
+      "cited_by": 30,
+      "tags": [
+        "assistive"
+      ]
+    },
+    {
+      "rank": 28,
+      "score": 0.0437,
+      "id": "MED:33755548",
+      "title": "Assistive technology and telecare to maintain independent living at home for people with dementia: the ATTILA RCT.",
+      "year": 2021,
+      "journal": "Health technology assessment (Winchester, England)",
+      "doi": "10.3310/hta25190",
+      "pmcid": null,
+      "open_access": true,
+      "cited_by": 33,
+      "tags": [
+        "assistive"
+      ]
+    },
+    {
+      "rank": 29,
+      "score": 0.0428,
+      "id": "MED:25784202",
+      "title": "Recognition of familiar people with a mobile cloud architecture for Alzheimer patients.",
+      "year": 2017,
+      "journal": "Disability and rehabilitation",
+      "doi": "10.3109/09638288.2015.1025992",
+      "pmcid": null,
+      "open_access": false,
+      "cited_by": 12,
+      "tags": [
+        "assistive",
+        "recognition"
+      ]
+    },
+    {
+      "rank": 30,
+      "score": 0.0421,
+      "id": "MED:31518270",
+      "title": "A Web-Based Mobile App With a Smartwatch to Support Social Engagement in Persons With Memory Loss: Pilot Randomized Controlled Trial.",
+      "year": 2019,
+      "journal": "JMIR aging",
+      "doi": "10.2196/13378",
+      "pmcid": "PMC6715400",
+      "open_access": true,
+      "cited_by": 30,
+      "tags": [
+        "assistive",
+        "ethics",
+        "recognition"
+      ]
+    }
+  ]
+}
