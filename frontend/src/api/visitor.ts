@@ -21,7 +21,7 @@ export interface SubmitResult {
   person: Person;
   /** Photos where a face was found and labelled with this person (of 5). */
   facesLabelled: number;
-  /** False when context text was sent but the server stored none of it (no context routes, or no Gemini key). */
+  /** False when context text was sent but the server stored none of it (no context routes, or no Claude key). */
   contextSaved: boolean;
 }
 
@@ -159,7 +159,7 @@ async function submit(s: VisitorSubmission): Promise<SubmitResult> {
         if (e instanceof ApiError && (e.status === 404 || e.status === 405)) contextSaved = false;
         else throw e;
       }
-      // The notes route answers 200 even when it stored nothing (no Gemini key on the server).
+      // The notes route answers 200 even when it stored nothing (no Claude key on the server).
       contextSaved = contextSaved && person.small_context !== "";
     }
     setLeftover(null);

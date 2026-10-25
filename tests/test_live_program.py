@@ -109,7 +109,7 @@ def test_an_unknown_face_is_called_out_only_after_a_while():
     assert p.unknown_face(True) is None  # within the cooldown
 
 
-# -- the visit and its summary (the context owner's Gemini flow) ---------------------------------
+# -- the visit and its summary (the context owner's Claude flow) ---------------------------------
 
 def test_visit_keeps_lines_and_known_people():
     v = Visit()
@@ -130,14 +130,14 @@ def pool(test_db):
     p.close()
 
 
-def test_save_visit_hands_the_transcript_to_gemini_and_stores_facts_and_card(conn, pool):
-    from tests.gemini_fakes import FakeGemini
+def test_save_visit_hands_the_transcript_to_claude_and_stores_facts_and_card(conn, pool):
+    from tests.claude_fakes import FakeClaude
 
     david = create_person(conn, "David", "grandson")
     rose = create_person(conn, "Rose", "user")
     update_person(conn, david.id, small_context="David is your grandson.")
     conn.commit()
-    fake = FakeGemini(
+    fake = FakeClaude(
         facts={"new_facts": ["David moved to Pittsburgh in September 2026.", "David works as a nurse."]},
         card={"small_context": "Last spoke about: moving · Works as a nurse | Ask about: Pittsburgh"},
     )
@@ -162,8 +162,8 @@ def test_save_visit_hands_the_transcript_to_gemini_and_stores_facts_and_card(con
     ]
 
 
-def test_save_visit_keeps_everything_when_gemini_fails(conn, pool):
-    from tests.gemini_fakes import FakeGemini
+def test_save_visit_keeps_everything_when_claude_fails(conn, pool):
+    from tests.claude_fakes import FakeClaude
 
     david = create_person(conn, "David", "grandson")
     update_person(conn, david.id, small_context="David is your grandson.")
@@ -171,7 +171,7 @@ def test_save_visit_keeps_everything_when_gemini_fails(conn, pool):
     v = Visit()
     v.add("David", david.id, "Hello there.")
     v.note(PresentPerson(person_id=david.id, name="David", relationship="grandson", small_context=""))
-    [result] = save_visit(pool, v, client=FakeGemini(facts=RuntimeError("boom")))
+    [result] = save_visit(pool, v, client=FakeClaude(facts=RuntimeError("boom")))
     assert result.new_facts == [] and result.updated is None
     conn.rollback()
     assert get_person(conn, david.id).small_context == "David is your grandson."
@@ -179,7 +179,7 @@ def test_save_visit_keeps_everything_when_gemini_fails(conn, pool):
 
 
 def test_save_visit_with_nothing_new_changes_nothing(conn, pool):
-    from tests.gemini_fakes import FakeGemini
+    from tests.claude_fakes import FakeClaude
 
     david = create_person(conn, "David", "grandson")
     update_person(conn, david.id, small_context="Works as a nurse | Ask about: the garden")
@@ -187,7 +187,7 @@ def test_save_visit_with_nothing_new_changes_nothing(conn, pool):
     v = Visit()
     v.add("David", david.id, "Hi again.")
     v.note(PresentPerson(person_id=david.id, name="David", relationship="grandson", small_context=""))
-    fake = FakeGemini(facts={"new_facts": []})
+    fake = FakeClaude(facts={"new_facts": []})
     [result] = save_visit(pool, v, client=fake)
     assert result.updated is None and fake.kinds() == ["facts"]  # a repeat visit keeps the card, no card call
 

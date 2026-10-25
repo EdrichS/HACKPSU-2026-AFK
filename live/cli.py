@@ -18,7 +18,7 @@ from enroll.cli import bold, dim, green, red, yellow
 from live.presence import Presence
 from live.visit import Visit, VisitResult, save_visit
 
-MODEL = "claude-opus-5-5"  # Nova's brain; visit summaries are Gemini's (backend.gemini)
+MODEL = "claude-opus-5-5"  # Nova's brain; visit summaries use backend.context_ai's own model (CONTEXT_MODEL)
 
 ROOT = Path(__file__).resolve().parents[1]
 log = logging.getLogger("live")
@@ -55,7 +55,7 @@ def build_parser() -> argparse.ArgumentParser:
     out = p.add_argument_group("voice output")
     out.add_argument("--no-tts", action="store_true", help="print what would be spoken instead of saying it")
     out.add_argument("--tts-voice", metavar="DIR", help="Supertonic model folder (default: the first under hackpsu_voice_rec/models)")
-    brain = p.add_argument_group("Nova (Claude) and visit summaries (Gemini)")
+    brain = p.add_argument_group("Nova and visit summaries (Claude)")
     brain.add_argument("--model", default=MODEL, help="(default: %(default)s)")
     brain.add_argument("--nova-name", default="Nova", help="the wake word (default: %(default)s)")
     brain.add_argument("--no-nova", action="store_true", help="don't answer questions")
@@ -87,7 +87,7 @@ class Session:
         self.assistant = None
         self.nova = None  # the NovaBrain the assistant asks, when Nova is on
         self.client = None  # Anthropic, for Nova only
-        self.gemini = False  # whether visits can become facts and cards
+        self.summaries = False  # whether visits can become facts and cards
         self.logfile = open(args.log, "a", encoding="utf-8") if args.log else None
 
     # -- output -----------------------------------------------------------------------------
@@ -150,8 +150,8 @@ class Session:
         print(f"\n{bold('visit over')} ({reason}): {len(visit.lines)} line(s), {', '.join(p.name for p in known) or 'no one known'}", flush=True)
         if not known:
             return
-        if self.args.no_summary or not self.gemini:
-            print(dim("  not summarized (" + ("--no-summary" if self.args.no_summary else "no GEMINI_API_KEY") + ")"), flush=True)
+        if self.args.no_summary or not self.summaries:
+            print(dim("  not summarized (" + ("--no-summary" if self.args.no_summary else "no ANTHROPIC_API_KEY") + ")"), flush=True)
             return
         self.nova_state = "summarizing the visit..."
         for r in save_visit(self.pool, visit, self.user_id):
@@ -160,7 +160,7 @@ class Session:
 
     def _report(self, r: VisitResult) -> None:
         if r.updated is None:
-            print(yellow(f"  {r.person.name}: nothing stored (Gemini failed, or nothing new was said)"), flush=True)
+            print(yellow(f"  {r.person.name}: nothing stored (Claude failed, or nothing new was said)"), flush=True)
             return
         print(green(f"  {r.person.name}: {len(r.new_facts)} new fact(s)"), flush=True)
         for fact in r.new_facts:
@@ -222,12 +222,11 @@ def run(args) -> int:
 
         session.speaker = make_speaker(not args.no_tts, args.tts_voice, say=lambda t: None)
         if transcriber is not None and not args.no_summary:
-            from backend import gemini
+            from backend import context_ai
 
-            gemini.load_env()
-            session.gemini = bool(os.environ.get("GEMINI_API_KEY"))
-            if not session.gemini:
-                print(yellow("no GEMINI_API_KEY in the environment or .env: visits won't be summarized"), flush=True)
+            session.summaries = context_ai.configured()
+            if not session.summaries:
+                print(yellow("no ANTHROPIC_API_KEY in the environment or .env: visits won't be summarized"), flush=True)
         if not args.no_nova and transcriber is not None:
             if os.environ.get("ANTHROPIC_API_KEY") or os.environ.get("ANTHROPIC_AUTH_TOKEN"):
                 import anthropic

@@ -1,5 +1,5 @@
-// The facts behind the card: the record Gemini reads. Add one as typed, reword or delete one, or
-// hand Gemini a paragraph of notes to turn into facts. Not designed.
+// The facts behind the card: the record Claude reads. Add one as typed, reword or delete one, or
+// hand Claude a paragraph of notes to turn into facts. Not designed.
 
 import { useState } from "react";
 
@@ -127,7 +127,7 @@ export function FactsSection({ person, facts, setFacts, onPerson }: FactsSection
     setFailure(null);
     setNote(null);
     try {
-      // The notes route answers 200 with the person unchanged when Gemini is off or found nothing,
+      // The notes route answers 200 with the person unchanged when Claude is off or found nothing,
       // so look at the facts afterwards before telling the family their notes were taken in.
       const updated = await addNotes(person.id, notes.trim());
       const after = await listFacts(person.id);
@@ -136,9 +136,9 @@ export function FactsSection({ person, facts, setFacts, onPerson }: FactsSection
       setFacts(() => after);
       if (taken) {
         setNotes("");
-        setNote(after.length > facts.length ? `Gemini took ${after.length - facts.length} new fact${after.length - facts.length === 1 ? "" : "s"} from the notes and rewrote the card above.` : "Gemini rewrote the card above from the notes.");
+        setNote(after.length > facts.length ? `Claude took ${after.length - facts.length} new fact${after.length - facts.length === 1 ? "" : "s"} from the notes and rewrote the card above.` : "Claude rewrote the card above from the notes.");
       } else {
-        setFailure("Gemini stored nothing from those notes (no Gemini key on the server, or nothing new in them). They're still in the box: add the important bits as facts instead.");
+        setFailure("Claude stored nothing from those notes (no Claude key on the server, or nothing new in them). They're still in the box: add the important bits as facts instead.");
       }
     } catch (e) {
       setFailure(describe(e, "sending the notes"));
@@ -149,7 +149,7 @@ export function FactsSection({ person, facts, setFacts, onPerson }: FactsSection
   return (
     <Section title="Facts" aside={<span className={styles.help}>{facts.length === 1 ? "1 fact" : `${facts.length} facts`}</span>}>
       <p className={styles.help}>
-        The record about {person.name}: what visits and notes have taught the glasses. Gemini writes the card from these. Oldest first.
+        The record about {person.name}: what visits and notes have taught the glasses. Claude writes the card from these. Oldest first.
       </p>
       {facts.length === 0 ? (
         <p className={styles.empty}>No facts yet.</p>
@@ -175,16 +175,16 @@ export function FactsSection({ person, facts, setFacts, onPerson }: FactsSection
         </Button>
       </div>
       <TextArea
-        label="Or give Gemini some notes"
+        label="Or give Claude some notes"
         value={notes}
         onChange={setNotes}
         placeholder="Anything about them: where they live, what they do, what's coming up…"
-        helper="Gemini turns the notes into facts and rewrites the card, the same as the sign-up forms do."
+        helper="Claude turns the notes into facts and rewrites the card, the same as the sign-up forms do."
         rows={3}
       />
       <div className={styles.actions}>
         <Button variant="secondary" icon="sparkles" busy={busy === "notes"} disabled={!notes.trim() || busy !== null} onClick={sendNotes}>
-          Send to Gemini
+          Send to Claude
         </Button>
       </div>
       {note && <Notice tone="info">{note}</Notice>}

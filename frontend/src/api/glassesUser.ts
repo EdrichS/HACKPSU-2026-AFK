@@ -48,9 +48,9 @@ export interface SaveResult {
  * The app has one user. Reuse their row if it exists (renamed when the name changed), else let
  * the sign-up route create it; then store this recording and the notes.
  *
- * The notes go through POST /enroll rather than POST /people/{id}/notes: both run the Gemini
+ * The notes go through POST /enroll rather than POST /people/{id}/notes: both run the Claude
  * context flow (which knows the wearer's record is the patient's own), but /enroll also keeps
- * the notes as typed when Gemini is off or adds nothing, so nothing typed is lost.
+ * the notes as typed when Claude is off or adds nothing, so nothing typed is lost.
  */
 export async function saveGlassesUser(user: GlassesUser, voice: Blob): Promise<SaveResult> {
   const name = user.name.trim();

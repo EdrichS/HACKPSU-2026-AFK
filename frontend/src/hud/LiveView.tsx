@@ -2,7 +2,7 @@ import { useEffect, useMemo, useRef } from "react";
 import { useLocation } from "react-router";
 
 import { Captions } from "./Captions";
-import { StartButton, WhoButton } from "./Controls";
+import { HomeLink, StartButton } from "./Controls";
 import { DEMO_CAPTION, DEMO_DIRECTORY, DEMO_FACES, DEMO_PEOPLE } from "./demo";
 import { DemoScene } from "./DemoScene";
 import { FaceTags } from "./FaceTags";
@@ -61,11 +61,10 @@ function CameraLiveView({ settings }: { settings: HudSettings }) {
     <HudStage
       vars={settings.vars}
       controls={
-        session.started ? (
-          <WhoButton onClick={session.who} disabled={!session.connected} />
-        ) : (
-          <StartButton onClick={session.start} />
-        )
+        <>
+          <HomeLink />
+          {!session.started && <StartButton onClick={session.start} />}
+        </>
       }
     >
       <h1 className="visually-hidden">Name Tags live view</h1>
@@ -93,7 +92,7 @@ function DemoLiveView({ settings }: { settings: HudSettings }) {
   const tracks = useFaceTracks(DEMO_FACES);
   const person = choosePanelPerson(tracks, DEMO_DIRECTORY, DEMO_PEOPLE, null);
   return (
-    <HudStage vars={settings.vars}>
+    <HudStage vars={settings.vars} controls={<HomeLink />}>
       <h1 className="visually-hidden">Name Tags live view</h1>
       <DemoScene />
       <FaceTags tracks={tracks} directory={DEMO_DIRECTORY} boxes={settings.boxes} />

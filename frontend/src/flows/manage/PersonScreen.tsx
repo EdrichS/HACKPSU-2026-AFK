@@ -49,7 +49,7 @@ function RemoveSection({ person, onRemoved }: { person: Person; onRemoved: () =>
   return (
     <Section title="Remove">
       <p className={styles.help}>
-        Removing {person.name} deletes their voice recordings and notes and unlabels their faces (the photos stay, under Faces to label).
+        Removing {person.name} deletes their photos, voice recordings and notes. A photo that also shows someone else is kept.
         {isGlassesUser(person) && " This is the glasses user: the live view will have nobody to tell voices apart from until someone is set up again."}
       </p>
       <div className={styles.actions}>
@@ -103,6 +103,9 @@ export function PersonScreen() {
           <Button variant="secondary" to="/manage" icon="arrow-left">
             People
           </Button>
+          <Button variant="secondary" to="/">
+            Home
+          </Button>
         </ActionBar>
       }
     >
@@ -113,7 +116,7 @@ export function PersonScreen() {
         {record && (
           <>
             {/* Keyed on the stored values: a draft restarts from what the server has whenever that changes
-                (Gemini rewrote the card, a visit added to it), so a stale draft can't be saved over it. */}
+                (Claude rewrote the card, a visit added to it), so a stale draft can't be saved over it. */}
             <DetailsSection key={`${record.person.name}|${record.person.relationship}`} person={record.person} onSaved={setPerson} />
             <CardSection key={record.person.small_context} person={record.person} factCount={record.facts.length} onSaved={setPerson} reload={loaded.reload} />
             <FactsSection person={record.person} facts={record.facts} setFacts={setFacts} onPerson={setPerson} />

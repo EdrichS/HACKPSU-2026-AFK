@@ -110,15 +110,15 @@ def test_speech_becomes_captions_attributed_to_the_user(backend_client, backend_
     assert all(c["end"] > c["start"] >= 0 for c in captions)
 
 
-def test_end_visit_sends_the_transcript_to_gemini_and_reports_what_was_saved(backend_client, backend_module, monkeypatch, maya):
-    """The socket's end_visit, driven directly: the transcript goes to backend.gemini, and the
+def test_end_visit_sends_the_transcript_to_claude_and_reports_what_was_saved(backend_client, backend_module, monkeypatch, maya):
+    """The socket's end_visit, driven directly: the transcript goes to backend.context_ai, and the
     frontend gets one visit_saved per visitor with the new facts and card."""
     from backend.live_api import LiveSession
     from contract.live import PresentPerson, VisitSaved
-    from tests.gemini_fakes import FakeGemini
+    from tests.claude_fakes import FakeClaude
 
-    fake = FakeGemini(facts={"new_facts": ["Maya brought photos from a beach trip."]}, card={"small_context": "Last spoke about: the beach trip | Ask about: the photos"})
-    monkeypatch.setattr("backend.gemini.get_client", lambda: fake)
+    fake = FakeClaude(facts={"new_facts": ["Maya brought photos from a beach trip."]}, card={"small_context": "Last spoke about: the beach trip | Ask about: the photos"})
+    monkeypatch.setattr("backend.context_ai.get_client", lambda: fake)
     session = LiveSession(backend_module.app.state)
     session.visit.note(PresentPerson(person_id=maya["id"], name="Maya", relationship="granddaughter", small_context=""))
     session.visit.add("Maya", maya["id"], "Hi Grandma! I brought the photos from our beach trip.")
@@ -141,10 +141,10 @@ def test_a_quiet_visit_ends_by_itself(backend_client, backend_module, monkeypatc
 
     from backend.live_api import LiveSession
     from contract.live import PresentPerson, Who
-    from tests.gemini_fakes import FakeGemini
+    from tests.claude_fakes import FakeClaude
 
-    fake = FakeGemini(facts={"new_facts": ["Maya visits on Sundays."]}, card={"small_context": "Visits on Sundays"})
-    monkeypatch.setattr("backend.gemini.get_client", lambda: fake)
+    fake = FakeClaude(facts={"new_facts": ["Maya visits on Sundays."]}, card={"small_context": "Visits on Sundays"})
+    monkeypatch.setattr("backend.context_ai.get_client", lambda: fake)
     session = LiveSession(backend_module.app.state, visit_idle=60.0)
     session.visit.note(PresentPerson(person_id=maya["id"], name="Maya", relationship="granddaughter", small_context=""))
     session.visit.add("Maya", maya["id"], "See you next Sunday, Grandma.")
@@ -178,7 +178,9 @@ class FakeSpeechmatics:
             if stop():
                 break
             self.sent_samples += len(block)
-            namer.offer("S1", block)
+            named = namer.offer("S1", block)
+            if named:
+                self.kwargs["on_event"]("mapping", {"label": "S1", "speaker": named})
             n += 1
             on_partial("S1", "Hi Grandma, I")
             on_turn(Turn("S1", [Word("Hi", 0.0, 0.4, "S1"), Word("Grandma,", 0.5, 1.0, "S1"), Word(f"visit {n}.", 1.1, 1.6, "S1", is_eos=True)]), "S1")
@@ -197,18 +199,20 @@ def test_cloud_captions_arrive_live_and_name_the_voice(backend_client, backend_m
     try:
         with backend_client.websocket_connect("/live") as ws:
             ws.send_text(json.dumps({"type": "audio", "ts": 1, "wav": b64(make_wav(5.0))}))  # Maya's enrolled recording
-            first = receive_until(ws, "caption")
-            assert [m["type"] for m in first] == ["caption"] and first[0]["final"] is False and first[0]["text"] == "Hi Grandma, I"
-            partial_then_final = receive_until(ws, "caption")
-            assert partial_then_final[-1]["final"] is True and partial_then_final[-1]["text"] == "Hi Grandma, visit 1."
-            assert partial_then_final[-1]["speaker"] is None  # one vote so far: not matched yet, so no name
-            ws.send_text(json.dumps({"type": "audio", "ts": 2, "wav": b64(make_wav(5.0))}))
             msgs = receive_until(ws, "caption")
             msgs += receive_until(ws, "caption")
             kinds = [m["type"] for m in msgs]
-            assert "arrived" in kinds, msgs  # the second vote names S1: Maya, by voice
+            assert "arrived" in kinds, msgs  # a clear match names S1 on the first attempt: Maya, by voice
+            partial = next(m for m in msgs if m["type"] == "caption" and not m["final"])
+            assert partial["text"] == "Hi Grandma, I" and partial["speaker"] == "Maya"
             final = [m for m in msgs if m["type"] == "caption" and m["final"]][-1]
-            assert final["speaker"] == "Maya" and final["person_id"] == maya["id"] and final["text"] == "Hi Grandma, visit 2."
+            assert final["speaker"] == "Maya" and final["person_id"] == maya["id"] and final["text"] == "Hi Grandma, visit 1."
+            ws.send_text(json.dumps({"type": "audio", "ts": 2, "wav": b64(make_wav(5.0))}))
+            msgs = receive_until(ws, "caption")
+            msgs += receive_until(ws, "caption")
+            assert "arrived" not in [m["type"] for m in msgs]  # announced once
+            final = [m for m in msgs if m["type"] == "caption" and m["final"]][-1]
+            assert final["speaker"] == "Maya" and final["text"] == "Hi Grandma, visit 2."
             ws.send_text('{"type":"who"}')
             who = receive_until(ws, "who_answer")[-1]
             assert "Maya" in who["text"]
@@ -221,6 +225,42 @@ def test_cloud_captions_arrive_live_and_name_the_voice(backend_client, backend_m
     assert made[0].kwargs["extra_vocab"] == ["Maya", "Nova"]
     visits = list((Path(backend_module.app.state.data_dir) / "visits").glob("*.txt"))
     assert len(visits) == 1 and "Maya: Hi Grandma, visit 2." in visits[0].read_text()
+
+
+def test_lines_said_before_a_voice_was_named_become_theirs(backend_client, backend_module, monkeypatch, maya):
+    """The first attempt matched nobody (a cough, a short word); the second names Maya, and the
+    transcript line from before is hers too, so the visit summary doesn't lose it."""
+    import backend.cloud_captions as cloud
+    from live.voices import VoiceIdentifier
+
+    real = VoiceIdentifier.identify
+    calls = []
+
+    def flaky(self, samples):
+        calls.append(1)
+        return (None, "no_match", 0.9) if len(calls) == 1 else real(self, samples)
+
+    monkeypatch.setattr(VoiceIdentifier, "identify", flaky)
+    monkeypatch.setattr(cloud, "RawLabelSession", lambda **kw: FakeSpeechmatics(**kw))
+    backend_module.app.state.speechmatics_key = "test-key"
+    try:
+        with backend_client.websocket_connect("/live") as ws:
+            ws.send_text(json.dumps({"type": "audio", "ts": 1, "wav": b64(make_wav(5.0))}))
+            first = [m for m in receive_until(ws, "caption") + receive_until(ws, "caption") if m["type"] == "caption" and m["final"]][-1]
+            assert first["speaker"] is None and first["text"] == "Hi Grandma, visit 1."
+            ws.send_text(json.dumps({"type": "audio", "ts": 2, "wav": b64(make_wav(5.0))}))
+            msgs = receive_until(ws, "caption") + receive_until(ws, "caption")
+            if "arrived" not in [m["type"] for m in msgs]:
+                msgs += receive_until(ws, "arrived")
+            assert [m for m in msgs if m["type"] == "caption" and m["final"]][-1]["speaker"] == "Maya"
+            ws.send_text('{"type":"end_visit"}')
+            ws.send_text('{"type":"who"}')
+            receive_until(ws, "who_answer")
+    finally:
+        backend_module.app.state.speechmatics_key = None
+    [visit] = (Path(backend_module.app.state.data_dir) / "visits").glob("*.txt")
+    text = visit.read_text()
+    assert "Maya: Hi Grandma, visit 1." in text and "Someone:" not in text
 
 
 def test_an_unknown_voice_is_nobody_even_with_a_user_registered(backend_client, backend_module, monkeypatch):
@@ -295,3 +335,50 @@ def test_novas_context_on_live_leaves_out_voices_nobody_enrolled(backend_client,
     [call] = claude.calls
     prompt = call["messages"][0]["content"]
     assert "Maya: I brought the photos." in prompt and "Is this seat taken?" not in prompt
+
+
+def test_a_named_face_keeps_its_name_through_an_unsure_frame(backend_client, monkeypatch, maya):
+    """A turned head, or a stranger's sample as near as the person's own, makes the matcher unsure
+    for a frame; the tag must not blink out for that."""
+    from live.faces import FaceIdentifier
+
+    real = FaceIdentifier.identify
+    calls = []
+
+    def flaky(self, face):
+        calls.append(1)
+        return real(self, face) if len(calls) == 1 else (None, "not_sure", 0.3)
+
+    monkeypatch.setattr(FaceIdentifier, "identify", flaky)
+    with backend_client.websocket_connect("/live") as ws:
+        ws.send_text(frame())
+        assert receive_until(ws, "present")[-1]["faces"][0]["state"] == "named"
+        for ts in (2, 3):
+            ws.send_text(frame(ts=ts))
+            present = receive_until(ws, "present")[-1]
+            assert present["faces"] == [{"box": {"x": 0, "y": 0, "width": 1, "height": 1}, "state": "named", "person_id": maya["id"]}]
+    assert len(calls) == 3
+
+
+def test_a_voice_label_is_judged_on_everything_it_said_recently():
+    """Each attempt hears the label's whole recent speech, not just the newest 1.5 s."""
+    import numpy as np
+
+    from backend.cloud_captions import DbLabelNamer
+
+    heard = []
+
+    class Identifier:
+        def identify(self, samples):
+            heard.append(len(samples) / 16000)
+            return None, "no_match", 0.9
+
+    namer = DbLabelNamer(Identifier(), min_audio=1.5)
+    second = np.zeros(16000, dtype=np.float32)
+    namer.offer("S1", second)  # 1 s: not yet
+    namer.offer("S1", second)  # 2 s: an attempt on all 2 s
+    namer.offer("S1", second)  # 3 s: 1 s new, not yet
+    namer.offer("S1", second)  # 4 s: an attempt on all 4 s
+    for _ in range(8):
+        namer.offer("S1", second)
+    assert heard[:2] == [2.0, 4.0] and max(heard) <= 8.0  # never more than MAX_AUDIO

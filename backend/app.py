@@ -43,6 +43,8 @@ from db.errors import Conflict, NotFound
 from enroll import store
 
 log = logging.getLogger("backend")
+if not logging.getLogger().handlers:  # uvicorn configures only its own loggers; ours would be silent
+    logging.basicConfig(level=logging.INFO, format="%(name)s: %(message)s")
 
 # uvicorn shows only its own info lines. Let the time to name someone through (live/presence.py)
 # and keep the rest at warnings, so captions stay out of the server's log.
@@ -50,6 +52,9 @@ logging.basicConfig(format="%(name)s: %(message)s")
 logging.getLogger("live.presence").setLevel(logging.INFO)
 
 EXIF_ORIENTATION = 0x0112
+
+
+DEFAULT_VOICE_CUTOFF = 0.62  # cosine distance; a match must be this close to be named outright
 
 
 class TakeTurns:
@@ -82,7 +87,11 @@ def make_embedders():
     from embedders.face import FaceRecEmbedder
     from embedders.voice import VoiceRecEmbedder
 
-    return TakeTurns(FaceRecEmbedder()), VoiceRecEmbedder()
+    # Live room audio sits farther from the sign-up recording than a clean clip does; a wider
+    # cutoff than the model's own (0.55) names people sooner. The margin and rescue rules in
+    # live/voices.py still refuse a voice two people could be. NAMETAGS_VOICE_CUTOFF tunes it.
+    cutoff = float(os.environ.get("NAMETAGS_VOICE_CUTOFF") or DEFAULT_VOICE_CUTOFF)
+    return TakeTurns(FaceRecEmbedder()), VoiceRecEmbedder(threshold=round(1.0 - cutoff, 4))
 
 
 def load_transcriber():
@@ -123,13 +132,12 @@ def speechmatics_key() -> str | None:
     return key
 
 
-def gemini_ready() -> bool:
-    """Whether notes and visits can become facts and cards (backend.gemini needs GEMINI_API_KEY)."""
-    from backend import gemini
+def context_ready() -> bool:
+    """Whether notes and visits can become facts and cards: backend.context_ai needs the Anthropic key Nova uses."""
+    from backend import context_ai
 
-    gemini.load_env()
-    if not os.environ.get("GEMINI_API_KEY"):
-        log.warning("no GEMINI_API_KEY: notes are stored as typed and visits are not summarized")
+    if not context_ai.configured():
+        log.warning("no ANTHROPIC_API_KEY: notes are stored as typed and visits are not summarized")
         return False
     return True
 
@@ -149,7 +157,7 @@ async def lifespan(app: FastAPI):
         app.state.voice_embedder = voice_embedder
         app.state.transcriber = load_transcriber()
         app.state.claude = load_claude()
-        app.state.gemini = gemini_ready()
+        app.state.context_ready = context_ready()
         app.state.speechmatics_key = speechmatics_key()
         app.state.presence = None  # the latest /live connection's, for /nova/ask
         yield
@@ -218,7 +226,7 @@ def health(request: Request) -> dict:
         "voice_model": voice_embedder.spec.model,
         "transcription": state.transcriber is not None,
         "captions": "speechmatics" if state.speechmatics_key else ("local" if state.transcriber is not None else "off"),
-        "gemini": state.gemini,  # notes and visit summaries
+        "context": state.context_ready,  # notes and visit summaries (facts + cards)
         "claude": state.claude is not None,  # Nova
     }
 
@@ -268,10 +276,10 @@ def update_person(request: Request, person_id: int, body: PersonPatch) -> Person
 @app.delete("/people/{person_id}", status_code=204)
 def delete_person(request: Request, person_id: int) -> Response:
     with request.app.state.pool.connection() as conn:
-        recordings = people.delete_person(conn, person_id)
-    if recordings is None:
+        files = people.delete_person(conn, person_id)
+    if files is None:
         raise NotFound("person")
-    for path in recordings:  # only after the commit
+    for path in files:  # recordings and now-faceless photos, only after the commit
         Path(path).unlink(missing_ok=True)
     return Response(status_code=204)
 
@@ -329,13 +337,20 @@ def upload_voice(request: Request, person_id: int, file: UploadFile) -> VoiceOut
         check_wav(data)
     except ValueError as e:
         raise HTTPException(422, str(e)) from None
-    embedding = voice_embedder.embed_voice(data)
-    path = _new_file(request, "voice", "wav", data)
+    from backend.enroll_api import voice_clips
+
+    clips = voice_clips(data, voice_embedder)  # the whole recording, then each 4-second slice
+    written, sample_id = [], None
     try:
         with request.app.state.pool.connection() as conn:
-            sample_id = voice.add_voice(conn, person_id, str(path), embedding, voice_embedder.spec.model)
+            for clip, embedding in clips:
+                path = _new_file(request, "voice", "wav", clip)
+                written.append(path)
+                sid = voice.add_voice(conn, person_id, str(path), embedding, voice_embedder.spec.model)
+                sample_id = sample_id if sample_id is not None else sid
     except BaseException:
-        path.unlink(missing_ok=True)
+        for path in written:
+            path.unlink(missing_ok=True)
         raise
     return VoiceOut(voice_sample_id=sample_id)
 

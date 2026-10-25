@@ -120,12 +120,12 @@ def test_nova_is_off_without_claude(backend_client, backend_module):
     assert r.status_code == 503
 
 
-def test_enroll_notes_go_through_gemini_when_it_is_on(backend_client, backend_module, monkeypatch, speech_as_is, conn):
-    from tests.gemini_fakes import FakeGemini
+def test_enroll_notes_go_through_claude_when_it_is_on(backend_client, backend_module, monkeypatch, speech_as_is, conn):
+    from tests.claude_fakes import FakeClaude
 
-    fake = FakeGemini(facts={"new_facts": ["Maya is studying nursing.", "Maya visits most Sundays."]}, card={"small_context": "Studying nursing | Ask about: Sunday visits"})
-    monkeypatch.setattr("backend.gemini.get_client", lambda: fake)
-    backend_module.app.state.gemini = True
+    fake = FakeClaude(facts={"new_facts": ["Maya is studying nursing.", "Maya visits most Sundays."]}, card={"small_context": "Studying nursing | Ask about: Sunday visits"})
+    monkeypatch.setattr("backend.context_ai.get_client", lambda: fake)
+    backend_module.app.state.context_ready = True
     r = backend_client.post("/enroll", data={"name": "Maya", "relationship": "granddaughter", "notes": "I'm studying nursing and I visit most Sundays."})
     assert r.status_code == 201, r.text
     assert r.json()["facts"] == 2
@@ -134,11 +134,11 @@ def test_enroll_notes_go_through_gemini_when_it_is_on(backend_client, backend_mo
     assert [f.text for f in list_facts(conn, r.json()["person"]["id"])] == ["Maya is studying nursing.", "Maya visits most Sundays."]
 
 
-def test_enroll_notes_are_kept_as_typed_when_gemini_adds_nothing(backend_client, backend_module, monkeypatch, speech_as_is):
-    from tests.gemini_fakes import FakeGemini
+def test_enroll_notes_are_kept_as_typed_when_claude_adds_nothing(backend_client, backend_module, monkeypatch, speech_as_is):
+    from tests.claude_fakes import FakeClaude
 
-    monkeypatch.setattr("backend.gemini.get_client", lambda: FakeGemini(facts=RuntimeError("quota")))
-    backend_module.app.state.gemini = True
+    monkeypatch.setattr("backend.context_ai.get_client", lambda: FakeClaude(facts=RuntimeError("quota")))
+    backend_module.app.state.context_ready = True
     r = backend_client.post("/enroll", data={"name": "Maya", "relationship": "granddaughter", "notes": "I visit most Sundays."})
     assert r.status_code == 201 and r.json()["facts"] == 1
     assert r.json()["person"]["small_context"] == "I visit most Sundays."

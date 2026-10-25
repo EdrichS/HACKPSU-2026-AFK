@@ -1,9 +1,9 @@
-"""The person-context routes on the real backend (Postgres), with Gemini replaced by FakeGemini."""
+"""The person-context routes on the real backend (Postgres), with Claude replaced by FakeClaude."""
 
 import pytest
 
-from backend import gemini
-from tests.gemini_fakes import FakeGemini
+from backend import context_ai
+from tests.claude_fakes import FakeClaude
 
 CARD = "Lives in Pittsburgh · Works as a nurse | Ask about: the new job"
 VISIT = {"lines": [{"speaker": "Rose", "text": "Did you move?"}, {"speaker": "David", "text": "Yes, to Pittsburgh."}]}
@@ -11,8 +11,8 @@ VISIT = {"lines": [{"speaker": "Rose", "text": "Did you move?"}, {"speaker": "Da
 
 @pytest.fixture
 def fake(monkeypatch):
-    fake = FakeGemini()
-    monkeypatch.setattr(gemini, "get_client", lambda: fake)
+    fake = FakeClaude()
+    monkeypatch.setattr(context_ai, "get_client", lambda: fake)
     return fake
 
 
@@ -82,9 +82,9 @@ def test_a_failed_card_call_keeps_the_facts_and_the_old_card(backend_client, fak
 
 def test_without_a_key_the_route_still_answers(backend_client, monkeypatch):
     def no_key():
-        raise RuntimeError("GEMINI_API_KEY is not set")
+        raise RuntimeError("ANTHROPIC_API_KEY is not set")
 
-    monkeypatch.setattr(gemini, "get_client", no_key)
+    monkeypatch.setattr(context_ai, "get_client", no_key)
     pid = new_person(backend_client)
     r = backend_client.post(f"/people/{pid}/notes", json={"text": "I'm a nurse."})
     assert r.status_code == 200 and r.json()["small_context"] == ""
@@ -134,7 +134,7 @@ def test_the_family_adds_rewords_and_deletes_facts_directly(backend_client, fake
     other = new_person(backend_client, "Maria", "daughter")
     assert backend_client.patch(f"/people/{other}/facts/{fact['id']}", json={"text": "x"}).status_code == 404  # not hers
     assert facts_of(backend_client, pid) == [("David plays the cello in a quartet.", "notes"), ("David lives in Erie.", "notes")]
-    assert fake.kinds() == []  # none of this went through Gemini
+    assert fake.kinds() == []  # none of this went through Claude
 
     assert backend_client.delete(f"/people/{pid}/facts/{fact['id']}").status_code == 204
     assert facts_of(backend_client, pid) == [("David lives in Erie.", "notes")]
@@ -155,12 +155,12 @@ def test_the_card_is_rewritten_from_the_stored_facts(backend_client, fake):
     assert backend_client.post("/people/999/card").status_code == 404
 
 
-def test_rewriting_the_card_without_gemini_keeps_the_old_one(backend_client, monkeypatch):
-    monkeypatch.setattr(gemini, "get_client", lambda: (_ for _ in ()).throw(RuntimeError("GEMINI_API_KEY is not set")))
+def test_rewriting_the_card_without_claude_keeps_the_old_one(backend_client, monkeypatch):
+    monkeypatch.setattr(context_ai, "get_client", lambda: (_ for _ in ()).throw(RuntimeError("ANTHROPIC_API_KEY is not set")))
     pid = new_person(backend_client)
     backend_client.patch(f"/people/{pid}", json={"small_context": "Your grandson."})
     r = backend_client.post(f"/people/{pid}/card")
-    assert r.status_code == 503 and "Gemini" in r.json()["detail"]
+    assert r.status_code == 503 and "Claude" in r.json()["detail"]
     assert backend_client.get(f"/people/{pid}").json()["small_context"] == "Your grandson."
 
 

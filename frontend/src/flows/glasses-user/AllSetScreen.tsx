@@ -1,3 +1,5 @@
+import { Link } from "react-router";
+
 import { FooterNote, PageShell } from "../../components/PageShell";
 import { Icon } from "../../components/Icon";
 import styles from "./glasses-user.module.css";
@@ -6,7 +8,11 @@ import { useGlassesUserFlow } from "./state";
 export function AllSetScreen() {
   const { doneName } = useGlassesUserFlow();
   return (
-    <PageShell title="All set" footer={<FooterNote>You can now close this website.</FooterNote>}>
+    <PageShell title="All set" footer={
+        <FooterNote>
+          You can now close this website, or <Link to="/">go back to the start</Link>.
+        </FooterNote>
+      }>
       <main className={styles.doneMain}>
         <span className={styles.badge} aria-hidden="true">
           <Icon name="check" strokeWidth={2.5} className={styles.badgeIcon} />
