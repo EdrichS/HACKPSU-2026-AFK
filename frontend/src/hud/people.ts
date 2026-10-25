@@ -1,22 +1,46 @@
 import type { PresentPerson } from "../api/contract";
 import type { TrackView } from "./tracker";
 
-const MAX_LINES = 3;
-
 function stripMarker(line: string): string {
   return line.replace(/^\s*[-•*]+\s*/, "").trim();
 }
 
+function tidy(text: string): string {
+  return stripMarker(text).replace(/(?<!\.)\.$/, "");
+}
+
+/** The card as the panel shows it: the latest conversation, the standing context, what to ask about. */
+export interface CardSections {
+  /** "Last spoke about: ..." */
+  recent: string | null;
+  /** The card's other fragments, in order. */
+  about: string[];
+  /** "Ask about: ..." */
+  ask: string | null;
+}
+
+const RECENT = /^last spoke about:\s*/i;
+const ASK = /^ask about:\s*/i;
+
 /**
- * What the info panel shows: the person's card, the short context Claude writes from their facts
- * ("Last spoke about: x · Works as a nurse | Ask about: y"), and nothing else. The card's two halves
- * become two lines, the summary and the conversation starters, so recent conversations and new
- * context show up as the card changes; a hand-written card shows one line per line typed. The
- * facts themselves never appear here: they are the record the card is written from.
+ * Reads the card Claude writes ("Last spoke about: x · Works as a nurse | Ask about: y, z") into
+ * its sections, so the panel can set each one in its own type. A hand-written card without those
+ * markers is all "about": one fragment per line, or per " · ". Nothing here comes from the facts.
  */
-export function toBullets(smallContext: string): string[] {
-  const lines = smallContext.split(/\r?\n|\s*\|\s*/).map(stripMarker).filter(Boolean);
-  return lines.slice(0, MAX_LINES).map((line) => line.replace(/(?<!\.)\.$/, ""));
+export function parseCard(smallContext: string): CardSections {
+  const sections: CardSections = { recent: null, about: [], ask: null };
+  for (const part of smallContext.split(/\r?\n|\s*\|\s*/)) {
+    const text = stripMarker(part);
+    if (!text) continue;
+    if (ASK.test(text)) {
+      sections.ask = tidy(text.replace(ASK, ""));
+      continue;
+    }
+    const pieces = text.split(/\s*[·•]\s*/).map(tidy).filter(Boolean);
+    if (pieces.length > 0 && RECENT.test(pieces[0])) sections.recent = tidy(pieces.shift()!.replace(RECENT, ""));
+    sections.about.push(...pieces);
+  }
+  return sections;
 }
 
 /** "granddaughter" (as the visitor flow stores it) to "Granddaughter" (as the HUD shows it). */

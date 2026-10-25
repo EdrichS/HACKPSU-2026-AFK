@@ -9,7 +9,7 @@ export const DEMO_PERSON: PresentPerson = {
   person_id: 1,
   name: "Maya",
   relationship: "granddaughter",
-  small_context: "Anita's daughter, your oldest grandchild\nStudying nursing, in her final year\nVisits most Sundays after lunch",
+  small_context: "Last spoke about: her final nursing exams · Anita's daughter, your oldest grandchild · Studying nursing, in her final year | Ask about: Sunday lunch, the exam results",
 };
 
 export const DEMO_PEOPLE: PresentPerson[] = [DEMO_PERSON];
