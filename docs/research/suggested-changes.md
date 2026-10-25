@@ -8,7 +8,7 @@
 **Built since version 4:**
 - **Change 1's quick win:** an arrival is introduced, *"Here's David, your grandson."*; asked "Who is this?", the answer is still *"That's …"*. Cue first, then the name, is not built.
 - **Change 2:** when a name isn't registered, Nova says so and says who is here. Her first answer in a visit introduces her, and she never claims to be a person.
-- **Change 6, first part:** Gemini gets only the lines of voices the app recognized, and so does Nova's view of the conversation on the glasses HUD. The pause mode, the recording cue and the local-only default are not built.
+- **Change 6, first part:** the visit summary (Claude's since PR #19, no longer Gemini's) gets only the lines of voices the app recognized, and so does Nova's view of the conversation on the glasses HUD. The pause mode, the recording cue and the local-only default are not built.
 - **Change 9, the measuring:** each arrival is logged with how long naming took. Changing the two-sightings rule waits for those numbers.
 
 **What changed since version 3:**

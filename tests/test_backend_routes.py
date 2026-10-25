@@ -125,9 +125,9 @@ def test_backend_starts_on_a_database_filled_by_enroll(backend_module, conn, mon
 
 
 def test_nova_over_http_never_introduces_herself(backend_client, backend_module, monkeypatch):
-    from tests.helpers import FakeClaude
+    from tests.helpers import FakeNova
 
-    monkeypatch.setattr(backend_module.app.state, "claude", FakeClaude("David is your grandson."))
+    monkeypatch.setattr(backend_module.app.state, "claude", FakeNova("David is your grandson."))
     for _ in range(2):  # every request is a conversation of its own, so "I'm Nova…" would open each one
         r = backend_client.post("/nova/ask", json={"question": "who is David?"})
         assert r.status_code == 200 and r.json() == {"text": "David is your grandson."}

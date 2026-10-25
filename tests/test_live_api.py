@@ -2,7 +2,6 @@
 the same embedding, so a frame of an enrolled picture is a match)."""
 
 import json
-import logging
 from pathlib import Path
 
 import pytest
@@ -41,11 +40,6 @@ def maya(backend_client, monkeypatch):
     )
     assert r.status_code == 201, r.text
     return r.json()["person"]
-
-
-def test_the_server_shows_how_long_naming_took(backend_module):
-    # uvicorn shows only its own info lines; the server lets this one through, and captions stay out
-    assert logging.getLogger("live.presence").getEffectiveLevel() == logging.INFO
 
 
 def test_a_known_face_is_named_announced_and_carded(backend_client, maya):
@@ -310,9 +304,9 @@ def test_local_captions_when_the_cloud_session_fails(backend_client, backend_mod
 
 def test_nova_introduces_herself_again_after_a_visit_ends(backend_client, backend_module, monkeypatch):
     from backend.live_api import LiveSession
-    from tests.helpers import FakeClaude
+    from tests.helpers import FakeNova
 
-    monkeypatch.setattr(backend_module.app.state, "claude", FakeClaude("David is your grandson."))
+    monkeypatch.setattr(backend_module.app.state, "claude", FakeNova("David is your grandson."))
     session = LiveSession(backend_module.app.state)
     intro = "I'm Nova, the helper in your glasses. David is your grandson."
     assert [m.text for m in session.ask_nova("Nova, who is David?", "Rose")] == [intro]
@@ -324,9 +318,9 @@ def test_nova_introduces_herself_again_after_a_visit_ends(backend_client, backen
 
 def test_novas_context_on_live_leaves_out_voices_nobody_enrolled(backend_client, backend_module, monkeypatch):
     from backend.live_api import LiveSession
-    from tests.helpers import FakeClaude
+    from tests.helpers import FakeNova
 
-    claude = FakeClaude("Maya is your granddaughter.")
+    claude = FakeNova("Maya is your granddaughter.")
     monkeypatch.setattr(backend_module.app.state, "claude", claude)
     session = LiveSession(backend_module.app.state)
     session.visit.add("Maya", 1, "I brought the photos.")

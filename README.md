@@ -154,10 +154,10 @@ uv run python -m live
 ```
 
 It names the people it sees and hears, announces each arrival once, and keeps the visit's transcript. When the visit
-ends, Gemini turns the lines of recognized voices (never a stranger's) into each visitor's facts and card. In its
-window, `q` quits, `e` ends the visit, and `w` asks who is here. `--no-camera` uses the microphone only, `--no-tts`
-prints instead of speaking, `--no-nova` and `--no-summary` turn off Nova and the visit summary, and `--help` lists the
-rest. More in [enroll/README.md](enroll/README.md) and [live/README.md](live/README.md).
+ends, the visit summary turns the lines of recognized voices (never a stranger's) into each visitor's facts and card.
+In its window, `q` quits, `e` ends the visit, and `w` asks who is here. `--no-camera` uses the microphone only,
+`--no-tts` prints instead of speaking, `--no-nova` and `--no-summary` turn off Nova and the visit summary, and `--help`
+lists the rest. More in [enroll/README.md](enroll/README.md) and [live/README.md](live/README.md).
 
 ### Nova
 
@@ -191,7 +191,7 @@ From the [suggested changes](docs/research/suggested-changes.md), most urgent fi
   grandson.* Asked "Who is this?", it still answers *That's …*.
 - [x] Make Nova graceful: when a name isn't registered, she says so and says who is here. She introduces herself once
   per visit and never claims to be a person.
-- [x] Privacy by design: Gemini gets only the lines of enrolled voices it recognized, never a bystander's.
+- [x] Privacy by design: the visit summary gets only the lines of enrolled voices it recognized, never a bystander's.
 - [ ] Privacy by design, still to do: a pause mode for bedrooms and bathrooms, and local-only as the default in care
   homes.
 - [ ] Cue first, then the name: give the wearer a moment to recall who it is before the glasses show or say it. Opt-in,

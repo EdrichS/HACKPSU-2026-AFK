@@ -227,9 +227,9 @@ def test_nova_says_who_is_here_when_nobody_has_that_name(pool):
 
 def test_nova_introduces_herself_once_per_visit(pool):
     from live.nova import NovaBrain
-    from tests.helpers import FakeClaude
+    from tests.helpers import FakeNova
 
-    nova = NovaBrain(client=FakeClaude("David is your grandson."), pool=pool, presence=Presence(clock=Clock()), user_name="Rose")
+    nova = NovaBrain(client=FakeNova("David is your grandson."), pool=pool, presence=Presence(clock=Clock()), user_name="Rose")
     assert nova.answer("who is David?") == "I'm Nova, the helper in your glasses. David is your grandson."
     assert nova.answer("who is David?") == "David is your grandson."
     nova.new_visit()
@@ -238,9 +238,9 @@ def test_nova_introduces_herself_once_per_visit(pool):
 
 def test_nova_is_told_never_to_claim_to_be_a_person(pool):
     from live.nova import NovaBrain
-    from tests.helpers import FakeClaude
+    from tests.helpers import FakeNova
 
-    claude = FakeClaude("I'm the helper in your glasses.")
+    claude = FakeNova("I'm the helper in your glasses.")
     NovaBrain(client=claude, pool=pool, presence=Presence(clock=Clock()), user_name="Rose").answer("are you a real person?")
     [call] = claude.calls
     assert "never claim to be a person" in call["system"][0]["text"]
@@ -249,10 +249,10 @@ def test_nova_is_told_never_to_claim_to_be_a_person(pool):
 def test_python_m_live_lets_nova_introduce_herself_again_after_a_visit(pool):
     from live.cli import Session
     from live.nova import NovaBrain
-    from tests.helpers import FakeClaude
+    from tests.helpers import FakeNova
 
     session = Session(SimpleNamespace(log=None), pool, "Rose", None)
-    session.nova = NovaBrain(FakeClaude("Hello."), pool, session.presence, user_name="Rose")
+    session.nova = NovaBrain(FakeNova("Hello."), pool, session.presence, user_name="Rose")
     assert session.nova.answer("hi there") == "I'm Nova, the helper in your glasses. Hello."
     session.end_visit("you asked")
     assert session.nova.answer("hi there") == "I'm Nova, the helper in your glasses. Hello."

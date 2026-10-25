@@ -46,11 +46,6 @@ log = logging.getLogger("backend")
 if not logging.getLogger().handlers:  # uvicorn configures only its own loggers; ours would be silent
     logging.basicConfig(level=logging.INFO, format="%(name)s: %(message)s")
 
-# uvicorn shows only its own info lines. Let the time to name someone through (live/presence.py)
-# and keep the rest at warnings, so captions stay out of the server's log.
-logging.basicConfig(format="%(name)s: %(message)s")
-logging.getLogger("live.presence").setLevel(logging.INFO)
-
 EXIF_ORIENTATION = 0x0112
 
 

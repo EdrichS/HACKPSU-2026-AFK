@@ -89,9 +89,10 @@ def _png(width: int, height: int) -> bytes:
 PNG_1x1 = _png(1, 1)
 
 
-class FakeClaude:
+class FakeNova:
     """Stands in for anthropic.Anthropic in Nova's tests: every tool_runner call ends on one
-    message that says `reply`, without looking anything up."""
+    message that says `reply`, without looking anything up. (The facts and card calls have their
+    own fake, tests/claude_fakes.py.)"""
 
     def __init__(self, reply: str):
         self.reply = reply
