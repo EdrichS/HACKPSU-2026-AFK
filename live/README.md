@@ -27,8 +27,8 @@ Nothing is loaded into memory at start: every face and every utterance is matche
 tables as they are now. Enroll someone with `python -m enroll` and the live program knows them
 on their next sentence. The one exception is the user, who is read once at start (see The user).
 Only people in the database can ever be named; anyone else is "unknown" on camera, and on the
-microphone any voice the database can't name, including a not-sure match, is attributed to the
-user.
+microphone any voice the database can't name, including a not-sure match, is "Someone" in the
+transcript.
 
 `live/presence.py` merges the two: a voice match counts at once, a face needs two sightings
 within three seconds. Each arrival is announced once, with the sentence the contract fixes
@@ -39,10 +39,10 @@ at least five minutes have passed since their last announcement.
 
 The user is the person wearing the glasses, registered with `python -m enroll --user NAME`
 (their `people` row has the relationship `user`). Their voice is recognized and labelled like
-anyone's, but they are never announced, never counted as a visitor, and never summarized. A voice
-the database doesn't know is attributed to them too, since they are the one person always there.
-`--user NAME` sets the name on the user's lines, overriding the registered user's name if there
-is one.
+anyone's, but they are never announced, never counted as a visitor, and never summarized. Until
+their voice is enrolled, their lines are "Someone", like any voice the database doesn't know.
+`--user NAME` sets the name Nova uses for them, overriding the registered user's name if there is
+one.
 
 ## Without the camera
 
@@ -63,8 +63,9 @@ uv run python -m live --no-camera --audio-file data/voice/<some-enrollment>.wav 
 
 Every utterance is transcribed locally (Moonshine via sherpa-onnx) and logged as a speaker-labelled
 line. The visit ends on `e` in the window, after `--visit-timeout` seconds of silence (120 by
-default), or when the program exits. Then the transcript goes, once per known visitor, to the
-context owner's `backend.gemini.update_context`: a facts call adds new facts (source
+default), or when the program exits. Then the lines of recognized voices go, once per known
+visitor, to the context owner's `backend.gemini.update_context`; a "Someone" line, such as a
+bystander's, is left out. A facts call adds new facts (source
 `conversation`) and a card call rewrites `people.small_context`, with no database connection held
 meanwhile. A failed facts call changes nothing; a failed card call still keeps the facts. It needs
 `GEMINI_API_KEY` in the repo's `.env`. The same call serves `POST /people/{id}/conversation` and
@@ -86,9 +87,9 @@ The answer is spoken with the local Supertonic voice (macOS `say` if the model f
 ## Echo, and what leaves the laptop
 
 The microphone keeps listening while the program speaks. Only Nova's echo suppression drops the
-program's own voice, so without Nova its announcements can land in the transcript as the user's
-lines. Visit transcripts go to Gemini, and Nova sends names, cards, facts and the recent
-conversation to Anthropic; photos and audio stay on the laptop.
+program's own voice, so without Nova its announcements can land in the transcript as "Someone"
+lines. Gemini gets only the lines of recognized voices. Nova sends names, cards, facts and the
+recent conversation, every voice included, to Anthropic; photos and audio stay on the laptop.
 
 ## Keys and setup
 

@@ -154,10 +154,10 @@ uv run python -m live
 ```
 
 It names the people it sees and hears, announces each arrival once, and keeps the visit's transcript. When the visit
-ends, Gemini turns the transcript into each visitor's facts and card. In its window, `q` quits, `e` ends the visit, and
-`w` asks who is here. `--no-camera` uses the microphone only, `--no-tts` prints instead of speaking, `--no-nova` and
-`--no-summary` turn off Nova and the visit summary, and `--help` lists the rest. More in
-[enroll/README.md](enroll/README.md) and [live/README.md](live/README.md).
+ends, Gemini turns the lines of recognized voices (never a stranger's) into each visitor's facts and card. In its
+window, `q` quits, `e` ends the visit, and `w` asks who is here. `--no-camera` uses the microphone only, `--no-tts`
+prints instead of speaking, `--no-nova` and `--no-summary` turn off Nova and the visit summary, and `--help` lists the
+rest. More in [enroll/README.md](enroll/README.md) and [live/README.md](live/README.md).
 
 ### Nova
 

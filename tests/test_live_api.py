@@ -121,9 +121,11 @@ def test_end_visit_sends_the_transcript_to_gemini_and_reports_what_was_saved(bac
     assert isinstance(saved, VisitSaved)
     assert (saved.name, saved.new_facts, saved.small_context) == ("Maya", ["Maya brought photos from a beach trip."], "Last spoke about: the beach trip | Ask about: the photos")
     assert "Maya: Hi Grandma! I brought the photos from our beach trip." in fake.contents("facts")
+    assert "Oh, how lovely." not in fake.contents("facts")  # a voice nobody enrolled stays on the machine
     assert session.visit.lines == []  # a fresh visit starts
     [transcript] = (backend_module.app.state.data_dir / "visits").glob("*.txt")
     assert "Maya: Hi Grandma! I brought the photos from our beach trip." in transcript.read_text()
+    assert "User: Oh, how lovely." in transcript.read_text()  # the local file keeps every line
     assert backend_client.get("/people").json()[0]["small_context"] == "Last spoke about: the beach trip | Ask about: the photos"
     assert [f["text"] for f in backend_client.get(f"/people/{maya['id']}/facts").json()][-1] == "Maya brought photos from a beach trip."
 
@@ -272,3 +274,18 @@ def test_nova_introduces_herself_again_after_a_visit_ends(backend_client, backen
     session.visit.add("Rose", None, "Nova, who is David?")
     session.end_visit()
     assert [m.text for m in session.ask_nova("Nova, who is David?", "Rose")] == [intro]
+
+
+def test_novas_context_on_live_leaves_out_voices_nobody_enrolled(backend_client, backend_module, monkeypatch):
+    from backend.live_api import LiveSession
+    from tests.helpers import FakeClaude
+
+    claude = FakeClaude("Maya is your granddaughter.")
+    monkeypatch.setattr(backend_module.app.state, "claude", claude)
+    session = LiveSession(backend_module.app.state)
+    session.visit.add("Maya", 1, "I brought the photos.")
+    session.visit.add("Someone", None, "Is this seat taken?")
+    session.ask_nova("Nova, who is Maya?", "Rose")
+    [call] = claude.calls
+    prompt = call["messages"][0]["content"]
+    assert "Maya: I brought the photos." in prompt and "Is this seat taken?" not in prompt

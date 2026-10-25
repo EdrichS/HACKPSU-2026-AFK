@@ -3,7 +3,8 @@
 The summary itself belongs to the context owner: backend.gemini.update_context turns the
 transcript into new facts (source 'conversation') and a fresh card with two Gemini calls, holding
 no database connection meanwhile, and leaves everything as it was when a call fails. This module
-keeps the transcript and reports what that call changed.
+keeps the transcript and reports what that call changed. Gemini gets only lines from recognized
+voices: a voice nobody enrolled, such as a bystander's, stays in `lines` on this machine.
 """
 
 import logging
@@ -47,8 +48,12 @@ class Visit:
     def note(self, person: PresentPerson) -> None:
         self.people[person.person_id] = person
 
+    def known_lines(self) -> list[Line]:
+        """The lines of recognized voices: all Gemini gets, and Nova's context on /live."""
+        return [line for line in self.lines if line.person_id is not None]
+
     def transcript(self) -> list[TranscriptLine]:
-        return [TranscriptLine(speaker=line.speaker, text=line.text) for line in self.lines]
+        return [TranscriptLine(speaker=line.speaker, text=line.text) for line in self.known_lines()]
 
 
 def render_transcript(lines: list[Line]) -> str:
@@ -63,7 +68,7 @@ class VisitResult:
 
 
 def save_visit(pool, visit: Visit, user_id: int | None = None, client=None, today=None) -> list[VisitResult]:
-    """Hand the whole transcript to backend.gemini.update_context once per visitor who was there.
+    """Hand the transcript (recognized voices only) to backend.gemini.update_context once per visitor who was there.
 
     The user (the wearer) is never a visitor. `client` and `today` are for tests.
     """

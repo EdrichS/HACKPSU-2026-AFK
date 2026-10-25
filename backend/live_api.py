@@ -203,7 +203,7 @@ class LiveSession:
         if not (heard and len(question.split()) >= 2):
             return []
         try:
-            answer = self.nova.answer(question, speaker, render_transcript(self.visit.lines[-20:]))
+            answer = self.nova.answer(question, speaker, render_transcript(self.visit.known_lines()[-20:]))
         except Exception as e:  # noqa: BLE001
             log.error("Nova failed: %s: %s", type(e).__name__, e)
             answer = "Sorry, I couldn't answer that just now."

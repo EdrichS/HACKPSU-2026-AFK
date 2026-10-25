@@ -93,11 +93,13 @@ def test_an_unknown_face_is_called_out_only_after_a_while():
 
 def test_visit_keeps_lines_and_known_people():
     v = Visit()
-    v.add("Patient", None, "Did you move?")
+    v.add("Rose", 3, "Did you move?")
     v.add("David", 1, "Yeah, last month.")
     v.add("David", 1, "   ")
+    v.add("Someone", None, "Is this seat free?")  # a voice nobody enrolled: kept here, never sent to Gemini
     v.note(DAVID)
-    assert [(l.speaker, l.text) for l in v.transcript()] == [("Patient", "Did you move?"), ("David", "Yeah, last month.")]
+    assert [(l.speaker, l.text) for l in v.transcript()] == [("Rose", "Did you move?"), ("David", "Yeah, last month.")]
+    assert [l.speaker for l in v.lines] == ["Rose", "David", "Someone"]
     assert list(v.people) == [1]
 
 

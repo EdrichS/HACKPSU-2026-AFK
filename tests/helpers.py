@@ -95,7 +95,9 @@ class FakeClaude:
 
     def __init__(self, reply: str):
         self.reply = reply
+        self.calls: list[dict] = []  # each tool_runner call's arguments: what would go to Anthropic
         self.beta = self.messages = self  # so client.beta.messages.tool_runner(...) lands below
 
     def tool_runner(self, **kwargs):
+        self.calls.append(kwargs)
         return [SimpleNamespace(stop_reason="end_turn", content=[SimpleNamespace(type="text", text=self.reply)])]
