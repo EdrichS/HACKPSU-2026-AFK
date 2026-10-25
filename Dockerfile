@@ -34,11 +34,11 @@ COPY --from=build /app/hackpsu_voice_rec/models /app/hackpsu_voice_rec/models
 COPY . .
 ENV PATH=/app/.venv/bin:$PATH \
     PYTHONUNBUFFERED=1 \
-    NAMETAGS_DATA=/data \
+    NAMETAGS_DATA=data \
     VOICEREC_MODEL=/app/hackpsu_voice_rec/models/nemo_en_titanet_small.onnx \
     VOICEREC_VAD_MODEL=/app/hackpsu_voice_rec/models/silero_vad.onnx \
     VOICEREC_ASR_MODEL=/app/hackpsu_voice_rec/models/sherpa-onnx-moonshine-base-en-int8
-VOLUME /data
+VOLUME /app/data
 EXPOSE 8000
 HEALTHCHECK --interval=30s --timeout=5s --start-period=90s --retries=3 \
     CMD curl -fsS http://127.0.0.1:8000/health || exit 1
